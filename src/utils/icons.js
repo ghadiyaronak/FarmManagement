@@ -1,0 +1,24 @@
+import { GiHamburgerMenu, GiSpeakerOff, GiElectric } from "react-icons/gi";
+import { FiChevronLeft, FiChevronRight, FiChevronDown, FiSettings } from "react-icons/fi";
+import { AiOutlineClose, AiOutlinePoweroff, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { BsMoonFill, BsSunFill, BsCircle, BsDash } from "react-icons/bs";
+import { RiMenuAddLine } from "react-icons/ri";
+import { TbEngine } from "react-icons/tb";
+
+export const HamburgerMenu = (props) => <GiHamburgerMenu size={props.size ? props.size : "20px"} />;
+export const CloseIcon = (props) => <AiOutlineClose size={props.size ? props.size : "20px"} />;
+export const ChevronLeft = (props) => <FiChevronLeft size={props.size ? props.size : "20px"} />;
+export const ChevronRight = (props) => <FiChevronRight size={props.size ? props.size : "20px"} />;
+export const ChevronDown = (props) => <FiChevronDown size={props.size ? props.size : "20px"} />;
+export const SpeakerOff = (props) => <GiSpeakerOff size={props.size ? props.size : "20px"} />;
+export const Moon = (props) => <BsMoonFill size={props.size ? props.size : "20px"} />;
+export const Sun = (props) => <BsSunFill size={props.size ? props.size : "20px"} />;
+export const PowerOff = (props) => <AiOutlinePoweroff size={props.size ? props.size : "20px"} />;
+export const AddMenu = (props) => <RiMenuAddLine size={props.size ? props.size : "20px"} />;
+export const Circle = (props) => <BsCircle size={props.size ? props.size : "20px"} />;
+export const Settings = (props) => <FiSettings size={props.size ? props.size : "20px"} />;
+export const Dash = (props) => <BsDash size={props.size ? props.size : "20px"} />;
+export const Engine = (props) => <TbEngine size={props.size ? props.size : "20px"} />;
+export const Thunder = (props) => <GiElectric size={props.size ? props.size : "20px"} />;
+export const PasswordVisible = (props) => <AiFillEye size={props.size ? props.size : "20px"} />;
+export const PasswordHidden = (props) => <AiFillEyeInvisible size={props.size ? props.size : "20px"} />;

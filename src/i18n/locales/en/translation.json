@@ -1,0 +1,293 @@
+{
+    "heading": "Admin Portal",
+    "home": "Dashboard",
+    "sales": "Sales",
+    "users": "Users",
+    "User": "User",
+    "Farm": "Farm",
+    "Camera": "Camera",
+    "products": "Products",
+    "category": "Category",
+    "Device": "Device",
+    "device": "Device",
+    "group": "Group",
+    "review": "Review",
+    "inquiry": "Inquiry",
+    "faq": "FAQ",
+    "News": "News",
+    "analytics": "Analytics",
+    "stripe": "Stripe",
+    "line": "Line",
+    "show_more": "Show more",
+    "rows_per_page": "Rows per Page",
+    "view": "view",
+    "there_are_no_records_to_display": "There are no records to display",
+
+    "dashboard": {
+        "user": "User"
+    },
+
+    "status": {
+        "owner": "Owner",
+        "user": "User",
+        "active": "ACTIVE",
+        "block": "BLOCK",
+        "enable": "Enable",
+        "disable": "Disable",
+        "operational": "Operational",
+        "non_operational": "Non-operational",
+        "open": "Open",
+        "close": "Close",
+        "yes": "Yes",
+        "no": "No",
+        "completed": "Completed",
+        "confirming": "Confirming",
+        "unconfirmed": "Unconfirmed"
+    },
+
+    "auth_header": {
+        "add_name": "Add Name",
+        "name": "Name",
+        "edit": "Edit",
+        "add_your_name": "Add Your Name",
+        "save": "Save",
+        "cancel": "Cancel"
+    },
+
+    "user_status": {
+        "admin": "Admin",
+        "red_only": "Red only"
+    },
+
+    "common": {
+        "return": "Return",
+        "search_condition": "search condition",
+        "email": "Email",
+        "contact_number": "Contact number",
+        "status": "Status",
+        "name": "Name",
+        "action": "Action",
+        "register_date": "Register Date",
+        "export": "CSV Export",
+        "delete": "Delete",
+        "Enabled": "Enabled",
+        "Disabled": "Disabled",
+        "save": "Save",
+        "cancel": "Cancel",
+        "keep": "keep",
+        "private": "Private"
+    },
+
+    "farm_mgmt": {
+        "add_farm": "Add Farm",
+        "farm": "Farm",
+        "farm_name": "Name",
+        "search": "search",
+        "reset": "reset",
+        "batch_download": "Batch download",
+        "owner_name": "Owner Name",
+        "address": "address",
+        "memo": "memo",
+        "save": "Save",
+        "farm_details": "Farm Details",
+        "edit_farm_details": "Edit Farm Details",
+        "update": "Update",
+        "farm_view": "Farm View",
+        "camera_pin": "Camera pin",
+        "farm_id": "FarmID",
+        "memo_developer": "Memo developer",
+        "last_datetime": "Last datetime",
+        "construction_period": "Construction period",
+        "contract_start_date": "Contract start date",
+        "contract_end_date": "Contract end date",
+        "postal_code": "Postal code",
+        "prefecture": "Prefecture",
+        "city": "City",
+        "sub_area": "Sub area",
+        "subarea_number": "Subarea number",
+        "delete_farm": "Delere farm",
+        "app_pin": "App pin"
+    },
+
+    "user_mgmt": {
+        "user_name": "Name",
+        "add_user": "Add user",
+        "role": "Role",
+        "user": "User",
+        "user_details": "User Details",
+        "last_login": "Last Login",
+        "user_id": "UserID",
+        "change_status": "Change status"
+    },
+
+    "device_mgmt": {
+        "farm_name": "Farm name",
+        "device_access": "Device access",
+        "device_details": "Device Details",
+        "mac_address": "mac-address",
+        "location": "Location",
+        "operate": "Operate",
+        "Device_ID": "Device ID",
+        "current_value": "Current value",
+        "view_activity": "View Activity",
+        "device_edit": "Device edit"
+    },
+
+    "camera_mgmt": {
+        "camera_access": "Camera access",
+        "camera_details": "Camera Details",
+        "camera_id": "CameraID",
+        "link_id": "LinkID",
+        "camera_edit": "Camera Edit",
+        "camera_activity": "View Activity",
+        "camera_type": "Camera type"
+    },
+
+    "news": {
+        "news_title": "News title",
+        "start_date": "Start date",
+        "end_date": "End date",
+        "action": "Action",
+        "newa_id": "News ID",
+        "news_description": "News description",
+        "add_news": "Add news",
+        "news_view": "News view",
+        "edit_news": "Edit news"
+    },
+
+    "inquiry_mgmt": {
+        "user_name": "User name",
+        "date_time": "Date time",
+        "inquiry_title": "Inquiry title",
+        "inquiry_id": "Inquiry ID",
+        "inquiry_details": "Inquiry Details",
+        "inquiry_description": "Inquiry description"
+    },
+
+    "faq_mgmt": {
+        "faq": "FAQ",
+        "faq_mgmt": "FAQ Management",
+        "add_question": "Add Question",
+        "section": "Section",
+        "question": "Question",
+        "answer": "Answer",
+        "status": "Status",
+        "order": "Order",
+        "praiority": "Priority",
+        "action": "Action",
+
+        "add_section": "Add Section",
+        "section_private": "Section Private",
+        "edit_section": "Edit Section",
+
+        "section_name": "Section name",
+        "enter_section_name": "Enter section name",
+        "enter_order": "Enter order",
+        "close": "Close",
+        "add_faq": "Add Faq",
+        "select_section": "Select section",
+        "enter_question": "Enter question",
+        "enter_answer": "Enter answer",
+        "type_your_answer_here": "Type your answer_here...",
+        "hide_faq": "Hide faq",
+        "no": "No",
+        "yes": "Yes",
+        "faq_section": "Section Name",
+        "select_faq_section": "Select Section Name",
+        "cancel": "Cancel",
+        "delete_title": "Delete FAQ",
+        "delete_quetion": "Delete Quetion",
+        "delete_quetion_body": "Delete Quetion?",
+        "delete_msg": "Are you sure you want to delete the store?",
+        "delete_msg1": "This action is irreversible.",
+        "confirm": "Confirm",
+        "delete_section": "Delete Section",
+        "make_section_public": "Make section public?",
+        "enable_message": "Are you sure you want to enable?",
+        "disable_message": "Are you sure you want to disable?",
+        "disable_section": "Disable Section",
+        "disable_faq": "Disable Faq",
+        "enable_section": "Enable Section",
+        "enable_faq": "Enable Faq",
+        "priority": "Priority"
+    },
+
+    "login": {
+        "email": "Email Address",
+        "password": "Password",
+        "login": "Login",
+        "old_password": "Old Password",
+        "new_password": "New Password",
+        "change_password": "Change Password",
+        "confirm_password": "Confirm Password",
+        "logout_success": "Logout successful!",
+        "logout": "Logout"
+    },
+
+    "form_errors": {
+        "required_email": "Please enter your email address",
+        "required_password": "Please enter your password",
+        "invalid_email": "Please enter a valid email address",
+        "required_fields": "Required Fields",
+        "password_minimum_characters": "password must be at least 6 characters",
+        "both_password_needs_to_be_the_same": "Both password need to be the same"
+    },
+
+    "footer": {
+        "all_rights_reserved": "©  Copyright 2022 （資）羽生惣吾商店 全て 権利 予約済み."
+    },
+
+    "messages": {
+        "admin_login_success": "Admin Login Successfully!",
+        "password_set_success": "Password set success",
+        "logout_success": "Logout successful!",
+        "password_update_success": "Password Updated Successfully!",
+        "company_not_exists": "Company not exists",
+        "admin_updated_success": "Admin Updated Successfully",
+        "same_name_error": "This Same name is also available in Market",
+        "this_action_is_irreversible": "This action is irreversible.",
+        "profile_update_success": "Profile Updated Successfully",
+
+        "farm_name_is_required": "Farm name is required",
+        "owner_name_is_required": "Owner name is required",
+        "email_field_is_required": "Email field is required",
+        "contact_number_field_is_required": "Contact number field is required",
+        "camera_pin_is_required": "Camera pin is required",
+        "address_field_is_required": "Address field is required",
+        "status_field_is_required": "Status field is required",
+        "register_date_is_required": "register date is required",
+        "suspend_message": "Are you sure you want to suspend  the user?",
+        "active_message": "Are you sure you want to active the user?",
+        "farm_delete_confirm": "Are you sure you want to delete the Farm?",
+        "construction_period": "Construction period is required",
+        "suspend_message_farm": "Are you sure you want to suspend  the farm?",
+        "active_message_farm": "Are you sure you want to active the farm?",
+        "postal_code": "Postal code is required",
+        "prefecture": "Prefecture is required",
+        "city": "City is required",
+        "sub_area": "Sub area id required",
+        "subarea_number": "Sub area number is required",
+        "title_is_required": "Title is required",
+        "content_is_required": "Content is required",
+        "start_date_is_required": "Start date is required",
+        "end_date_is_required": "End date is required",
+        "memo_field_is_required": "Memo field is required",
+        "news_delete_confirm": "News delete confirm",
+
+        "404error": "404 | This page could not be found.",
+        "please_try_after_some_times": "Please Try After Some Times",
+
+        "please_select_rows_first": "Please Select Rows first",
+        "delete_project": "Delete Project",
+        "sure_delete": "Are You Sure You Want To Delete This Item?",
+        "user_activate_success": "User Activated Successfuly!",
+        "user_deactivate_success": "User Deactivated Successfuly!",
+
+        "inquiry_delete_confirm": "Are you sure you want to delete the Inquiry?",
+        "inquiry_delete_success": "Inquiry Deleted Successfully!",
+
+        "review_delete_confirm": "Are you sure you want to delete the Review?",
+        "review_delete_success": "Review Deleted Successfully!",
+        "are_you_sure": "Are you Sure?"
+    }
+}

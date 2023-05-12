@@ -1,0 +1,315 @@
+{
+    "heading": "マイミル - 管理者",
+    "home": "ホーム",
+    "Farm": "農家",
+    "User": "読取",
+    "Camera": "カメラ",
+    "Device": "デバイス",
+    "sales": "販売状況",
+    "users": "ユーザー",
+    "products": "商品情報",
+    "category": "カテゴリー",
+    "group": "グループ",
+    "review": "評価",
+    "inquiry": "お問い合わせ",
+    "analytics": "Googleアナリティクスへ",
+    "stripe": "Stripeへ",
+    "News": "ニュース",
+    "Inquiry": "問い合わせ",
+    "line": "LINEへ",
+    "faq": "よくある質問",
+    "rows_per_page": "件数",
+    "show_more": "もっと見る",
+    "view": "見る",
+    "there_are_no_records_to_display": "表示するレコードがありません",
+
+    "dashboard": {
+        "user": "ユーザー"
+    },
+
+    "status": {
+        "owner": "管理者",
+        "user": "読取",
+        "active": "有効",
+        "block": "無効",
+        "enable": "有効",
+        "disable": "無効",
+        "operational": "稼働中",
+        "non_operational": "停止中",
+        "open": "開ける",
+        "close": "閉じる",
+        "yes": "はい",
+        "no": "いいえ",
+        "completed": "対応完了",
+        "confirming": "確認中",
+        "unconfirmed": "未確認"
+    },
+    "auth_header": {
+        "add_name": "名前を追加",
+        "name": "名前",
+        "edit": "編集",
+        "add_your_name": "あなたの名前を追加",
+        "save": "保存",
+        "cancel": "キャンセル"
+    },
+
+    "user_status": {
+        "admin": "管理者",
+        "red_only": "読み取り"
+    },
+
+    "common": {
+        "return": "戻る",
+        "search_condition": "検索条件",
+        "email": "メールアドレス",
+        "contact_number": "携帯電話",
+        "status": "ステータス",
+        "name": "名前",
+        "action": "次へ",
+        "register_date": "登録日",
+        "export": "CSV輸出",
+        "delete": "削除",
+        "Disabled": "無効",
+        "Enabled": "有効",
+        "save": "保存",
+        "cancel": "キャンセル",
+        "keep": "保存",
+        "private": "非公開"
+    },
+
+    "farm_mgmt": {
+        "add_farm": "追加",
+        "farm": "農家",
+        "farm_name": "農家名",
+        "search": "検索",
+        "reset": "リセット",
+        "batch_download": "一括ダウンロード",
+        "owner_name": "オーナー名",
+        "address": "住所",
+        "memo": "メモ",
+        "save": "開ける",
+        "farm_details": "農家の詳細",
+        "edit_farm_details": "情報を編集する",
+        "update": "更新",
+        "farm_view": "農家情報",
+        "camera_pin": "カメラ認証コード",
+        "farm_id": "農家ID",
+        "memo_developer": "備考",
+        "construction_period": "契約開始日および契約終了日",
+        "contract_start_date": "契約開始日",
+        "contract_end_date": "契約終了日",
+        "last_datetime": "最終日付 時刻",
+        "postal_code": "郵便番号",
+        "prefecture": "都道府県名",
+        "city": "市区町村名",
+        "sub_area": "サブエリア名",
+        "subarea_number": "サブエリア番号",
+        "delete_farm": "農家を削除する",
+        "app_pin": "アプリケーションPIN"
+    },
+
+    "user_mgmt": {
+        "user_name": "ユーザー名",
+        "add_user": "ユーザー追加",
+        "role": "権限",
+        "user_details": "ユーザー情報",
+        "last_login": "最終ログイン",
+        "user": "ユーザー",
+        "user_id": "読取ID",
+        "change_status": "切替える"
+    },
+
+    "device_mgmt": {
+        "mac_address": "MACアドレス",
+        "farm_name": "農家名",
+        "current_value": "現在値",
+        "location": "設置場所",
+        "device_access": "機器アクセス",
+        "device_edit": "デバイス編集",
+        "device_details": "デバイスの詳細",
+        "operate": "Operate",
+        "Device_ID": "機器ID",
+        "view_activity": "デバイスアクティビティ"
+    },
+
+    "camera_mgmt": {
+        "camera_access": "カメラ アクセス",
+        "camera_details": "カメラの詳細",
+        "camera_id": "CameraID",
+        "link_id": "ライブビューリンク",
+        "camera_edit": "カメラ編集",
+        "camera_activity": "ビューアクティビティ",
+        "camera_type": "カメラタイプ"
+    },
+
+    "news": {
+        "news_title": "ニュースのタイトル",
+        "start_date": "開始日",
+        "end_date": "終了日",
+        "action": "保存",
+        "news_id": "ニュースID",
+        "news_description": "ニュース概要",
+        "add_news": "ニュース追加",
+        "news_view": "ニュースを見る",
+        "edit_news": "ニュースを編集"
+    },
+
+    "inquiry_mgmt": {
+        "user_name": "ユーザー名",
+        "date_time": "データータイム",
+        "inquiry_title": "問い合わせタイトル",
+        "inquiry_id": "お問い合わせID",
+        "inquiry_description": "問い合わせ内容",
+        "inquiry_details": "お問い合わせ内容"
+    },
+
+    "faqs": {
+        "faq": "よくある質問"
+    },
+
+    "login": {
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "login": "ログイン",
+        "old_password": "古いパスワード",
+        "new_password": "新しいパスワード",
+        "change_password": "パスワード変更",
+        "confirm_password": "パスワードを認証する",
+        "logout_success": "ログアウト 成功!",
+        "logout": "ログアウト"
+    },
+
+    "form_errors": {
+        "required_email": "メールアドレスを入力してください",
+        "required_password": "パスワードを入力してください",
+        "invalid_email": "有効なメールアドレスを入力してください",
+        "required_fields": "必須項目",
+        "password_minimum_characters": "パスワードが短すぎます - 6 文字以上にする必要があります",
+        "both_password_needs_to_be_the_same": "パスワードが一致しません"
+    },
+
+    "footer": {
+        "all_rights_reserved": "©  Copyright 2022 （資）羽生惣吾商店 All rights reserved."
+    },
+
+    "messages": {
+        "admin_login_success": "管理者画面にログインしました。",
+        "logout_success": "ログアウトしました。",
+        "password_update_success": "パスワードを更新しました",
+        "password_set_success": "パスワード設定成功",
+        "same_name_error": "商品名が重複しています",
+        "this_action_is_irreversible": "削除した情報は復元できません",
+        "admin_updated_success": "管理者が正常に更新されました",
+        "category_create_success": "カテゴリーを登録しました",
+        "category_update_success": "カテゴリーを更新しました",
+        "category_delete_success": "カテゴリーを削除しました。",
+        "category_delete_confirm": "カテゴリーを削除しますか？",
+        "category_delete_reject": "このカテゴリーは商品データがある為、削除することはできません",
+        "profile_update_success": "プロファイルが正常に更新されました",
+        "group_create_success": "グループを登録しました",
+        "group_update_success": "グループを更新しました",
+        "group_delete_success": "グループを削除しました。",
+        "company_not_exists": "会社が存在しません",
+        "group_delete_confirm": "本当にグループを削除しますか？",
+        "group_delete_reject": "このグループは販売データがある為、削除することはできません。",
+
+        "farm_name_is_required": "農家名は必須です",
+        "owner_name_is_required": "オーナー名は必須です",
+        "memo_field_is_required": "メモ欄は必須です",
+        "email_field_is_required": "メールアドレスは必須です",
+        "contact_number_field_is_required": "お問い合わせ番号は必須です",
+        "camera_pin_is_required": "PINコードが必要です",
+        "address_field_is_required": "住所は必須です",
+        "status_field_is_required": "ステータスは必須です",
+        "register_date_is_required": "登録日は必須です",
+        "suspend_message": "ユーザーを停止してもよろしいですか?",
+        "active_message": "このユーザーを有効にしてもよろしいですか?",
+        "construction_period": "契約開始日および契約終了日は必須です",
+        "suspend_message_farm": "農家を停止してもよろしいですか?",
+        "active_message_farm": "この農家を有効にしてもよろしいですか?",
+        "postal_code": "郵便番号は必須です",
+        "prefecture": "都道府県名は必須です",
+        "city": "市区町村名は必須です",
+        "sub_area": "サブエリア名は必須です",
+        "subarea_number": "サブエリア番号は必須です",
+        "farm_delete_confirm": "農家を削除してよろしいですか？",
+        "title_is_required": "タイトルは必須です",
+        "content_is_required": "コンテンツは必須です",
+        "start_date_is_required": "開始日は必須です",
+        "end_date_is_required": "終了日は必須です",
+        "news_delete_confirm": "ニュースを削除してよろしいですか？",
+
+        "product_create_success": "商品を登録しました",
+        "product_update_success": "商品を更新しました",
+        "product_delete_success": "商品を削除しました!",
+        "product_delete_confirm": "商品 ーを削除しますか？削除した情報は復元できません。",
+
+        "Product_upload_10_image": "最大10枚画像登録",
+        "product_upload_image_error": "画像は10枚以上登録できません",
+
+        "404error": "404 | このページは見つかりませんでした。",
+        "please_try_after_some_times": "時間をおいて再度お試しください",
+
+        "please_select_rows_first": "最初に行を選択してください",
+
+        "user_activate_success": "ユーザー認証が完了しました",
+        "user_deactivate_success": "ユーザーを無効化しました",
+
+        "inquiry_delete_confirm": "本当にお問い合わせを削除しますか？",
+        "inquiry_delete_success": "お問い合わせを削除しました",
+        "delete_project": "案件トを削除",
+        "sure_delete": "案件れを削除してもよろしいですか",
+        "review_delete_confirm": "本当にお問い合わせを削除しますか？",
+        "review_delete_success": "レビューを削除しました",
+        "are_you_sure": "本当によろしいですか？"
+    },
+
+    "faq_mgmt": {
+        "faq": "FAQ",
+        "faq_mgmt": "FAQ",
+
+        "add_question": "質問追加",
+        "praiority": "Priority",
+
+        "section": "セクション",
+        "question": "質問",
+        "answer": "回答",
+        "status": "ステータス",
+        "order": "注文",
+        "action": "編集/削除",
+
+        "add_section": "セクション名",
+        "edit_section": "FAQ編集",
+
+        "section_name": "セクション名",
+        "section_private": "セクション非公開",
+        "enter_section_name": "セクション名入力",
+        "enter_order": "注文を入力",
+        "add_faq": "FAQ追加",
+        "select_section": "セクション選択",
+        "enter_question": "質問入力",
+        "enter_answer": "回答入力",
+        "type_your_answer_here": "回答を入力してください……",
+        "hide_faq": "FAQを非表示",
+        "faq_section": "セクション名",
+        "select_faq_section": "セクション名選択",
+        "cancel": "キャンセル",
+        "delete_title": "FAQ削除",
+        "delete_quetion": "質問削除",
+
+        "delete_quetion_body": "質問を削除しますか？",
+        "delete_msg": "本当に削除してよろしいですか？",
+        "delete_msg1": "この操作は取り消せません",
+        "confirm": "確認",
+        "delete_section": "セクション削除",
+
+        "make_section_public": "セクションを公開にしますか?",
+        "enable_message": "有効にしてもよろしいですか？",
+        "disable_message": "無効にしてもよろしいですか？",
+        "disable_section": "セクション非公開",
+        "disable_faq": "よくある質問を無効にする",
+        "enable_section": "セクション公開",
+        "enable_faq": " よくある質問を有効にする",
+        "priority": "ランク"
+    }
+}
