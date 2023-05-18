@@ -121,17 +121,25 @@ const FarmManagement = () => {
                 },
                 (success: any) => {
                     getFarmList(true);
+                    toast({
+                        title: success.message,
+                        status: "success",
+                        duration: 3 * 1000,
+                        isClosable: true,
+                        position: "top-right"
+                    });
                 },
-                (error: any) => {}
+                (error: any) => {
+                    toast({
+                        title: error.message,
+                        status: "error",
+                        duration: 3 * 1000,
+                        isClosable: true,
+                        position: "top-right"
+                    });
+                }
             )
         );
-        toast({
-            title: "Farm deleted successfully!",
-            status: "error",
-            duration: 3 * 1000,
-            isClosable: true,
-            position: "top-right"
-        });
     };
     const dispatch = useDispatch();
     const { values, handleChange, handleSubmit, setFieldValue, resetForm, setFieldTouched, dirty, touched } = useFormik(
@@ -335,7 +343,7 @@ const FarmManagement = () => {
                     w={32}
                     onClick={handleClick}
                     bgColor={globalStyles.colors.btn.blue}
-                    _hover={{ bgColor: globalStyles.colors.mainColor }}
+                    _hover={{ bgColor: "blue.300" }}
                     color={"white"}
                 >
                     + {t("farm_mgmt.add_farm")}
@@ -346,7 +354,7 @@ const FarmManagement = () => {
                 <Text display={"flex"} fontWeight={"bold"} mb={3}>
                     {t("common.search_condition")}
                 </Text>
-                <Flex gap={5} w={"full"}>
+                <Flex gap={4} w={"full"} flexWrap={{ base: "nowrap", xl: "wrap", lg: "wrap", md: "wrap" }}>
                     <Flex flexDir={"column"} gap={3} mt={2} w={"xs"}>
                         <InputSelect
                             label={t("farm_mgmt.farm_name")}
@@ -410,20 +418,27 @@ const FarmManagement = () => {
                     </ModalBody>
 
                     <ModalFooter display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                        <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            {t("status.close")}
-                        </Button>
                         <Box onClick={onClose}>
                             <Button
                                 _hover={{ bgColor: "red.500" }}
                                 onClick={handleDelete}
                                 bgColor={"red.500"}
                                 color={"white"}
+                                mr={3}
                                 variant="ghost"
                             >
                                 {t("common.delete")}
                             </Button>
                         </Box>
+                        <Button
+                            _hover={{ bgColor: "#4299e1" }}
+                            bgColor="#4299e1"
+                            variant="ghost"
+                            color={"white"}
+                            onClick={onClose}
+                        >
+                            {t("status.cancel")}
+                        </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

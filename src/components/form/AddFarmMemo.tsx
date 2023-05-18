@@ -32,7 +32,7 @@ const AddFarmMemo = ({
             <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
                 {label}
             </FormLabel>
-            <Box width={"lg"} ps={"5"}>
+            <Box width={"lg"} ps={"3"}>
                 <Input
                     _focus={{ borderColor: globalStyles.colors.mainColor }}
                     border={"1px solid #D6D6D6"}

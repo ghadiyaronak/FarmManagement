@@ -219,7 +219,7 @@ const InquiryManagement = () => {
                 <Text display={"flex"} fontWeight={"bold"} mb={3}>
                     {t("common.search_condition")}
                 </Text>
-                <Flex gap={5} w={"full"}>
+                <Flex gap={5} w={"full"} flexWrap={{ base: "nowrap", xl: "wrap", lg: "wrap", md: "wrap" }}>
                     <Flex flexDir={"column"} gap={3} w={"xs"}>
                         <InputSelect
                             label={t("inquiry_mgmt.user_name")}

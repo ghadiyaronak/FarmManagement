@@ -10,7 +10,13 @@ const SaveButtonFaq = ({ isSubmitting }: IProps) => {
     const { t } = useTranslation();
 
     return (
-        <Button bgColor={globalStyles.colors.btn.success} color={"white"} type={"submit"} isLoading={isSubmitting}>
+        <Button
+            bgColor={globalStyles.colors.btn.success}
+            _hover={{ bgColor: "green.300" }}
+            color={"white"}
+            type={"submit"}
+            isLoading={isSubmitting}
+        >
             {t("common.save")}
         </Button>
     );

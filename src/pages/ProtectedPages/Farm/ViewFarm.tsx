@@ -60,12 +60,14 @@ const ViewFarm = ({ mode }: EditProps) => {
     const [farmUserData, setFarmUserData] = useState<any>([]);
     const [farmDeviceData, setFarmDeviceData] = useState<any>([]);
     const [farmCameraeData, setFarmCameraData] = useState<any>([]);
+    const [trueData, setTrue] = useState<any>(true);
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [openTab, setOpenTab] = useState(searchParams.get("tab"));
+    const [scrollTop, setScrollTop] = useState<boolean>(false);
 
     function handleClick(row: any) {
         navigate(`/user-view/${row._id}`);
@@ -339,28 +341,6 @@ const ViewFarm = ({ mode }: EditProps) => {
         );
     };
 
-    const getDeviceByFarmId = () => {
-        dispatch(
-            DeviceService.getDevice(
-                {
-                    farmId: params.id
-                },
-                (success: any) => {
-                    setDeviceData(success.data.rows);
-                },
-                (errorData: any) => {
-                    toast({
-                        title: errorData.message ? errorData.message : errorData?.data?.message,
-                        status: "error",
-                        duration: 3 * 1000,
-                        isClosable: true,
-                        position: "top-right"
-                    });
-                }
-            )
-        );
-    };
-
     const getUserDetailsByFarmId = async () => {
         <>
             {dispatch(
@@ -383,28 +363,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                 )
             )}
         </>;
-    };
-
-    const getCameraList = () => {
-        dispatch(
-            CameraService.getCamera(
-                {
-                    farmId: params.id
-                },
-                (success: any) => {
-                    setCameraData(success.data.rows);
-                },
-                (errorData: any) => {
-                    toast({
-                        title: errorData.message ? errorData.message : errorData?.data?.message,
-                        status: "error",
-                        duration: 3 * 1000,
-                        isClosable: true,
-                        position: "top-right"
-                    });
-                }
-            )
-        );
     };
 
     const getDeviceDetailsByFarmId = async () => {
@@ -451,28 +409,6 @@ const ViewFarm = ({ mode }: EditProps) => {
         );
     };
 
-    const getUserList = () => {
-        dispatch(
-            UserService.getUser(
-                {
-                    farmId: params.id
-                },
-                (success: any) => {
-                    setUserData(success.data.rows);
-                },
-                (errorData: any) => {
-                    toast({
-                        title: errorData.message ? errorData.message : errorData?.data?.message,
-                        status: "error",
-                        duration: 3 * 1000,
-                        isClosable: true,
-                        position: "top-right"
-                    });
-                }
-            )
-        );
-    };
-
     const handleUpdateFarmStatus = () => {
         setIsLoading(true);
         const data = {
@@ -485,6 +421,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                     getFarmListById();
                     onClose();
                     setIsLoading(false);
+                    window.scrollTo({ top: 0 });
                 },
                 (errorData: any) => {
                     setIsLoading(false);
@@ -502,14 +439,19 @@ const ViewFarm = ({ mode }: EditProps) => {
 
     useEffect(() => {
         getFarmListById();
-        getDeviceByFarmId();
-        getCameraList();
-        getUserList();
         getUserDetailsByFarmId();
         getDeviceDetailsByFarmId();
         getCameraDetailsByFarmId();
     }, []);
 
+    useEffect(() => {
+        scrollTopFunction(), [scrollTop];
+    });
+    const scrollTopFunction = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }, 100);
+    };
     useEffect(() => {
         const tab = searchParams.get("tab");
 
@@ -523,7 +465,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             <Box w="4xl" bgColor={"white"} pt={4} rounded={"lg"} mt={4}>
                 <Box my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                     <Stack position={"absolute"} mx={5}>
-                        <ReturnButton link={openTab === "0" ? "/farm-management" : "?tab=0"} />
+                        <ReturnButton link={"/farm-management"} />
                     </Stack>
                     <Box
                         p={0}
@@ -537,11 +479,12 @@ const ViewFarm = ({ mode }: EditProps) => {
                             {t("farm_mgmt.farm_details")}
                         </Heading>
                     </Box>
-
-                    {String(openTab) === "0" && (
+                    {trueData ? (
                         <Box position={"absolute"} right={0} top={"-6"}>
                             <HeadingButtonRight path={`/edit-farm/${farmData?._id}`} />
                         </Box>
+                    ) : (
+                        ""
                     )}
                 </Box>
 
@@ -551,6 +494,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                             onClick={() => {
                                 navigate({ search: `?tab=0` });
                                 setOpenTab("0");
+                                setTrue(true);
                             }}
                         >
                             {t("farm_mgmt.farm_view")}
@@ -561,6 +505,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     getUserDetailsByFarmId();
                                     navigate({ search: `?tab=1` });
                                     setOpenTab("1");
+                                    setTrue(false);
                                 }}
                             >
                                 {t("user_mgmt.user")}
@@ -572,6 +517,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     getDeviceDetailsByFarmId();
                                     navigate({ search: `?tab=2` });
                                     setOpenTab("2");
+                                    setTrue(false);
                                 }}
                             >
                                 {t("Device")}
@@ -583,6 +529,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     getCameraDetailsByFarmId();
                                     navigate({ search: `?tab=3` });
                                     setOpenTab("3");
+                                    setTrue(false);
                                 }}
                             >
                                 {t("Camera")}
@@ -887,7 +834,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                             </Heading>
                                             <Text p={3} fontSize="md">
                                                 {farmData?.lastLoginTime
-                                                    ? dayjs(farmData?.lastLoginTime).format("YYYY/MM/DD hh:mm:ss")
+                                                    ? dayjs(farmData?.lastLoginTime).format("YYYY/MM/DD HH:MM")
                                                     : "--"}
                                             </Text>
                                         </Flex>
@@ -901,7 +848,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     onClick={onOpen}
                                     isLoading={isLoading}
                                     bgColor={farmData?.status === "ACTIVE" ? "#4299e1" : "red"}
-                                    _hover={{ bgColor: farmData?.status === "ACTIVE" ? "#4299e1.400" : "red.400" }}
+                                    _hover={{ bgColor: farmData?.status === "ACTIVE" ? "blue.300" : "red.300" }}
                                     color={"white"}
                                     w={"36"}
                                 >
@@ -912,7 +859,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                             <Modal isOpen={isOpen} onClose={onClose}>
                                 <ModalOverlay />
                                 <ModalContent mt={"64"}>
-                                    <ModalHeader>{t("common.action")}</ModalHeader>
+                                    <ModalHeader>{t("common.farm_status")}</ModalHeader>
                                     <ModalCloseButton />
                                     <ModalBody>
                                         <Box>
@@ -935,13 +882,22 @@ const ViewFarm = ({ mode }: EditProps) => {
                                         >
                                             <Button
                                                 bgColor={globalStyles.colors.mainColor}
-                                                onClick={handleUpdateFarmStatus}
+                                                _hover={{ bgColor: "blue.300" }}
+                                                onClick={() => {
+                                                    setScrollTop(true);
+                                                    handleUpdateFarmStatus();
+                                                }}
                                                 color={"white"}
                                                 mr={3}
                                             >
                                                 {t("status.yes")}
                                             </Button>
-                                            <Button bgColor={"red.400"} color={"white"} onClick={onClose}>
+                                            <Button
+                                                bgColor={"red.500"}
+                                                _hover={{ bgColor: "red.300" }}
+                                                color={"white"}
+                                                onClick={onClose}
+                                            >
                                                 {t("status.no")}
                                             </Button>
                                         </Box>

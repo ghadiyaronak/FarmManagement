@@ -61,7 +61,7 @@ const NewsView = () => {
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
-                            <ReturnButton />
+                            <ReturnButton link={"/news-management"} />
                         </Stack>
                         <CardHeader
                             p={0}
@@ -121,15 +121,33 @@ const NewsView = () => {
                             </Flex>
                         </Stack>
                         <Divider />
-                        <Stack divider={<StackDivider />} spacing="4">
+                        {/* <Stack divider={<StackDivider />} spacing="4">
                             <Flex>
                                 <Heading
-                                    flex={"0.3"}
+                                    flex={"0.8"}
                                     w={"72"}
                                     p={3}
                                     bg={"#f9fafa"}
                                     pl={12}
                                     fontSize={20}
+                                    textTransform="capitalize"
+                                >
+                                    {t("news.news_description")}
+                                </Heading>
+                                <Text p={3} flex={"0."} fontSize="md">
+                                    {newsData?.content ?? "--"}
+                                </Text>
+                            </Flex>
+                        </Stack> */}
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading
+                                    w={"72"}
+                                    flex={"0.3"}
+                                    p={3}
+                                    bg={"#f9fafa"}
+                                    pl={12}
+                                    fontSize={19}
                                     textTransform="capitalize"
                                 >
                                     {t("news.news_description")}

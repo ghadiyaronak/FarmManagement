@@ -25,7 +25,7 @@ const AddFarmDate: React.FC<InputFieldProps> = (props, isMandatory) => {
                     </Text>
                 )}
             </FormLabel>
-            <Box width={"lg"} px={5} py={3} pr={0}>
+            <Box width={"lg"} px={3} py={3} pr={0}>
                 <Input
                     size="md"
                     name={props.name}

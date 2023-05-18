@@ -63,53 +63,61 @@ const CameraActivity = () => {
                         </CardHeader>
                     </Box>
 
-                    {cameraData.map((elem: any, index: any) => {
-                        return (
-                            <Box key={index}>
-                                <Grid pb={2} gap={6} px={5} rounded={"lg"}>
-                                    <GridItem w="full" boxShadow={"md"} px={4} pt={2} bg="white">
-                                        <Flex py={2}>
-                                            <Text fontWeight={"semibold"} flex={"0.2"}>
-                                                {"ID"}
-                                            </Text>
-                                            <Text flex={"0.8"} fontSize="md">
-                                                {elem?.cameraId ?? "--"}
-                                            </Text>
-                                        </Flex>
+                    {cameraData.length > 0 ? (
+                        <>
+                            {cameraData.map((elem: any, index: any) => {
+                                return (
+                                    <Box key={index}>
+                                        <Grid pb={2} gap={6} px={5} rounded={"lg"}>
+                                            <GridItem w="full" boxShadow={"md"} px={4} pt={2} bg="white">
+                                                <Flex py={2}>
+                                                    <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                        {"ID"}
+                                                    </Text>
+                                                    <Text flex={"0.8"} fontSize="md">
+                                                        {elem?.cameraId ?? "--"}
+                                                    </Text>
+                                                </Flex>
 
-                                        <Flex py={2}>
-                                            <Text fontWeight={"semibold"} flex={"0.2"}>
-                                                {t("news.action")}
-                                            </Text>
-                                            <Text flex={"0.8"} fontSize="md">
-                                                {elem?.captureVideo ? "Capture Video" : "Capture ScreenShot"}
-                                            </Text>
-                                        </Flex>
+                                                <Flex py={2}>
+                                                    <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                        {t("news.action")}
+                                                    </Text>
+                                                    <Text flex={"0.8"} fontSize="md">
+                                                        {elem?.captureVideo ? "Capture Video" : "Capture ScreenShot"}
+                                                    </Text>
+                                                </Flex>
 
-                                        <Flex py={2}>
-                                            <Text fontWeight={"semibold"} flex={"0.2"}>
-                                                {t("user_mgmt.user_name")}
-                                            </Text>
-                                            <Text flex={"0.8"} fontSize="md">
-                                                {elem?.user?.user_name ?? "--"}
-                                            </Text>
-                                        </Flex>
+                                                <Flex py={2}>
+                                                    <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                        {t("user_mgmt.user_name")}
+                                                    </Text>
+                                                    <Text flex={"0.8"} fontSize="md">
+                                                        {elem?.user?.user_name ?? "--"}
+                                                    </Text>
+                                                </Flex>
 
-                                        <Flex py={2}>
-                                            <Text fontWeight={"semibold"} flex={"0.2"}>
-                                                {"ActivityAt"}
-                                            </Text>
-                                            <Text flex={"0.8"} fontSize="md">
-                                                {elem?.ActivityAt
-                                                    ? dayjs(elem?.ActivityAt).format("YYYY/MM/DD hh:mm:ss")
-                                                    : "--"}
-                                            </Text>
-                                        </Flex>
-                                    </GridItem>
-                                </Grid>
-                            </Box>
-                        );
-                    })}
+                                                <Flex py={2}>
+                                                    <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                        {t("camera_mgmt.activity_timt")}
+                                                    </Text>
+                                                    <Text flex={"0.8"} fontSize="md">
+                                                        {elem?.ActivityAt
+                                                            ? dayjs(elem?.ActivityAt).format("YYYY/MM/DD HH:MM")
+                                                            : "--"}
+                                                    </Text>
+                                                </Flex>
+                                            </GridItem>
+                                        </Grid>
+                                    </Box>
+                                );
+                            })}
+                        </>
+                    ) : (
+                        <Text display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                            {t("there_are_no_records_to_display")}
+                        </Text>
+                    )}
                 </Card>
             </Box>
         </>

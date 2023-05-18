@@ -178,7 +178,13 @@ const SectionModal = ({ isOpen, onClose, getAllFaq, getAllSection }: IProps) => 
                             ? t("common.keep")
                             : t("common.keep")}
                     </Button>
-                    <Button bgColor={globalStyles.colors.btn.blue} color="white" mr={3} onClick={onClose}>
+                    <Button
+                        bgColor={globalStyles.colors.btn.blue}
+                        _hover={{ bgColor: "blue.300" }}
+                        color="white"
+                        mr={3}
+                        onClick={onClose}
+                    >
                         {t("common.cancel")}
                     </Button>{" "}
                     {/* <Button colorScheme="blue" mr={3} onClick={() => setShow(!show)}>

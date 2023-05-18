@@ -80,6 +80,9 @@ export const DELETE_FARM_API = BASE_URL + "/admin/farm/";
 export const ADD_FARM_DETAILS = BASE_URL + "/admin/farm";
 export const UPDATE_FARM_DETAILS = BASE_URL + "/admin/farm/";
 
+export const GET_FARM_NAME_API = BASE_URL + "/admin/farm/name/list";
+
+
 export const GET_FARM_DOWNLOAD_API = BASE_URL + "/admin/farm/excel";
 
 //Device

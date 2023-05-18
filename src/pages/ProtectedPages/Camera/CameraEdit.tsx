@@ -43,10 +43,14 @@ const CameraEdit = () => {
                     setFieldValue("farm_name", camera?.farm_id?.farm_name);
                     setFieldValue("cameraAccess", camera?.cameraAccess);
                     setFieldValue("user_name", camera?.farm_id?.owner_id?.user_name);
-                    setFieldValue("memo_developer", camera?.memo_developer);
+                    setFieldValue("memoDeveloper", camera?.memoDeveloper);
                     setFieldValue("memo", camera?.memo);
                     setFieldValue("register_date", dayjs(camera?.register_date).format("YYYY/MM/DD"));
-                    setFieldValue("status", camera?.status);
+                    // setFieldValue("status", camera?.status);
+                    setFieldValue("status", {
+                        label: camera?.status === "OPERATIONAL" ? "稼働中 " : "停止中 ",
+                        value: camera?.status
+                    });
 
                     setCameraData(camera);
                 },
@@ -76,7 +80,7 @@ const CameraEdit = () => {
             cameraAccess: values.cameraAccess,
             register_date: values.register_date,
             memo: values.memo,
-            memo_developer: values.memo_developer,
+            memoDeveloper: values.memoDeveloper,
             status: values.status.value
         };
         dispatch(
@@ -84,7 +88,7 @@ const CameraEdit = () => {
                 { _id: params._id, data },
                 (responseData: any) => {
                     toast({
-                        title: t("messages.password_update_success"),
+                        title: responseData?.message ? responseData?.message : responseData.response?.data?.message,
                         status: "success",
                         variant: "solid",
                         duration: 2000,
@@ -133,7 +137,7 @@ const CameraEdit = () => {
             user_name: "",
             cameraAccess: "",
             register_date: "",
-            memo_developer: "",
+            memoDeveloper: "",
             memo: "",
             status: {
                 lable: "",
@@ -297,13 +301,12 @@ const CameraEdit = () => {
                     <Flex w={"full"}>
                         <FormFildLabel label={t("farm_mgmt.memo_developer")} isMandatory={false} />
                         <CustomTextArea
-                            name="memo_developer"
-                            // placehold={String(t("contract.up_to_500_characters"))}
-                            value={values.memo_developer}
+                            name="memoDeveloper"
+                            value={values.memoDeveloper}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
-                            errors={errors.memo_developer}
-                            touched={touched.memo_developer}
+                            errors={errors.memoDeveloper}
+                            touched={touched.memoDeveloper}
                             isMandatory={false}
                             style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
                         />

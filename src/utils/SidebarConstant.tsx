@@ -5,10 +5,13 @@ import { FaCcStripe, FaLine, FaQuestion, FaUsers } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import { GiFarmTractor, GiWheat } from "react-icons/gi";
 import { ImPriceTag } from "react-icons/im";
-import { MdHome, MdOutlinePrivacyTip, MdOutlineRateReview } from "react-icons/md";
+import { MdHome, MdOutlineEmail, MdOutlinePrivacyTip, MdOutlineRateReview } from "react-icons/md";
 import { SiGoogleanalytics } from "react-icons/si";
 import { ImNewspaper } from "react-icons/im";
 import { TbArrowGuide } from "react-icons/tb";
+import { RxQuestionMark } from "react-icons/rx";
+import { RiContactsBookLine } from "react-icons/ri";
+import { GrTransaction } from "react-icons/gr";
 
 //react scripts flag if heap memory is not enough --max_old_space_size=8000
 export interface INavItem {
@@ -58,16 +61,16 @@ export const NAV_ITEMS: Array<INavItem> = [
         path: "/news-management",
         label: "News"
     },
-    
+
     {
         id: 7,
-        icon: () => <AiOutlineQuestionCircle />,
+        icon: () => <MdOutlineEmail />,
         path: "/inquiry-management",
         label: "Inquiry"
     },
     {
         id: 8,
-        icon: () => <FaQuestion />,
+        icon: () => <RxQuestionMark />,
         path: "/faq-management",
         label: "faq"
     },
@@ -79,13 +82,13 @@ export const NAV_ITEMS: Array<INavItem> = [
     },
     {
         id: 10,
-        icon: () => <FaQuestion />,
+        icon: () => <GrTransaction />,
         path: "/notaion",
         label: "特定商取引法に基づく表記"
     },
     {
         id: 11,
-        icon: () => <TbArrowGuide />,
+        icon: () => <RiContactsBookLine />,
         path: "/user-guide",
         label: "利用ガイド"
     }

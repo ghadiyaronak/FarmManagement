@@ -56,7 +56,7 @@ const CameraView = () => {
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
-                            <ReturnButton />
+                            <ReturnButton link={"/camera-management"} />
                         </Stack>
                         <CardHeader
                             p={0}
@@ -229,7 +229,7 @@ const CameraView = () => {
                                     {t("farm_mgmt.memo")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {cameraData?.memo ? cameraData?.memo : "--"}
+                                    {cameraData?.memo ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -240,7 +240,7 @@ const CameraView = () => {
                                     {t("farm_mgmt.memo_developer")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {cameraData?.memo_developer ? cameraData?.memo_developer : "--"}
+                                    {cameraData?.memoDeveloper ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -264,6 +264,7 @@ const CameraView = () => {
                             onClick={() => navigate(`/camera-activity/${cameraData._id}`)}
                             color={"white"}
                             bg={globalStyles.colors.mainColor}
+                            _hover={{ bgColor: "blue.300" }}
                         >
                             {t("camera_mgmt.camera_activity")}
                         </Button>

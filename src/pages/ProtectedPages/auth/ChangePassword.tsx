@@ -41,10 +41,14 @@ const ChangePassword = () => {
     const onSubmit = async (values: any, actions: any) => {
         dispatch(
             AuthService.changePassword(
-                { new_password: values.new_password, old_password: values.old_password },
+                {
+                    new_password: values.new_password,
+                    old_password: values.old_password,
+                    confirm_password: values.confirm_password
+                },
                 (responseData: any) => {
                     toast({
-                        title: t("messages.password_update_success"),
+                        title: responseData?.message ? responseData?.message : responseData.response?.data?.message,
                         status: "success",
                         variant: "solid",
                         duration: 2000,
@@ -53,7 +57,6 @@ const ChangePassword = () => {
                     });
 
                     TokenService.removeUser();
-
                     navigate("/login");
                     actions.resetForm();
                 },
@@ -81,13 +84,12 @@ const ChangePassword = () => {
             .min(6, t("form_errors.password_minimum_characters"))
             .max(255)
             .required(t("form_errors.required_fields")),
-        confirm_password: yup
-            .string()
-            .required(t("form_errors.required_fields"))
-            .when("new_password", {
-                is: (val: any) => (val && val.length > 0 ? true : false),
-                then: yup.string().oneOf([yup.ref("new_password")], t("form_errors.both_password_needs_to_be_the_same"))
-            })
+        confirm_password: yup.string().oneOf([yup.ref("new_password"), null], "Passwords must match")
+        // .required(t("form_errors.required_fields"))
+        // .when("new_password", {
+        //     is: (val: any) => (val && val.length > 0 ? true : false),
+        //     then: yup.string().oneOf([yup.ref("new_password")], t("form_errors.both_password_needs_to_be_the_same"))
+        // })
     });
 
     const { values, errors, touched, isSubmitting, handleBlur, handleChange, handleSubmit } = useFormik({

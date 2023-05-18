@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import ReturnButton from "../../../components/fields/ReturnButton";
 import DeviceService from "../../../services/DeviceService";
 import dayjs from "dayjs";
+import { id } from "date-fns/locale";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -70,19 +71,21 @@ export const data = {
 const DeviceActivity = () => {
     const { t } = useTranslation();
     const toast = useToast();
-    const params = useParams();
+    const { _id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [deviceData, setDeviceData] = useState<any>([]);
+    console.log(_id);
 
     const getDeviceList = () => {
         dispatch(
             DeviceService.getDeviceActivity(
                 {
-                    deviceId: params._id
+                    deviceId: _id,
+                    limit: 10
                 },
                 (success: any) => {
-                    setDeviceData(success.data.rows[0]);
+                    setDeviceData(success.data.rows);
                 },
                 (errorData: any) => {
                     toast({
@@ -144,28 +147,41 @@ const DeviceActivity = () => {
                                     </Heading>
                                 </Flex>
                             </Stack>
+                            <Divider />
 
-                            <Divider />
                             <Stack divider={<StackDivider />} spacing="4">
-                                <Flex>
-                                    <Heading
-                                        w={40}
-                                        p={3}
-                                        bg={"#f9fafa"}
-                                        pl={12}
-                                        fontSize={19}
-                                        textTransform="capitalize"
-                                    >
-                                        {deviceData?.current_value ? deviceData?.current_value : "--"}
-                                    </Heading>
-                                    <Text p={3} ml={5} fontSize="md">
-                                        {deviceData?.createdAt
-                                            ? dayjs(deviceData?.createdAt).format("YYYY/MM/DD hh:mm:ss")
-                                            : "--"}
+                                {deviceData.length > 0 ? (
+                                    <>
+                                        {deviceData.map((elem: any, index: any) => {
+                                            return (
+                                                <Flex h={"16"}>
+                                                    <Heading
+                                                        w={60}
+                                                        p={3}
+                                                        // bg={"#f9fafa"}
+                                                        pl={12}
+                                                        fontSize={19}
+                                                        textTransform="capitalize"
+                                                    >
+                                                        {elem?.current_value === "OPEN"
+                                                            ? t("status.open")
+                                                            : t("status.close")}
+                                                    </Heading>
+                                                    <Text p={3} ml={5} fontSize="md">
+                                                        {elem?.createdAt
+                                                            ? dayjs(elem?.createdAt).format("YYYY/MM/DD HH:MM")
+                                                            : "--"}
+                                                    </Text>
+                                                </Flex>
+                                            );
+                                        })}
+                                    </>
+                                ) : (
+                                    <Text display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                                        {t("there_are_no_records_to_display")}
                                     </Text>
-                                </Flex>
+                                )}
                             </Stack>
-                            <Divider />
                         </Box>
                     </Card>
                     <Box>
@@ -175,7 +191,6 @@ const DeviceActivity = () => {
                                 flexDirection: "column",
                                 alignItems: "center",
                                 width: "500px",
-                                // height: "500px",
                                 margin: "auto",
                                 justifyContent: "center",
                                 marginTop: "40px"

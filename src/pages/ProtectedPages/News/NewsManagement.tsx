@@ -177,34 +177,6 @@ const NewsManagement = () => {
         }
     );
 
-    const getExcelData = async () => {
-        const arrayOfId = newsData.map((data: any) => data._id);
-        const excelData: any = await new Promise((resolve, reject) => {
-            dispatch(
-                NewsService.DownloadNewsList(
-                    {
-                        id: arrayOfId
-                    },
-                    (successData: any) => {
-                        resolve(successData?.data?.rows);
-                    },
-                    (errorData: any) => {
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
-                        reject();
-                    }
-                )
-            );
-        });
-
-        return excelData;
-    };
-
     const getNewsList = (isReset: boolean) => {
         setIsLoading(true);
         if (!isReset) {
@@ -282,6 +254,7 @@ const NewsManagement = () => {
                     onClick={handleClick}
                     bgColor={globalStyles.colors.btn.blue}
                     color={"white"}
+                    _hover={{ bgColor: "blue.300" }}
                 >
                     + {t("news.add_news")}
                 </Button>
@@ -335,7 +308,6 @@ const NewsManagement = () => {
                     <Box w={"0.5px"} h={"32"} bgColor={globalStyles.colors.mainColor} />
                     <Flex gap={3} mb={2} flexDir={"column"} ml={4}>
                         <Box w="36"></Box>
-                        <ExportExcel getExcelData={getExcelData} fileName={"Device"} />
                         <SearchButton isLoading={isLoading} handleSearchData={handleSubmit} />
                         <ResetButton isDisabled={!dirty && disableReset} handleReset={handleReset} />
                     </Flex>
@@ -349,19 +321,26 @@ const NewsManagement = () => {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>{t("farm_mgmt.delete_farm")}</ModalHeader>
+                    <ModalHeader>{t("news.delete_news")}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         {t("messages.news_delete_confirm")}
                     </ModalBody>
 
                     <ModalFooter display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                        <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            {t("status.close")}
+                        <Button
+                            _hover={{ bgColor: "blue.300" }}
+                            bgColor="#4299e1"
+                            variant="ghost"
+                            color={"white"}
+                            mr={3}
+                            onClick={onClose}
+                        >
+                            {t("status.cancel")}
                         </Button>
                         <Box onClick={onClose}>
                             <Button
-                                _hover={{ bgColor: "red.500" }}
+                                _hover={{ bgColor: "red.300" }}
                                 onClick={handleDelete}
                                 bgColor={"red.500"}
                                 color={"white"}

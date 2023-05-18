@@ -33,8 +33,8 @@ const DataTableComponent = ({
             columns={column}
             data={data}
             pagination
-            paginationPerPage={5}
-            paginationRowsPerPageOptions={[5, 10, 50, 100, 200, 300, 500]}
+            paginationPerPage={10}
+            paginationRowsPerPageOptions={[10, 50, 100, 200, 300, 500]}
             persistTableHead
             onRowClicked={handleSubmit}
             responsive

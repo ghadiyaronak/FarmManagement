@@ -29,12 +29,13 @@ import AddFAQ from "../../../components/modals/AddFAQ";
 import { setSectionList, setSelectedFaq, setSelectedSection } from "../../../store/actions/faq";
 import DeleteFAQ from "../../../components/modals/DeleteFAQ";
 import EnableFaqModal from "../../../components/modals/EnableFaqModal";
+import { useNavigate } from "react-router-dom";
 
 const FAQSmanagement = () => {
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [sectiondata, setSectionData] = useState<any>([]);
-
+    const navigate = useNavigate();
     const [faqdata, setFaqData] = useState<any>([]);
 
     const toast = useToast();
@@ -350,6 +351,7 @@ const FAQSmanagement = () => {
                                             background: globalStyles.colors.mainColor,
                                             color: "gray.100"
                                         }}
+                                        _hover={{ bgColor: "blue.300" }}
                                     >
                                         {tab.name}
                                     </Tab>
@@ -363,7 +365,7 @@ const FAQSmanagement = () => {
                                     <DataTableComponent
                                         column={sectiontableColumn}
                                         data={sectiondata}
-                                        progressPending={isLoading}
+                                        handleSubmit={handleEditSection}
                                     />
                                 </Box>
                             </TabPanel>
@@ -371,8 +373,8 @@ const FAQSmanagement = () => {
                                 <Box w="100%">
                                     <DataTableComponent
                                         column={faqtableColumn}
+                                        handleSubmit={handleEditFAQ}
                                         data={faqdata}
-                                        progressPending={isLoading}
                                     />
                                 </Box>
                             </TabPanel>

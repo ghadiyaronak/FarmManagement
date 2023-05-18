@@ -42,15 +42,15 @@
         "no": "いいえ",
         "completed": "対応完了",
         "confirming": "確認中",
-        "unconfirmed": "未確認"
+        "unconfirmed": "未確認",
+        "cancel": "キャンセル"
     },
     "auth_header": {
         "add_name": "名前を追加",
         "name": "名前",
         "edit": "編集",
         "add_your_name": "あなたの名前を追加",
-        "save": "保存",
-        "cancel": "キャンセル"
+        "save": "保存"
     },
 
     "user_status": {
@@ -74,7 +74,10 @@
         "save": "保存",
         "cancel": "キャンセル",
         "keep": "保存",
-        "private": "非公開"
+        "private": "非公開",
+        "gender": "性別",
+        "user_status": "ユーザーステータス",
+        "farm_status": "農家のステータス"
     },
 
     "farm_mgmt": {
@@ -105,7 +108,8 @@
         "sub_area": "サブエリア名",
         "subarea_number": "サブエリア番号",
         "delete_farm": "農家を削除する",
-        "app_pin": "アプリケーションPIN"
+        "app_pin": "アプリケーションPIN",
+        "birthday": "生年月日"
     },
 
     "user_mgmt": {
@@ -116,7 +120,9 @@
         "last_login": "最終ログイン",
         "user": "ユーザー",
         "user_id": "読取ID",
-        "change_status": "切替える"
+        "change_status": "切替える",
+        "male": "男性",
+        "female": "女性"
     },
 
     "device_mgmt": {
@@ -139,7 +145,8 @@
         "link_id": "ライブビューリンク",
         "camera_edit": "カメラ編集",
         "camera_activity": "ビューアクティビティ",
-        "camera_type": "カメラタイプ"
+        "camera_type": "カメラタイプ",
+        "activity_timt": "アクティビティ時間"
     },
 
     "news": {
@@ -151,7 +158,8 @@
         "news_description": "ニュース概要",
         "add_news": "ニュース追加",
         "news_view": "ニュースを見る",
-        "edit_news": "ニュースを編集"
+        "edit_news": "ニュースを編集",
+        "delete_news": "delete news"
     },
 
     "inquiry_mgmt": {
@@ -238,6 +246,11 @@
         "start_date_is_required": "開始日は必須です",
         "end_date_is_required": "終了日は必須です",
         "news_delete_confirm": "ニュースを削除してよろしいですか？",
+        "app_pin_is_required": "アプリケーションPINは必須です",
+        "10_digit_contact_number_is_required!": "電話番号は10桁以上の番号を入力してください",
+        "enter_priority_between_1_to_100": "優先順位を1〜100の間で入力する",
+        "information_you_have_made_private": "非公開にした情報はユーザー/店舗アカウントに表示されません",
+        "information_you_have_made_public": "公開にした情報はユーザー/店舗アカウントに表示されます",
 
         "product_create_success": "商品を登録しました",
         "product_update_success": "商品を更新しました",

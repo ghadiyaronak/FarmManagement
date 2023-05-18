@@ -255,6 +255,8 @@ export const GET_FARM_SUCCESS = "GET_FARM";
 export const GET_FARM_ERROR = "GET_FARM";
 export const DELETE_FARM = "DELETE_FARM";
 
+export const GET_FARM_NAME = "GET_FARM_NAME";
+
 export const ADD_FARM = "ADD_FARM";
 export const UPDATE_FARM = "UPDATE_FARM";
 
@@ -264,6 +266,8 @@ export const GET_FARM_DOWNLOAD = "GET_FARM_DOWNLOAD";
 export const GET_DEVICE = "GET_DEVICE";
 export const UPDATE_DEVICE = "UPDATE_DEVICE";
 export const GET_DEVICE_DOWNLOAD = "GET_DEVICE_DOWNLOAD";
+
+export const GET_DEVICE_ACTIVITY = "GET_DEVICE_ACTIVITY";
 
 // Camera
 export const GET_CAMERA = "GET_CAMERA";

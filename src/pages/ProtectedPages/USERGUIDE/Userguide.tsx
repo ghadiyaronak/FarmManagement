@@ -1,8 +1,9 @@
+import { Box } from "@chakra-ui/react";
 import React from "react";
 
 const Userguide = () => {
     return (
-        <div>
+        <Box w={"full"} bgColor={"white"} px={5} py={4} rounded={"md"}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum nihil veritatis sit sunt optio odio quaerat
             delectus iusto ullam consequuntur impedit beatae doloremque voluptas, vel quam fugit possimus inventore,
             cumque enim perspiciatis culpa aut rerum. Quaerat dolorem ipsa molestiae veritatis quidem officiis, vero
@@ -17,7 +18,7 @@ const Userguide = () => {
             aut est commodi nihil facere ut? Facere deleniti laborum inventore, et corporis dolorem alias vitae.
             Adipisci inventore reprehenderit cum suscipit nisi. Quae voluptatum, enim possimus, eos voluptates at est,
             maxime omnis aspernatur exercitationem ducimus consectetur. Voluptas nisi eveniet ad saepe odio temporibus.
-        </div>
+        </Box>
     );
 };
 

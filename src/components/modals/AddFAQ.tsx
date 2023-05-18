@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     Button,
     Modal,
@@ -40,7 +40,7 @@ interface IProps {
 const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
     const faqDetails = useSelector((state: any) => state.FAQ?.selectedFAQ);
     const sectionList = useSelector((state: any) => state?.FAQ?.allSections);
-
+    const [isLoading, setIsLoading] = useState<any>(false);
     const toast = useToast();
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -54,7 +54,10 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
         faq_section: yup.string().required(t("form_errors.required_fields")),
         question: yup.string().required(t("form_errors.required_fields")),
         answer: yup.string().required(t("form_errors.required_fields")),
-        priority: yup.string().required(t("form_errors.required_fields"))
+        priority: yup
+            .string()
+            .max(3, t("messages.enter_priority_between_1_to_100"))
+            .required(t("form_errors.required_fields"))
     });
 
     const onSubmit = (param: any, actions: any) => {
@@ -63,6 +66,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
         data.question = param?.question;
         data.answer = param.answer;
         data.priority = param.priority;
+        setIsLoading(true);
 
         if (faqDetails?.create) {
             dispatch(
@@ -81,6 +85,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                         getAll();
                         handleModalClose();
                         actions.resetForm();
+                        setIsLoading(false);
                     },
                     (errorData: any) => {
                         toast({
@@ -91,6 +96,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                             position: "top-right",
                             isClosable: true
                         });
+                        setIsLoading(false);
                     }
                 )
             );
@@ -225,11 +231,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <FooterModal type="add" isLoading={isSubmitting} handleClose={handleModalClose} />
-                        {/* <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            {t("common.cancel")}
-                        </Button>
-                        <Button type="submit"> {t("common.save")}</Button> */}
+                        <FooterModal type="add" isLoading={isLoading} handleClose={handleModalClose} />
                     </ModalFooter>
                 </form>
             </ModalContent>

@@ -87,13 +87,13 @@ const DeviceManagement = () => {
                         });
                     },
                     (errorData: any) => {
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
+                        // toast({
+                        //     title: errorData.message ? errorData.message : errorData?.data?.message,
+                        //     status: "error",
+                        //     duration: 3 * 1000,
+                        //     isClosable: true,
+                        //     position: "top-right"
+                        // });
                         reject();
                     }
                 )
@@ -219,7 +219,7 @@ const DeviceManagement = () => {
 
     const getFarmName = () => {
         dispatch(
-            FarmServices.getFarm(
+            FarmServices.getName(
                 {},
                 (success: any) => {
                     let newArray: any = [];
@@ -319,7 +319,7 @@ const DeviceManagement = () => {
                 <Text display={"flex"} fontWeight={"bold"} mb={3}>
                     {t("common.search_condition")}
                 </Text>
-                <Flex gap={5} w={"full"}>
+                <Flex gap={5} w={"full"} flexWrap={{ base: "nowrap", xl: "wrap", lg: "wrap", md: "wrap" }}>
                     <Flex flexDir={"column"} mt={2} gap={3} w={"xs"}>
                         <InputSelect
                             label={t("common.name")}

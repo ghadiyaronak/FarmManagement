@@ -190,7 +190,7 @@ const CameraManagement = () => {
 
     const getFarmName = () => {
         dispatch(
-            FarmServices.getFarm(
+            FarmServices.getName(
                 {},
                 (success: any) => {
                     let newArray: any = [];
@@ -298,7 +298,7 @@ const CameraManagement = () => {
                 <Text display={"flex"} fontWeight={"bold"} mb={3}>
                     {t("common.search_condition")}
                 </Text>
-                <Flex gap={5} w={"full"}>
+                <Flex gap={5} w={"full"} flexWrap={{ base: "nowrap", xl: "wrap", lg: "wrap", md: "wrap" }}>
                     <Flex flexDir={"column"} mt={2} gap={3} w={"xs"}>
                         <InputSelect
                             label={t("common.name")}

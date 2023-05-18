@@ -30,9 +30,12 @@
     border-radius: 5px;
     border: 1px solid #ffffff;
     background-color: transparent;
-    color: black !important;
-    border-color: #cbd5e0;
+    color: rgb(0, 0, 0) !important;
+    border-color: #e0e4e9;
     border-radius: "0.375rem";
+}
+.custom:focus-visible {
+    outline-color: #428ae1;
 }
 
 .custom-date {
@@ -132,4 +135,8 @@
 
 .scoll-pane::-webkit-scrollbar {
     display: none;
+}
+.border-red {
+    border-color: #fc8181;
+    box-shadow: 0 0 0 1px #fc8181;
 }

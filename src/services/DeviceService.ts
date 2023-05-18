@@ -3,6 +3,7 @@ import {
     API_INVOCATION,
     DELETE_FARM,
     GET_DEVICE,
+    GET_DEVICE_ACTIVITY,
     GET_DEVICE_DOWNLOAD,
     GET_FARM,
     GET_PROFILE,
@@ -51,7 +52,7 @@ class DeviceService {
             query.append("status", _payload?.status);
         }
         if (_payload?.deviceId) {
-            query.append("id", _payload?.deviceId);
+            query.append("_id", _payload?.deviceId);
         }
         if (_payload?.device_Id) {
             query.append("farm_id", _payload?.device_Id);
@@ -80,15 +81,22 @@ class DeviceService {
 
         let query: any = new URLSearchParams();
 
+        if (_payload?.deviceId) {
+            query.append("deviceId", _payload?.deviceId);
+        }
+        if (_payload?.limit) {
+            query.append("limit", _payload?.limit);
+        }
+
         const payload = {
-            action: GET_DEVICE,
+            action: GET_DEVICE_ACTIVITY,
             method: GET,
             apiConfig: {
                 headers: {
                     "Content-Type": "application/json"
                 }
             },
-            url: `${GET_DEVICE_ACTIVITY_API}?${query.toString()}`,
+            url: `${GET_DEVICE_ACTIVITY_API}?deviceId=${_payload.deviceId}&limit=${_payload.limit}`,
             resolve,
             reject
         };

@@ -52,6 +52,7 @@ import { useEffect, useState } from "react";
 import AuthService from "../../services/AuthService";
 import { useFormik } from "formik";
 import HeadingButtonRight from "../button/HeadingButton";
+import { globalStyles } from "../../theme/styles";
 
 const AuthHeader = ({ open }: any) => {
     const [name, setName] = useState<any>("");
@@ -260,50 +261,38 @@ const AuthHeader = ({ open }: any) => {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalBody pb={6}>
-                        {userName && authData.name?.length > 0 ? (
-                            <>
-                                <ModalCloseButton />
-                                <FormControl>
-                                    <Flex mt={10}>
-                                        <FormLabel fontWeight={"bold"}>{t("auth_header.name")}:</FormLabel>
-                                        <Text>{authData.name}</Text>
-                                    </Flex>
-                                    <ModalFooter>
-                                        <Button mt={3} colorScheme="blue" onClick={() => setUserName(!userName)}>
-                                            {t("auth_header.edit")}
-                                        </Button>
-                                    </ModalFooter>
-                                </FormControl>
-                            </>
-                        ) : (
-                            <FormControl>
-                                <ModalCloseButton />
-                                <ModalHeader pl={0}>{t("auth_header.add_your_name")}</ModalHeader>
-                                <FormLabel fontWeight={"bold"}>{t("auth_header.name")}:</FormLabel>
-                                <Input placeholder={authData.name} onChange={(e) => setName(e.target.value)} />
-                                <ModalFooter>
-                                    <Button
-                                        onClick={() => {
-                                            onSubmit();
-                                            setUserName(true);
-                                        }}
-                                        colorScheme="blue"
-                                        mr={3}
-                                    >
-                                        {t("auth_header.save")}
-                                    </Button>
+                        <FormControl>
+                            <ModalCloseButton />
+                            <ModalHeader pl={0}>{t("auth_header.add_your_name")}</ModalHeader>
+                            <FormLabel fontWeight={"bold"}>{t("auth_header.name")}:</FormLabel>
+                            <Input placeholder={authData.name} onChange={(e) => setName(e.target.value)} />
+                            <ModalFooter>
+                                <Button
+                                    onClick={() => {
+                                        onSubmit();
+                                        setUserName(true);
+                                    }}
+                                    bgColor={globalStyles.colors.mainColor}
+                                    _hover={{ bgColor: "blue.300" }}
+                                    color={"white"}
+                                    mr={3}
+                                >
+                                    {t("auth_header.save")}
+                                </Button>
 
-                                    <Button
-                                        onClick={() => {
-                                            onClose();
-                                            setUserName(true);
-                                        }}
-                                    >
-                                        {t("auth_header.cancel")}
-                                    </Button>
-                                </ModalFooter>
-                            </FormControl>
-                        )}
+                                <Button
+                                    bgColor={"red.500"}
+                                    color={"white"}
+                                    _hover={{ bgColor: "red.300" }}
+                                    onClick={() => {
+                                        onClose();
+                                        setUserName(true);
+                                    }}
+                                >
+                                    {t("status.cancel")}
+                                </Button>
+                            </ModalFooter>
+                        </FormControl>
                     </ModalBody>
                 </ModalContent>
             </Modal>

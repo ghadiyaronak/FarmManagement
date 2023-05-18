@@ -57,6 +57,9 @@ class CameraService {
         if (_payload?.camera_Id) {
             query.append("farm_id", _payload?.camera_Id);
         }
+        if (_payload?.limit) {
+            query.append("limit", _payload?.limit);
+        }
 
         const payload = {
             action: GET_CAMERA,

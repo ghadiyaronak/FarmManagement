@@ -4,6 +4,7 @@ import {
     DELETE_FARM,
     GET_FARM,
     GET_FARM_DOWNLOAD,
+    GET_FARM_NAME,
     GET_PROFILE,
     GET_TOKEN_VALIDATION,
     LOGIN,
@@ -18,6 +19,7 @@ import {
     GETPROFILE,
     GET_FARM_API,
     GET_FARM_DOWNLOAD_API,
+    GET_FARM_NAME_API,
     REFRESH_TOKEN_URL,
     UPDATEPASSWORD,
     UPDATE_FARM_DETAILS
@@ -61,6 +63,32 @@ class FarmService {
                 }
             },
             url: `${GET_FARM_API}?${query.toString()}`,
+            resolve,
+            reject
+        };
+        return { type: API_INVOCATION, payload };
+    }
+
+    getName(_payload: any, resolve: any, reject: any) {
+        const URLSearchParams = window.URLSearchParams;
+
+        let query: any = new URLSearchParams();
+
+        if (_payload?.farm_name) {
+            query.append("farm_name", _payload?.farm_name);
+        }
+        if (_payload?.farmId) {
+            query.append("_id", _payload?.farmId);
+        }
+        const payload = {
+            action: GET_FARM_NAME,
+            method: GET,
+            apiConfig: {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            },
+            url: `${GET_FARM_NAME_API}?${query.toString()}`,
             resolve,
             reject
         };

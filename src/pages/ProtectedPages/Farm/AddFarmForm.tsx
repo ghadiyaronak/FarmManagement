@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Flex, Heading, Stack, Text, useToast } from "@chakra-ui/react";
+import { Box, Flex, FormLabel, Heading, Stack, Text, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
@@ -16,6 +16,9 @@ import FormTextArea from "../../../components/form/FormTextArea";
 import LabelTextField from "../../../components/form/LabelTextField";
 import AddFormStatus from "../../../components/form/AddFormStatus";
 import AddFarmMemo from "../../../components/form/AddFarmMemo";
+import CustomTextArea from "../../../components/form/CustomTextArea";
+import ReactDatePicker from "react-datepicker";
+import { projectTypes } from "../../../types/data.types";
 
 interface FarmFormProps {
     value?: any;
@@ -26,12 +29,13 @@ interface FarmFormProps {
     setFieldValue?: any;
 }
 
-const EditForm = ({ value }: FarmFormProps) => {
+const EditForm = ({}: FarmFormProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const toast = useToast();
     const [isLoading, setIsLoading] = useState<any>(false);
+    const today = new Date();
     const [contractStartDate, setContractStartDate] = useState<Date | null>(null);
     const [contractEndDate, setContractEndDate] = useState<Date | null>(null);
 
@@ -40,6 +44,7 @@ const EditForm = ({ value }: FarmFormProps) => {
         const data = {
             farm_name: values.farm_name,
             email: values.email,
+            AppPin: values.AppPin,
             contact_number: values.contact_number,
             register_date: values.register_date,
             status: values.status.value,
@@ -61,9 +66,8 @@ const EditForm = ({ value }: FarmFormProps) => {
                     data: data
                 },
                 (success: any) => {
-                    // setTableData(success.data.rows);
                     toast({
-                        title: "会社を登録しました",
+                        title: success?.message ? success?.message : success.response?.data?.message,
                         status: "success",
                         variant: "solid",
                         duration: 2000,
@@ -97,9 +101,9 @@ const EditForm = ({ value }: FarmFormProps) => {
         register_date: yup.string().required(t("messages.register_date_is_required")),
         // construction_period: yup.string().required(t("messages.construction_period")),
         contact_number: yup
-            .number()
-            .min(10, "Minimum 10 character")
-            .max(10, "Maximum 10 character")
+            .string()
+            .min(10, t("messages.10_digit_contact_number_is_required!"))
+            .max(10, t("messages.10_digit_contact_number_is_required!"))
             .required(t("messages.contact_number_field_is_required")),
         postalCode: yup.string().required(t("messages.postal_code")),
         prefecture: yup.string().required(t("messages.prefecture")),
@@ -107,15 +111,10 @@ const EditForm = ({ value }: FarmFormProps) => {
         subArea: yup.string().required(t("messages.sub_area")),
         subAreaNumber: yup.string().required(t("messages.subarea_number")),
 
-        AppPin: yup
-            .string()
-            .min(4, "Minimum 4 character")
-            .max(4, "Maximum 4 character")
-            .required(t("messages.app_pin_is_required")),
+        AppPin: yup.string().max(4, "Maximum 4 character").required(t("messages.app_pin_is_required")),
         status: yup.object().shape({
             value: yup.string().required(t("messages.status_field_is_required"))
-        }),
-        memo: yup.string().max(2000, "Maximum 2000 character").required(t("messages.memo_field_is_required"))
+        })
     });
 
     const {
@@ -148,7 +147,9 @@ const EditForm = ({ value }: FarmFormProps) => {
             status: {
                 lable: "",
                 value: ""
-            }
+            },
+            contractStartDate: "",
+            contractEndDate: ""
         },
         onSubmit,
         validationSchema: productSchema
@@ -211,7 +212,7 @@ const EditForm = ({ value }: FarmFormProps) => {
                             touched={touched.register_date}
                             isMandatory={true}
                         />
-
+                        {/* 
                         <DateSelect
                             label={t("farm_mgmt.construction_period")}
                             startDate={contractStartDate}
@@ -219,12 +220,57 @@ const EditForm = ({ value }: FarmFormProps) => {
                             setStartDate={setContractStartDate}
                             setEndDate={setContractEndDate}
                             isMandatory={true}
-                        />
-                        {/* {touched.construction_period && values.construction_period.length === 0 && (
-                            <Text fontSize={"sm"} color={"red.300"}>
-                                {t("messages.construction_period")}
-                            </Text>
-                        )} */}
+                        /> */}
+
+                        <Flex flex={1} fontSize={"sm"} borderTop={"1px solid #E0E0E0"} alignItems={"center"}>
+                            <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
+                                {t("farm_mgmt.construction_period")}
+                                <Text color={"red"} as="span">
+                                    *
+                                </Text>
+                            </FormLabel>
+                            <Box ps={3} w={"lg"}>
+                                <ReactDatePicker
+                                    className={`custom ${
+                                        (touched.contractStartDate && !contractStartDate) ||
+                                        (touched.contractEndDate && !contractEndDate)
+                                            ? "border-red"
+                                            : ""
+                                    }`}
+                                    dateFormat="yyyy/MM/dd"
+                                    selected={contractStartDate}
+                                    placeholderText={String(t(""))}
+                                    onChange={(dates: any) => {
+                                        const [start, end] = dates;
+                                        setContractStartDate(start);
+                                        setContractEndDate(end);
+                                    }}
+                                    onChangeRaw={() => {
+                                        setFieldTouched("contractStartDate", true, true);
+                                        setFieldTouched("contractEndDate", true, true);
+                                    }}
+                                    startDate={contractStartDate}
+                                    endDate={contractEndDate}
+                                    selectsRange
+                                    // className="custom custom-date"
+                                    popperClassName="popper-class"
+                                    popperPlacement="bottom-start"
+                                    minDate={today}
+                                    todayButton={t("common.today")}
+                                    showPopperArrow={false}
+                                    isClearable
+                                    locale={"ja"}
+                                />
+                                {(touched.contractStartDate && !contractStartDate) ||
+                                (touched.contractEndDate && !contractEndDate) ? (
+                                    <Text fontSize={"sm"} mt={1} color={"red.300"}>
+                                        {t("farm_mgmt.construction_period")}必要
+                                    </Text>
+                                ) : (
+                                    ""
+                                )}
+                            </Box>
+                        </Flex>
 
                         <FormInput
                             name="email"
@@ -245,15 +291,15 @@ const EditForm = ({ value }: FarmFormProps) => {
                             handleBlur={handleBlur}
                             errors={errors.contact_number}
                             touched={touched.contact_number}
-                            label={t("common.contact_number")}
-                            minValue={10}
                             maxValue={10}
+                            minValue={10}
+                            label={t("common.contact_number")}
                             isMandatory={true}
                         />
 
                         <FormInput
                             name="AppPin"
-                            Type="text"
+                            Type="number"
                             values={values.AppPin}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
@@ -302,7 +348,7 @@ const EditForm = ({ value }: FarmFormProps) => {
                         />
                         <Flex w={"full"} borderTop={"1px solid #E0E0E0"}>
                             <FormTextArea label={t("farm_mgmt.sub_area")} isMandatory={true} />
-                            <LabelTextField
+                            <CustomTextArea
                                 name="subArea"
                                 value={values.subArea}
                                 handleChange={handleChange}

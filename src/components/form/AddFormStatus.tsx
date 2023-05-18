@@ -22,6 +22,7 @@ interface MySelectProps {
     label: string;
     defaultvalue?: any;
     isMandatory: boolean;
+    placeholder?: string;
     datas?: Array<managerdataProps>;
 }
 
@@ -42,6 +43,7 @@ const AddFormStatus = ({
     isMandatory,
     touched,
     defaultvalue,
+    placeholder,
     error
 }: MySelectProps) => {
     const handleChange = (value: any) => {
@@ -95,13 +97,14 @@ const AddFormStatus = ({
                 )}
             </FormLabel>
 
-            <Box pl={5} py={3}>
+            <Box pl={3} py={3}>
                 <Select
                     options={options}
                     isMulti={multi}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={value}
+                    placeholder={placeholder}
                     styles={customStyles}
                 />
                 {error && touched && (

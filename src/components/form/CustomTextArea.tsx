@@ -35,7 +35,7 @@ const CustomTextArea: React.FC<InputFieldProps> = (props) => {
                 />
             </Box>
             {props.errors && props.touched && (
-                <Text fontSize={"sm"} mt={1} color={"red.300"}>
+                <Text fontSize={"sm"} mt={1} pl={3} color={"red.300"}>
                     {props.errors}
                 </Text>
             )}

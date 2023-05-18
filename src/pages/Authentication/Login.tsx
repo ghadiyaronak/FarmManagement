@@ -23,24 +23,20 @@ import CustomAuth from "../../components/fields/CustomAuth";
 const Login = () => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage?.getItem("user") as string) || null;
-
-    useEffect(() => {
-        if (user) {
-            navigate("/");
-        }
-    }, []);
     const toast = useToast();
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const [isLoading, setIsLoading] = useState<any>(false);
 
     // submit handler
     const onSubmit = async (values: any, actions: any) => {
+        setIsLoading(true);
         dispatch(
             AuthService.auth(
                 { data: { email: values.email, password: values.password } },
                 (responseData: any) => {
                     toast({
-                        title: t("messages.admin_login_success"),
+                        title: responseData.message ? responseData.message : responseData?.data?.message,
                         status: "success",
                         variant: "solid",
                         duration: 2000,
@@ -51,17 +47,17 @@ const Login = () => {
                     TokenService.setUser(responseData?.data);
                     navigate("/home");
                     actions.resetForm();
+                    setIsLoading(false);
                 },
                 (errorData: any) => {
-                    console.log(errorData);
                     toast({
-                        title: errorData?.message ? errorData?.message : errorData.response?.data?.message,
+                        title: errorData.message ? errorData.message : errorData?.data?.message,
                         status: "error",
-                        variant: "solid",
-                        duration: 2000,
-                        position: "top-right",
-                        isClosable: true
+                        duration: 3 * 1000,
+                        isClosable: true,
+                        position: "top-right"
                     });
+                    setIsLoading(false);
                 }
             )
         );
@@ -128,7 +124,7 @@ const Login = () => {
                             <Button
                                 bgColor={globalStyles.colors.btn.blue}
                                 type={"submit"}
-                                isLoading={isSubmitting}
+                                isLoading={isLoading}
                                 disabled={isSubmitting}
                                 color="white"
                             >

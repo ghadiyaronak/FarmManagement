@@ -20,9 +20,9 @@ const LabelTextField: React.FC<InputFieldProps> = (props) => {
     return (
         <Flex flexDir={"column"} flex={"0.5"} style={props.style}>
             {props.label && <CustomFormLabel label={props.label} isMandatory={props.isMandatory} />}
-            <Box py={1} pb={0} pl={5} width={"lg"}>
+            <Box py={1} pb={0} pl={3} width={"lg"}>
                 <Textarea
-                    minHeight={"14"}
+                    minHeight={"60"}
                     name={props.name}
                     placeholder={props.placehold}
                     value={props.value}

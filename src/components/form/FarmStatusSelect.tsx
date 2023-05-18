@@ -102,6 +102,7 @@ const FarmStatusSelect = ({
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={value}
+                    placeholder={""}
                     styles={customStyles}
                 />
                 {error && touched && (

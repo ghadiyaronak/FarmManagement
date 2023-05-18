@@ -32,6 +32,8 @@ import { useDispatch } from "react-redux";
 import UserService from "../../../services/UserService";
 import dayjs from "dayjs";
 import { BiLinkExternal } from "react-icons/bi";
+import { format } from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 
 interface EditProps {
     mode?: any;
@@ -48,6 +50,7 @@ const ViewFarm = ({ mode }: EditProps) => {
     const [modal, setModal] = useState<any>(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [userData, setUserData] = useState<any>([]);
+    const [scrollTop, setScrollTop] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const getUserList = () => {
@@ -77,6 +80,7 @@ const ViewFarm = ({ mode }: EditProps) => {
         const data = {
             status: userData?.status === "ACTIVE" ? "BLOCK" : "ACTIVE"
         };
+
         dispatch(
             UserService.updateUser(
                 { _id: userData?._id, data },
@@ -85,6 +89,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                     onClose();
                     setIsLoading(false);
                 },
+
                 (errorData: any) => {
                     setIsLoading(false);
                     toast({
@@ -102,6 +107,15 @@ const ViewFarm = ({ mode }: EditProps) => {
     useEffect(() => {
         getUserList();
     }, []);
+
+    useEffect(() => {
+        scrollTopFunction(), [scrollTop];
+    });
+    const scrollTopFunction = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }, 100);
+    };
 
     return (
         <>
@@ -126,7 +140,12 @@ const ViewFarm = ({ mode }: EditProps) => {
                     </Box>
 
                     <WrapItem px={5} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                        <Avatar size="2xl" borderRadius={"md"} src={userData?.profile_image?.url ?? "--"} />
+                        <Avatar
+                            size="2xl"
+                            borderRadius={"md"}
+                            src={userData?.profile_image?.url}
+                            name={userData?.user_name}
+                        />
                     </WrapItem>
 
                     <CardBody>
@@ -149,6 +168,17 @@ const ViewFarm = ({ mode }: EditProps) => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {userData?.user_name ? userData?.user_name : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                    {t("common.gender")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {userData?.gender ? t("user_mgmt.male") : t("user_mgmt.female")}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -205,6 +235,50 @@ const ViewFarm = ({ mode }: EditProps) => {
                         <Stack divider={<StackDivider />} spacing="4">
                             <Flex>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                    {t("farm_mgmt.birthday")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {userData?.birthDate ? dayjs(userData?.birthDate).format("YYYY/MM/DD") : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                    {t("farm_mgmt.postal_code")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {userData?.postalCode ? userData?.postalCode : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                    {t("farm_mgmt.prefecture")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {userData?.prefecture ? userData?.prefecture : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                    {t("farm_mgmt.subarea_number")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {userData?.subAreaNumber ? userData?.subAreaNumber : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("user_mgmt.role")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
@@ -244,7 +318,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {userData?.last_login
-                                        ? dayjs(userData?.last_login).format("YYYY/MM/DD hh:mm:ss")
+                                        ? dayjs(userData?.last_login).format("YYYY/MM/DD HH:MM")
                                         : "--"}
                                 </Text>
                             </Flex>
@@ -257,7 +331,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                             onClick={onOpen}
                             isLoading={isLoading}
                             bgColor={userData?.status === "ACTIVE" ? "#4299e1" : "red"}
-                            _hover={{ bgColor: userData?.status === "ACTIVE" ? "#4299e1.400" : "red.400" }}
+                            _hover={{ bgColor: userData?.status === "ACTIVE" ? "blue.300" : "red.300" }}
                             color={"white"}
                             w={"36"}
                         >
@@ -265,10 +339,10 @@ const ViewFarm = ({ mode }: EditProps) => {
                         </Button>
                     </Box>
 
-                    <Modal isOpen={isOpen} onClose={onClose}>
+                    <Modal isOpen={isOpen} onClose={onClose} isCentered>
                         <ModalOverlay />
-                        <ModalContent mt={"64"}>
-                            <ModalHeader>{t("common.action")}</ModalHeader>
+                        <ModalContent>
+                            <ModalHeader>{t("common.user_status")}</ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
                                 <Box>
@@ -291,13 +365,22 @@ const ViewFarm = ({ mode }: EditProps) => {
                                 >
                                     <Button
                                         bgColor={globalStyles.colors.mainColor}
-                                        onClick={handleUpdateStatus}
+                                        _hover={{ bgColor: "blue.300" }}
+                                        onClick={() => {
+                                            setScrollTop(true);
+                                            handleUpdateStatus();
+                                        }}
                                         color={"white"}
                                         mr={3}
                                     >
                                         {t("status.yes")}
                                     </Button>
-                                    <Button bgColor={"red.400"} color={"white"} onClick={onClose}>
+                                    <Button
+                                        bgColor={"red.500"}
+                                        _hover={{ bgColor: "red.300" }}
+                                        color={"white"}
+                                        onClick={onClose}
+                                    >
                                         {t("status.no")}
                                     </Button>
                                 </Box>

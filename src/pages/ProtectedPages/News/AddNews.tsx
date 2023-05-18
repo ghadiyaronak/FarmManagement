@@ -30,6 +30,7 @@ const AddNews = ({ value }: FarmFormProps) => {
     const [newsData, setNewsData] = useState<any>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const onSubmit = () => {
+        setIsLoading(true);
         const data = {
             title: values.title,
             start_date: values.start_date,
@@ -46,6 +47,7 @@ const AddNews = ({ value }: FarmFormProps) => {
                     setNewsData(success.data.rows);
                     resetForm();
                     navigate(-1);
+                    setIsLoading(false);
                 },
                 (errorData: any) => {
                     toast({
@@ -55,6 +57,7 @@ const AddNews = ({ value }: FarmFormProps) => {
                         isClosable: true,
                         position: "top-right"
                     });
+                    setIsLoading(false);
                 }
             )
         );
@@ -159,7 +162,7 @@ const AddNews = ({ value }: FarmFormProps) => {
                             isMandatory={true}
                         />
 
-                        <SaveButton title={t("farm_mgmt.save")} />
+                        <SaveButton isLoading={isLoading} title={t("farm_mgmt.save")} />
                     </Flex>
                 </form>
             </Box>

@@ -9,7 +9,13 @@ interface ButtonProps {
 const ConfirmButton = ({ handleDelete, isLoading }: ButtonProps) => {
     const { t } = useTranslation();
     return (
-        <Button colorScheme="red" onClick={handleDelete} isLoading={isLoading}>
+        <Button
+            bgColor={"red.500"}
+            color={"white"}
+            _hover={{ bgColor: "red.300" }}
+            onClick={handleDelete}
+            isLoading={isLoading}
+        >
             {t("common.delete")}
         </Button>
     );

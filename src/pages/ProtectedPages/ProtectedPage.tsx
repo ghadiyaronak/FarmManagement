@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Badge,
     Box,
     Button,
@@ -302,7 +303,7 @@ export default function BasicStatistics() {
         <Box>
             <MainHeading title={t("home")} />
             <Box w="full" justifyContent={"center"} pt={2} border={"none"}>
-                <Flex justifyContent={"center"} gap={3}>
+                <Flex flexWrap={{ base: "wrap", md: "nowrap" }} justifyContent={"center"} gap={3}>
                     <Box w={"full"} cursor={"pointer"} onClick={() => navigate("/user-management")}>
                         <StatsCard
                             color={"#bcbcbc"}
@@ -375,7 +376,7 @@ export default function BasicStatistics() {
                                 <Thead bg={"#ecf4fc"} fontSize={16} fontWeight={"bold"}>
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
-                                        <Td>{t("farm_mgmt.farm_name")}</Td>
+                                        <Td>{t("Farm")}</Td>
                                         <Td>{t("common.contact_number")}</Td>
                                         <Td>{t("common.register_date")}</Td>
                                         <Td>{t("view")}</Td>
@@ -390,11 +391,18 @@ export default function BasicStatistics() {
                                                 cursor={"pointer"}
                                                 onClick={() => navigate(`/user-view/${data._id}`)}
                                             >
-                                                <Td w={"60"}>{data?.user_name ? data?.user_name : "--"}</Td>
-                                                <Td w={"60"}>
-                                                    {data.farm_id?.farm_name ? data.farm_id?.farm_name : "--"}
+                                                <Td w={"60"} alignItems={"center"} gap={"3"}>
+                                                    <Flex alignItems={"center"} gap={"3"}>
+                                                        <Avatar
+                                                            size={"sm"}
+                                                            src={data?.profile_image?.url}
+                                                            name={data?.user_name}
+                                                        />
+                                                        <Text>{data?.user_name ?? "--"}</Text>
+                                                    </Flex>
                                                 </Td>
-                                                <Td w={"60"}>{data.contact_number ? data.contact_number : "--"}</Td>
+                                                <Td w={"60"}>{data.farm_id?.farm_name ?? "--"}</Td>
+                                                <Td w={"60"}>{data.contact_number ?? "--"}</Td>
                                                 <Td w={"60"}>
                                                     {data.register_date
                                                         ? dayjs(data?.register_date).format("YYYY/MM/DD")
@@ -417,6 +425,7 @@ export default function BasicStatistics() {
                         </TableContainer>
                     </Box>
 
+                    {/* DEVICE  */}
                     <Box bg="white" rounded={"lg"}>
                         <Flex justifyContent={"space-between"} bg={"#eeeeee"} roundedTop={"lg"} alignItems={"center"}>
                             <Text
@@ -488,6 +497,7 @@ export default function BasicStatistics() {
                         </TableContainer>
                     </Box>
 
+                    {/* FARM  */}
                     <Box bg="white" rounded={"lg"}>
                         <Flex justifyContent={"space-between"} bg={"#eeeeee"} roundedTop={"lg"} alignItems={"center"}>
                             <Text
@@ -524,8 +534,8 @@ export default function BasicStatistics() {
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
                                         <Td>{t("farm_mgmt.owner_name")}</Td>
-                                        <Td>{t("common.register_date")}</Td>
                                         <Td>{t("common.contact_number")}</Td>
+                                        <Td>{t("common.register_date")}</Td>
                                         <Td>{t("view")}</Td>
                                     </Tr>
                                 </Thead>
@@ -570,6 +580,7 @@ export default function BasicStatistics() {
                         </TableContainer>
                     </Box>
 
+                    {/* CAMERA  */}
                     <Box rounded={"lg"} bg="white">
                         <Flex justifyContent={"space-between"} bg={"#eeeeee"} roundedTop={"lg"} alignItems={"center"}>
                             <Text
@@ -606,8 +617,8 @@ export default function BasicStatistics() {
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
                                         <Td>{t("Farm")}</Td>
-                                        <Td>{t("common.register_date")}</Td>
                                         <Td>{t("common.status")}</Td>
+                                        <Td>{t("common.register_date")}</Td>
                                         <Td>{t("view")}</Td>
                                     </Tr>
                                 </Thead>
@@ -622,12 +633,12 @@ export default function BasicStatistics() {
                                             >
                                                 <Td w={"60"}>{data.name}</Td>
                                                 <Td w={"60"}>{data.farm_id?.farm_name ?? "--"}</Td>
+                                                <Td w={"60"}>{data.status}</Td>
                                                 <Td w={"60"}>
                                                     {data.register_date
                                                         ? dayjs(data?.register_date).format("YYYY/MM/DD")
                                                         : "--"}
                                                 </Td>
-                                                <Td w={"60"}>{data.status}</Td>
                                                 <Td
                                                     w={"30"}
                                                     fontSize={"lg"}

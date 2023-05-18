@@ -13,6 +13,10 @@ import ReturnButton from "../../../components/fields/ReturnButton";
 import FarmServices from "../../../services/FarmServices";
 import { useDispatch } from "react-redux";
 import DatePickerCustom from "../../../components/fields/DatePickerCustom";
+import HeadingButtonRight from "../../../components/button/HeadingButton";
+import dayjs from "dayjs";
+import FormInput from "../../../components/form/FormInput";
+import EditFormInput from "../../../components/form/EditFormInput";
 
 interface ProductFormProps {
     value?: any;
@@ -49,7 +53,16 @@ const EditForm = ({ value }: ProductFormProps) => {
                     setFieldValue("email", farm?.email);
                     setFieldValue("contact_number", farm?.contact_number);
                     setFieldValue("address", farm?.address);
-                    setFieldValue("status", farm?.status);
+                    setFieldValue("postalCode", farm?.postalCode);
+                    setFieldValue("prefecture", farm?.prefecture);
+                    setFieldValue("city", farm?.city);
+                    setFieldValue("subArea", farm?.subArea);
+                    setFieldValue("subAreaNumber", farm?.subAreaNumber);
+
+                    setFieldValue("status", {
+                        label: farm?.status === "BLOCK" ? "ブロック " : "アクティブ ",
+                        value: farm?.status
+                    });
 
                     setFarmData(farm);
                 },
@@ -73,14 +86,19 @@ const EditForm = ({ value }: ProductFormProps) => {
             address: values.address,
             status: values.status.value,
             register_date: values.register_date,
-            memo: values.memo
+            memo: values.memo,
+            postalCode: values.postalCode,
+            prefecture: values.prefecture,
+            subArea: values.subArea,
+            city: values.city,
+            subAreaNumber: values.subAreaNumber
         };
         dispatch(
             FarmServices.updateFarm(
                 { _id: params.id, data },
                 (responseData: any) => {
                     toast({
-                        title: t("messages.password_update_success"),
+                        title: responseData?.message ? responseData?.message : responseData.response?.data?.message,
                         status: "success",
                         variant: "solid",
                         duration: 2000,
@@ -88,6 +106,7 @@ const EditForm = ({ value }: ProductFormProps) => {
                         isClosable: true
                     });
                     setIsLoading(false);
+                    navigate(`/viewfarm/${params.id}`);
                 },
                 (errorData: any) => {
                     setIsLoading(false);
@@ -102,9 +121,6 @@ const EditForm = ({ value }: ProductFormProps) => {
                 }
             )
         );
-        setTimeout(() => {
-            navigate(`/viewfarm/${params.id}`);
-        }, 2000);
     };
 
     const {
@@ -123,7 +139,12 @@ const EditForm = ({ value }: ProductFormProps) => {
             owner_name: "",
             register_date: "",
             contact_number: "",
+            prefecture: "",
+            postalCode: "",
+            subArea: "",
             email: "",
+            subAreaNumber: "",
+            city: "",
             memo: "",
             address: "",
             status: {
@@ -198,7 +219,7 @@ const EditForm = ({ value }: ProductFormProps) => {
                         label={t("common.register_date")}
                         name={"register_date"}
                         type={"date"}
-                        value={values.register_date}
+                        value={dayjs(values?.register_date).format("YYYY-MM-DD")}
                         handleChange={handleChange}
                         handleBlur={handleBlur}
                         errors={errors.register_date}
@@ -228,11 +249,10 @@ const EditForm = ({ value }: ProductFormProps) => {
                     </Stack>
                     <Divider />
 
-                    <Flex w={"full"}>
+                    {/* <Flex w={"full"}>
                         <FormFildLabel label={t("farm_mgmt.address")} isMandatory={false} />
                         <CustomTextArea
                             name="address"
-                            // placehold={String(t("contract.up_to_500_characters"))}
                             value={values.address}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
@@ -242,7 +262,7 @@ const EditForm = ({ value }: ProductFormProps) => {
                             style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
                         />
                     </Flex>
-                    <Divider />
+                    <Divider /> */}
 
                     <FarmStatusSelect
                         touched={touched.status}
@@ -257,62 +277,65 @@ const EditForm = ({ value }: ProductFormProps) => {
                         onBlur={handleBlur}
                     />
 
-                    <Divider />
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("farm_mgmt.postal_code")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {farmData?.postalCode ? farmData?.postalCode : "--"}
-                            </Text>
-                        </Flex>
-                    </Stack>
-                    <Divider />
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("farm_mgmt.prefecture")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {farmData?.prefecture ? farmData?.prefecture : "--"}
-                            </Text>
-                        </Flex>
-                    </Stack>
-                    <Divider />
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("farm_mgmt.city")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {farmData?.city ? farmData?.city : "--"}
-                            </Text>
-                        </Flex>
-                    </Stack>
-                    <Divider />
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("farm_mgmt.sub_area")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {farmData?.subArea ? farmData?.subArea : "--"}
-                            </Text>
-                        </Flex>
-                    </Stack>
-                    <Divider />
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("farm_mgmt.subarea_number")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {farmData?.subAreaNumber ? farmData?.subAreaNumber : "--"}
-                            </Text>
-                        </Flex>
-                    </Stack>
-                    <Divider />
+                    <EditFormInput
+                        name="postalCode"
+                        Type="text"
+                        values={values.postalCode}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        errors={errors.postalCode}
+                        touched={touched.postalCode}
+                        label={t("farm_mgmt.postal_code")}
+                        isMandatory={true}
+                    />
+
+                    <EditFormInput
+                        name="prefecture"
+                        Type="text"
+                        values={values.prefecture}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        errors={errors.prefecture}
+                        touched={touched.prefecture}
+                        label={t("farm_mgmt.prefecture")}
+                        isMandatory={true}
+                    />
+
+                    <EditFormInput
+                        name="city"
+                        Type="text"
+                        values={values.city}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        errors={errors.city}
+                        touched={touched.city}
+                        label={t("farm_mgmt.city")}
+                        isMandatory={true}
+                    />
+
+                    <EditFormInput
+                        name="subArea"
+                        Type="text"
+                        values={values.subArea}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        errors={errors.subArea}
+                        touched={touched.subArea}
+                        label={t("farm_mgmt.sub_area")}
+                        isMandatory={true}
+                    />
+
+                    <EditFormInput
+                        name="subAreaNumber"
+                        Type="text"
+                        values={values.subAreaNumber}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        errors={errors.subAreaNumber}
+                        touched={touched.subAreaNumber}
+                        label={t("farm_mgmt.subarea_number")}
+                        isMandatory={true}
+                    />
 
                     <MemoFild
                         name="memo"

@@ -43,8 +43,8 @@ const EditNews = ({ value }: FarmFormProps) => {
                     const news = success.data.rows[0];
                     setFieldValue("title", news?.title);
                     setFieldValue("content", news?.content);
-                    setFieldValue("start_date", dayjs(news?.start_date).format("YYYY/MM/DD hh:mm:ss"));
-                    setFieldValue("end_date", dayjs(news?.end_date).format("YYYY/MM/DD"));
+                    setFieldValue("startDate", news?.startDate);
+                    setFieldValue("endDate", news?.endDate);
 
                     setNewsData(news);
                 },
@@ -175,7 +175,7 @@ const EditNews = ({ value }: FarmFormProps) => {
                             label={t("news.start_date")}
                             name={"startDate"}
                             type={"date"}
-                            value={values.startDate}
+                            value={dayjs(values?.startDate).format("YYYY-MM-DD")}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             errors={errors.startDate}
@@ -188,7 +188,7 @@ const EditNews = ({ value }: FarmFormProps) => {
                             label={t("news.end_date")}
                             name={"endDate"}
                             type={"date"}
-                            value={values.endDate}
+                            value={dayjs(values?.endDate).format("YYYY-MM-DD")}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             errors={errors.endDate}

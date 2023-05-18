@@ -199,6 +199,7 @@ const UserManagement = () => {
             width: "180px"
         }
     ];
+
     const handlerSearchValue = useCallbackRef((event: any, keyName: any) => {
         const value = event.target.value;
         setSearchForm((prev) => {
@@ -208,7 +209,7 @@ const UserManagement = () => {
 
     const getFarmName = () => {
         dispatch(
-            FarmServices.getFarm(
+            FarmServices.getName(
                 {},
                 (success: any) => {
                     let newArray: any = [];
@@ -297,9 +298,12 @@ const UserManagement = () => {
         }
     };
 
+    console.log(userData);
+
     useEffect(() => {
         getUserList(false), getFarmName();
     }, []);
+
     return (
         <>
             <Flex display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
@@ -310,7 +314,7 @@ const UserManagement = () => {
                 <Text display={"flex"} fontWeight={"bold"} mb={3}>
                     {t("common.search_condition")}
                 </Text>
-                <Flex gap={5} w={"full"}>
+                <Flex gap={4} w={"full"} flexWrap={{ base: "nowrap", xl: "wrap", lg: "wrap", md: "wrap" }}>
                     <Flex flexDir={"column"} gap={3} w={"xs"}>
                         <InputSelect
                             label={t("user_mgmt.user_name")}

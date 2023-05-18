@@ -42,7 +42,8 @@
         "no": "No",
         "completed": "Completed",
         "confirming": "Confirming",
-        "unconfirmed": "Unconfirmed"
+        "unconfirmed": "Unconfirmed",
+        "cancel": "Cancel"
     },
 
     "auth_header": {
@@ -75,7 +76,10 @@
         "save": "Save",
         "cancel": "Cancel",
         "keep": "keep",
-        "private": "Private"
+        "private": "Private",
+        "gender": "Gender",
+        "user_status": "User Status",
+        "farm_status": "Farm Status"
     },
 
     "farm_mgmt": {
@@ -106,7 +110,8 @@
         "sub_area": "Sub area",
         "subarea_number": "Subarea number",
         "delete_farm": "Delere farm",
-        "app_pin": "App pin"
+        "app_pin": "App pin",
+        "birthday": "Birthday"
     },
 
     "user_mgmt": {
@@ -117,7 +122,9 @@
         "user_details": "User Details",
         "last_login": "Last Login",
         "user_id": "UserID",
-        "change_status": "Change status"
+        "change_status": "Change status",
+        "male": "male",
+        "female": "female"
     },
 
     "device_mgmt": {
@@ -140,7 +147,8 @@
         "link_id": "LinkID",
         "camera_edit": "Camera Edit",
         "camera_activity": "View Activity",
-        "camera_type": "Camera type"
+        "camera_type": "Camera type",
+        "activity_timt": "Activity Tim"
     },
 
     "news": {
@@ -152,7 +160,8 @@
         "news_description": "News description",
         "add_news": "Add news",
         "news_view": "News view",
-        "edit_news": "Edit news"
+        "edit_news": "Edit news",
+        "delete_news": "delete news"
     },
 
     "inquiry_mgmt": {
@@ -273,6 +282,11 @@
         "end_date_is_required": "End date is required",
         "memo_field_is_required": "Memo field is required",
         "news_delete_confirm": "News delete confirm",
+        "app_pin_is_required": "App pin is required",
+        "10_digit_contact_number_is_required!": "10 digit contact number is required",
+        "enter_priority_between_1_to_100": "enter priority between 1 to 100",
+        "information_you_have_made_private": "information you have made private",
+        "information_you_have_made_public": "information you have made public",
 
         "404error": "404 | This page could not be found.",
         "please_try_after_some_times": "Please Try After Some Times",

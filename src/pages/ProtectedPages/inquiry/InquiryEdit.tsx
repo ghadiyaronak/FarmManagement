@@ -40,6 +40,10 @@ const InquiryEdit = () => {
                     setFieldValue("dateOfContact", dayjs(inquiry?.dateOfContact).format("YYYY/MM/DD hh:mm:ss"));
                     setFieldValue("memo", inquiry?.memo);
                     setFieldValue("status", inquiry?.status);
+                    setFieldValue("status", {
+                        label: inquiry?.status === "UNCONFIRMED" ? "未確認 " : "CONFIRMED" ? "確認中" : "対応完了 ",
+                        value: inquiry?.status
+                    });
                     setinquiryData(inquiry);
                 },
                 (errorData: any) => {

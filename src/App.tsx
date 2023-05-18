@@ -60,7 +60,7 @@ const App = () => {
                     <Route path="/device-management" element={<DeviceManagement />} />
                     <Route path="/device-view/:_id" element={<DeviceView />} />
                     <Route path="/device-edit/:_id" element={<DeviceEdit />} />
-                    <Route path="/device-activity" element={<DeviceActivity />} />
+                    <Route path="/device-activity/:_id" element={<DeviceActivity />} />
 
                     {/* Farm  */}
                     <Route path="/farm-management" element={<FarmManagement />} />

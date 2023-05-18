@@ -1,8 +1,6 @@
-import { border, Box, Flex, FormLabel, Text } from "@chakra-ui/react";
+import { Box, Flex, FormLabel, Text } from "@chakra-ui/react";
 import ReactDatePicker from "react-datepicker";
 import { useTranslation } from "react-i18next";
-import SmallFormLabel from "../fields/SmallFormLabel";
-import { globalStyles } from "../../theme/styles";
 import "../../../src/index.css";
 interface DateSelectProps {
     label: string;
@@ -22,35 +20,14 @@ interface DateSelectProps {
     value?: any;
 }
 
-const DateSelect = ({
-    label,
-    startDate,
-    endDate,
-    setStartDate,
-    setEndDate,
-    selected,
-    dates,
-    errors,
-    isMandatory,
-    handleChange,
-    handleBlur,
-    touched,
-    name,
-    value
-}: DateSelectProps) => {
+const DateSelect = ({ label, startDate, endDate, setStartDate, setEndDate, isMandatory }: DateSelectProps) => {
     const { t } = useTranslation();
     function setFieldValue(arg0: string, date: any) {
         throw new Error("Function not implemented.");
     }
 
     return (
-        <Flex
-            flex={1}
-            fontSize={"sm"}
-            borderTop={"1px solid #E0E0E0"}
-            // borderBottom={"1px solid #E0E0E0"}
-            alignItems={"center"}
-        >
+        <Flex flex={1} fontSize={"sm"} borderTop={"1px solid #E0E0E0"} alignItems={"center"}>
             <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
                 {label}
                 {isMandatory && (
@@ -60,7 +37,7 @@ const DateSelect = ({
                 )}
             </FormLabel>
             <Flex>
-                <Box ps={"5"}>
+                <Box ps={"3"}>
                     <ReactDatePicker
                         dateFormat="yyyy/MM/dd"
                         selected={startDate}

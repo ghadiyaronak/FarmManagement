@@ -62,7 +62,7 @@ const DeviceView = () => {
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
-                            <ReturnButton />
+                            <ReturnButton link={"/device-management"} />
                         </Stack>
                         <CardHeader
                             p={0}
@@ -222,7 +222,7 @@ const DeviceView = () => {
                                     {t("farm_mgmt.memo_developer")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {deviceData?.memo_developer ? deviceData?.memo_developer : "--"}
+                                    {deviceData?.memoDeveloper ? deviceData?.memoDeveloper : "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -248,7 +248,7 @@ const DeviceView = () => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {deviceData?.lastDateTime
-                                        ? dayjs(deviceData?.lastDateTime).format("YYYY/MM/DD hh:mm:ss")
+                                        ? dayjs(deviceData?.lastDateTime).format("YYYY/MM/DD HH:MM")
                                         : "--"}
                                 </Text>
                             </Flex>
@@ -257,9 +257,10 @@ const DeviceView = () => {
                     </Box>
                     <Box display={"flex"} pb={4} justifyContent={"center"} alignItems={"center"}>
                         <Button
-                            onClick={() => navigate(`/device-activity`)}
+                            onClick={() => navigate(`/device-activity/${deviceData._id}`)}
                             color={"white"}
                             bg={globalStyles.colors.mainColor}
+                            _hover={{ bgColor: "blue.300" }}
                         >
                             {t("device_mgmt.view_activity")}
                         </Button>

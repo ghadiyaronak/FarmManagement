@@ -1,15 +1,4 @@
-import {
-    Box,
-    Flex,
-    FormLabel,
-    Input,
-    NumberDecrementStepper,
-    NumberIncrementStepper,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    Text
-} from "@chakra-ui/react";
+import { Box, Flex, FormLabel, Input, Text } from "@chakra-ui/react";
 import { globalStyles } from "../../theme/styles";
 interface InputsProp {
     placehold?: any;
@@ -23,11 +12,10 @@ interface InputsProp {
     label?: any;
     isMandatory?: any;
     min?: string;
-    minValue?: any;
-    maxValue?: any;
 }
 
-const FormInput = ({
+const EditFormInput = ({
+    placehold,
     Type,
     name,
     values,
@@ -37,36 +25,28 @@ const FormInput = ({
     touched,
     label,
     isMandatory,
-    min,
-    minValue,
-    maxValue
+    min
 }: InputsProp) => {
     return (
         <Flex borderTop={"1px solid #E0E0E0"} alignItems={"center"}>
-            <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
+            <FormLabel fontWeight={"extrabold"} p={5} px={12} w={"72"} backgroundColor={"#F9FAFA"} m={"0"}>
                 {label}
-                {isMandatory && (
-                    <Text color={"red"} as="span">
-                        *
-                    </Text>
-                )}
             </FormLabel>
-            <Box width={"lg"} ps={"3"}>
+            <Box width={"lg"} ps={"5"} pl={3}>
                 <Input
                     _focus={{ borderColor: globalStyles.colors.mainColor }}
+                    border={"1px solid #D6D6D6"}
                     type={Type}
                     name={name}
+                    // placeholder={placehold}
                     _placeholder={{ color: "gray" }}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    minLength={minValue}
-                    maxLength={maxValue}
                     value={values}
                     min={min ?? new Date().toISOString().split("T")[0]}
                     isInvalid={errors && touched}
                     errorBorderColor="red.300"
                 />
-
                 {errors && touched && (
                     <Text fontSize={"sm"} mt={1} color={"red.300"}>
                         {errors}
@@ -77,4 +57,4 @@ const FormInput = ({
     );
 };
 
-export default FormInput;
+export default EditFormInput;

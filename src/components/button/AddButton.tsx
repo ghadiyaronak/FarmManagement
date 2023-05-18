@@ -13,6 +13,7 @@ const AddButton = ({ title, handleAdd }: AddButtonProps) => {
     return (
         <Button
             bgColor={globalStyles.colors.mainColor}
+            _hover={{ bgColor: "blue.300" }}
             color={"white"}
             leftIcon={<AddIcon />}
             onClick={handleAdd}

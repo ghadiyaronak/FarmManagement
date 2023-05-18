@@ -50,7 +50,7 @@ const DeviceEdit = () => {
                     setFieldValue("lastDateTime", dayjs(device?.lastDateTime).format("YYYY/MM/DD hh:mm:ss"));
                     setFieldValue("register_date", dayjs(device?.register_date).format("YYYY/MM/DD"));
                     setFieldValue("farm_name", device?.farm_id?.farm_name);
-                    setFieldValue("memo_developer", device?.memo_developer);
+                    setFieldValue("memoDeveloper", device?.memoDeveloper);
                     setFieldValue("memo", device?.memo);
                     setFieldValue("status", device?.status);
 
@@ -77,7 +77,7 @@ const DeviceEdit = () => {
             lastDateTime: values.lastDateTime,
             mac_addresse: values.mac_address,
             current_value: values.current_value,
-            memo_developer: values.memo_developer,
+            memoDeveloper: values.memoDeveloper,
             status: values.status.value
         };
         dispatch(
@@ -85,7 +85,7 @@ const DeviceEdit = () => {
                 { _id: params._id, data },
                 (responseData: any) => {
                     toast({
-                        title: t("messages.password_update_success"),
+                        title: responseData?.message ? responseData.message : responseData.response?.data?.message,
                         status: "success",
                         variant: "solid",
                         duration: 2000,
@@ -112,16 +112,6 @@ const DeviceEdit = () => {
         }, 2000);
     };
 
-    console.log();
-
-    const productSchema = yup.object().shape({
-        // memo_developer: yup.string().required("Memo developer is required"),
-        // memo: yup.string().required("Memo field is required"),
-        // status: yup.object().shape({
-        //     value: yup.string().required(t("messages.status_field_is_required"))
-        // })
-    });
-
     const {
         values,
         handleChange,
@@ -137,7 +127,7 @@ const DeviceEdit = () => {
             _id: "",
             user_name: "",
             deviceAccess: "",
-            memo_developer: "",
+            memoDeveloper: "",
             register_date: "",
             current_value: "",
             mac_address: "",
@@ -152,8 +142,7 @@ const DeviceEdit = () => {
                 value: ""
             }
         },
-        onSubmit,
-        validationSchema: productSchema
+        onSubmit
     });
 
     useEffect(() => {
@@ -315,12 +304,12 @@ const DeviceEdit = () => {
                     <Flex w={"full"}>
                         <FormFildLabel label={t("farm_mgmt.memo_developer")} isMandatory={false} />
                         <CustomTextArea
-                            name="memo_developer"
-                            value={values.memo_developer}
+                            name="memoDeveloper"
+                            value={values.memoDeveloper}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
-                            errors={errors.memo_developer}
-                            touched={touched.memo_developer}
+                            errors={errors.memoDeveloper}
+                            touched={touched.memoDeveloper}
                             isMandatory={false}
                             style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
                         />
@@ -363,7 +352,7 @@ const DeviceEdit = () => {
                             </Heading>
                             <Text p={3} fontSize="md">
                                 {deviceData?.lastDateTime
-                                    ? dayjs(deviceData?.lastDateTime).format("YYYY/MM/DD hh:mm:ss")
+                                    ? dayjs(deviceData?.lastDateTime).format("YYYY/MM/DD HH:MM")
                                     : "--"}
                             </Text>
                         </Flex>

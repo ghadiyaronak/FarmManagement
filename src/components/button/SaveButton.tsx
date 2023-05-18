@@ -25,7 +25,7 @@ const SaveButton = ({ onClick, title, isLoading }: IProps) => {
                 isLoading={isLoading}
                 rounded={"2xl"}
                 bgColor={globalStyles.colors.mainColor}
-                _hover={{ bgColor: globalStyles.colors.mainColor }}
+                _hover={{ bgColor: "blue.300" }}
                 color={"#FFFFFF"}
             >
                 {title}

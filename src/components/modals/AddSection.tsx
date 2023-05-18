@@ -44,7 +44,10 @@ const AddSection = ({ isOpen, onClose, getAll }: IProps) => {
 
     const sectionSchema = yup.object().shape({
         name: yup.string().required(t("form_errors.required_fields")),
-        priority: yup.string().required(t("form_errors.required_fields"))
+        priority: yup
+            .string()
+            .max(3, t("messages.enter_priority_between_1_to_100"))
+            .required(t("form_errors.required_fields"))
     });
 
     const handleModalClose = () => {
@@ -197,16 +200,13 @@ const AddSection = ({ isOpen, onClose, getAll }: IProps) => {
                                 errors={errors.priority}
                                 touched={touched.priority}
                                 isMandatory={true}
+                                maxLength={2}
                             />
                         </Flex>
                     </ModalBody>
 
                     <ModalFooter>
                         <FooterModal type="add" isLoading={isSubmitting} handleClose={handleModalClose} />
-                        {/* <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            {t("common.cancel")}
-                        </Button>
-                        <Button type="submit">{t("common.save")}</Button> */}
                     </ModalFooter>
                 </form>
             </ModalContent>

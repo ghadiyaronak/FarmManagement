@@ -61,7 +61,7 @@ const InquiryView = () => {
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
-                            <ReturnButton />
+                            <ReturnButton link={"/inquiry-management"} />
                         </Stack>
                         <CardHeader
                             p={0}
