@@ -33,7 +33,7 @@ const NewsView = () => {
         dispatch(
             NewsService.getNews(
                 {
-                    newsId: params.id
+                    newsId: params._id
                 },
                 (success: any) => {
                     setNewsData(success.data.rows[0]);
@@ -52,12 +52,16 @@ const NewsView = () => {
     };
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getNewsList();
     }, []);
 
     return (
         <>
-            <Box w={"4xl"} pt={4}>
+            <Box w={"4xl"} width={{ base: "full", md: "4xl" }} pt={4}>
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
@@ -121,24 +125,7 @@ const NewsView = () => {
                             </Flex>
                         </Stack>
                         <Divider />
-                        {/* <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
-                                <Heading
-                                    flex={"0.8"}
-                                    w={"72"}
-                                    p={3}
-                                    bg={"#f9fafa"}
-                                    pl={12}
-                                    fontSize={20}
-                                    textTransform="capitalize"
-                                >
-                                    {t("news.news_description")}
-                                </Heading>
-                                <Text p={3} flex={"0."} fontSize="md">
-                                    {newsData?.content ?? "--"}
-                                </Text>
-                            </Flex>
-                        </Stack> */}
+
                         <Stack divider={<StackDivider />} spacing="4">
                             <Flex>
                                 <Heading
@@ -152,7 +139,7 @@ const NewsView = () => {
                                 >
                                     {t("news.news_description")}
                                 </Heading>
-                                <Text p={3} flex={"0.7"} fontSize="md">
+                                <Text whiteSpace={"pre-line"} p={3} flex={"0.7"} fontSize="md">
                                     {newsData?.content ?? "--"}
                                 </Text>
                             </Flex>

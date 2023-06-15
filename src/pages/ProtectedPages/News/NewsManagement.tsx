@@ -2,6 +2,7 @@ import {
     Box,
     Button,
     Flex,
+    GlobalStyle,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -28,7 +29,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import NewsService from "../../../services/NewsService";
-import ExportExcel from "../../../components/button/Excelexport";
+import ja from "date-fns/locale/ja";
 
 const NewsManagement = () => {
     const navigate = useNavigate();
@@ -97,7 +98,6 @@ const NewsManagement = () => {
             )
         );
     };
-
     const column = [
         {
             id: 1,
@@ -106,12 +106,7 @@ const NewsManagement = () => {
             cell: (row: any) => {
                 return (
                     <Box onClick={() => navigate(`/news-view/${row._id}`, { state: row })}>
-                        <Text
-                            color={globalStyles.colors.mainColor}
-                            fontWeight={"normal"}
-                            textTransform={"uppercase"}
-                            cursor={"pointer"}
-                        >
+                        <Text fontWeight={"normal"} cursor={"pointer"}>
                             {row.title?.toString().substring(row.title, row?.title.length)}
                         </Text>
                     </Box>
@@ -143,8 +138,8 @@ const NewsManagement = () => {
             id: 4,
             selector: (row: any) => row?.Action,
             name: (
-                <Text display="flex" justifyContent="end" fontWeight={"bold"}>
-                    {t("news.action")}
+                <Text display="flex" justifyContent="center" alignItems={"center"} fontWeight={"bold"}>
+                    {t("common.delete")}
                 </Text>
             ),
 
@@ -184,12 +179,12 @@ const NewsManagement = () => {
             const startDate = values.start_date;
             let formattedStartDate = "";
             if (startDate) {
-                formattedStartDate = dayjs(startDate).format("YYYY-MM-DD");
+                formattedStartDate = dayjs(startDate).format("YYYY/MM/DD");
             }
             const endDate = values.end_date;
             let formattedEndDate = "";
             if (endDate) {
-                formattedEndDate = dayjs(endDate).format("YYYY-MM-DD");
+                formattedEndDate = dayjs(endDate).format("YYYY/MM/DD");
             }
 
             dispatch(
@@ -205,13 +200,6 @@ const NewsManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
                     }
                 )
             );
@@ -226,18 +214,15 @@ const NewsManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
                     }
                 )
             );
         }
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     useEffect(() => {
         getNewsList(false);
@@ -280,6 +265,7 @@ const NewsManagement = () => {
                                 <ReactDatePicker
                                     dateFormat="yyyy/MM/dd"
                                     className="form-date"
+                                    locale={ja}
                                     selected={values.start_date}
                                     // minDate={new Date()}
                                     onChange={(date: any) => {
@@ -295,6 +281,7 @@ const NewsManagement = () => {
                                 <ReactDatePicker
                                     dateFormat="yyyy/MM/dd"
                                     className="form-date"
+                                    locale={ja}
                                     selected={values.end_date}
                                     // minDate={new Date()}
                                     onChange={(date: any) => {
@@ -330,7 +317,7 @@ const NewsManagement = () => {
                     <ModalFooter display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         <Button
                             _hover={{ bgColor: "blue.300" }}
-                            bgColor="#4299e1"
+                            bgColor={globalStyles.colors.mainColor}
                             variant="ghost"
                             color={"white"}
                             mr={3}

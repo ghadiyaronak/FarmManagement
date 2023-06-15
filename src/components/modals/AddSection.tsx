@@ -45,8 +45,9 @@ const AddSection = ({ isOpen, onClose, getAll }: IProps) => {
     const sectionSchema = yup.object().shape({
         name: yup.string().required(t("form_errors.required_fields")),
         priority: yup
-            .string()
-            .max(3, t("messages.enter_priority_between_1_to_100"))
+            .number()
+            .min(0, t("messages.enter_priority_between_1_to_100"))
+            .max(99, t("messages.enter_priority_between_1_to_100"))
             .required(t("form_errors.required_fields"))
     });
 

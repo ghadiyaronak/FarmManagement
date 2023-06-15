@@ -11,8 +11,8 @@ const SaveButtonFaq = ({ isSubmitting }: IProps) => {
 
     return (
         <Button
-            bgColor={globalStyles.colors.btn.success}
-            _hover={{ bgColor: "green.300" }}
+            bgColor={globalStyles.colors.mainColor}
+            _hover={{ bgColor: "blue.400" }}
             color={"white"}
             type={"submit"}
             isLoading={isSubmitting}

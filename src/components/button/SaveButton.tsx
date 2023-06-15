@@ -15,7 +15,6 @@ const SaveButton = ({ onClick, title, isLoading }: IProps) => {
         <Flex w={"full"} justifyContent={"center"} alignItems={"center"}>
             <Button
                 type="submit"
-                loadingText="Submitting"
                 onClick={onClick}
                 fontWeight={"700"}
                 fontSize={"lg"}

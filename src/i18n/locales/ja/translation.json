@@ -12,16 +12,14 @@
     "group": "グループ",
     "review": "評価",
     "inquiry": "お問い合わせ",
-    "analytics": "Googleアナリティクスへ",
-    "stripe": "Stripeへ",
     "News": "ニュース",
     "Inquiry": "問い合わせ",
     "line": "LINEへ",
     "faq": "よくある質問",
     "rows_per_page": "件数",
     "show_more": "もっと見る",
-    "view": "見る",
-    "there_are_no_records_to_display": "表示するレコードがありません",
+    "view": "ステータス",
+    "there_are_no_records_to_display": "表示するデータがありません ",
 
     "dashboard": {
         "user": "ユーザー"
@@ -36,26 +34,32 @@
         "disable": "無効",
         "operational": "稼働中",
         "non_operational": "停止中",
-        "open": "開ける",
-        "close": "閉じる",
+        "open": "オープン",
+        "close": "クローズ",
         "yes": "はい",
         "no": "いいえ",
         "completed": "対応完了",
-        "confirming": "確認中",
-        "unconfirmed": "未確認",
-        "cancel": "キャンセル"
+        "confirming": "対応中",
+        "unconfirmed": "未対応",
+        "cancel": "キャンセル",
+        "cylinder": "シリンダー",
+        "sensor": "センサー",
+        "running": "動作中",
+        "stop": "停止中",
+        "read": "閲覧者",
+        "write": "管理者"
     },
     "auth_header": {
         "add_name": "名前を追加",
         "name": "名前",
         "edit": "編集",
-        "add_your_name": "あなたの名前を追加",
+        "add_your_name": "名前登録",
         "save": "保存"
     },
 
     "user_status": {
         "admin": "管理者",
-        "red_only": "読み取り"
+        "red_only": "閲覧者"
     },
 
     "common": {
@@ -81,31 +85,31 @@
     },
 
     "farm_mgmt": {
-        "add_farm": "追加",
-        "farm": "農家",
+        "add_farm": "農家登録",
+        "farm": "農家名",
         "farm_name": "農家名",
         "search": "検索",
         "reset": "リセット",
         "batch_download": "一括ダウンロード",
-        "owner_name": "オーナー名",
+        "owner_name": "担当者名",
         "address": "住所",
-        "memo": "メモ",
-        "save": "開ける",
+        "memo": "備考（管理者用）",
+        "save": "登録 ",
         "farm_details": "農家の詳細",
-        "edit_farm_details": "情報を編集する",
+        "edit_farm_details": "農家情報編集",
         "update": "更新",
         "farm_view": "農家情報",
         "camera_pin": "カメラ認証コード",
         "farm_id": "農家ID",
-        "memo_developer": "備考",
-        "construction_period": "契約開始日および契約終了日",
+        "memo_developer": "備考（開発者用）",
+        "construction_period": "契約期間",
         "contract_start_date": "契約開始日",
         "contract_end_date": "契約終了日",
-        "last_datetime": "最終日付 時刻",
+        "last_datetime": "最終閲覧日時 ",
         "postal_code": "郵便番号",
-        "prefecture": "都道府県名",
-        "city": "市区町村名",
-        "sub_area": "サブエリア名",
+        "prefecture": "都道府県",
+        "city": "市区町村",
+        "sub_area": "町域・番地",
         "subarea_number": "サブエリア番号",
         "delete_farm": "農家を削除する",
         "app_pin": "アプリケーションPIN",
@@ -122,53 +126,64 @@
         "user_id": "読取ID",
         "change_status": "切替える",
         "male": "男性",
-        "female": "女性"
+        "female": "女性",
+        "user_furigana": "フリガナ"
     },
 
     "device_mgmt": {
         "mac_address": "MACアドレス",
         "farm_name": "農家名",
-        "current_value": "現在値",
+        "current_value": "状況",
         "location": "設置場所",
-        "device_access": "機器アクセス",
+        "device_access": "デバイスアクセス",
         "device_edit": "デバイス編集",
-        "device_details": "デバイスの詳細",
+        "device_details": "デバイス履歴 ",
         "operate": "Operate",
         "Device_ID": "機器ID",
-        "view_activity": "デバイスアクティビティ"
+        "view_activity": "デバイスアクティビティ",
+        "client_id": "Flexy ID",
+        "device_activity_graph": "デバイスアクティビティ（週）",
+        "pubTopic": "Flexy Pub",
+        "SubTopic": "Flexy Sub",
+        "device_type": "デバイスタイプ"
     },
 
     "camera_mgmt": {
         "camera_access": "カメラ アクセス",
-        "camera_details": "カメラの詳細",
-        "camera_id": "CameraID",
-        "link_id": "ライブビューリンク",
+        "camera_details": "カメラ履歴",
+        "camera_id": "ID",
+        "link_id": "カメラリンク",
         "camera_edit": "カメラ編集",
-        "camera_activity": "ビューアクティビティ",
+        "camera_activity": "カメラアクティビティ",
         "camera_type": "カメラタイプ",
-        "activity_timt": "アクティビティ時間"
+        "activity_timt": "動作日時",
+        "capture_screenShot": "画像撮影",
+        "capture_video": "動画撮影",
+        "capture_time": "撮影時間"
     },
 
     "news": {
-        "news_title": "ニュースのタイトル",
+        "news_title": "タイトル",
         "start_date": "開始日",
         "end_date": "終了日",
-        "action": "保存",
+        "action": "動作記録",
         "news_id": "ニュースID",
-        "news_description": "ニュース概要",
-        "add_news": "ニュース追加",
-        "news_view": "ニュースを見る",
-        "edit_news": "ニュースを編集",
-        "delete_news": "delete news"
+        "news_description": "内容",
+        "add_news": "ニュース登録",
+        "news_view": "ニュース詳細",
+        "edit_news": "ニュース編集",
+        "delete_news": "ニュースを削除します"
     },
 
     "inquiry_mgmt": {
         "user_name": "ユーザー名",
         "date_time": "データータイム",
-        "inquiry_title": "問い合わせタイトル",
+        "inquiry_title": "タイトル",
         "inquiry_id": "お問い合わせID",
-        "inquiry_description": "問い合わせ内容",
-        "inquiry_details": "お問い合わせ内容"
+        "inquiry_description": "お問い合わせ内容",
+        "inquiry_details": "お問い合わせ内容",
+        "Inquiry_edit": "お問い合わせ編集",
+        "query": "クエリ"
     },
 
     "faqs": {
@@ -193,7 +208,11 @@
         "invalid_email": "有効なメールアドレスを入力してください",
         "required_fields": "必須項目",
         "password_minimum_characters": "パスワードが短すぎます - 6 文字以上にする必要があります",
-        "both_password_needs_to_be_the_same": "パスワードが一致しません"
+        "both_password_needs_to_be_the_same": "パスワードが一致しません",
+
+        "faq_section": "セクション名は必須です",
+        "question_fields_required": "は必須項目です",
+        "answer_fields_required": "回答欄は必須です"
     },
 
     "footer": {
@@ -220,6 +239,11 @@
         "company_not_exists": "会社が存在しません",
         "group_delete_confirm": "本当にグループを削除しますか？",
         "group_delete_reject": "このグループは販売データがある為、削除することはできません。",
+        "maximum_1000_words": "1000文字まで",
+        "maximum_1500_words": "1500文字まで",
+
+        "minimum_7_character": "郵便番号は7桁の数字を入力してください",
+        "maximum_7_character": "郵便番号は7桁の数字を入力してください",
 
         "farm_name_is_required": "農家名は必須です",
         "owner_name_is_required": "オーナー名は必須です",
@@ -242,7 +266,7 @@
         "subarea_number": "サブエリア番号は必須です",
         "farm_delete_confirm": "農家を削除してよろしいですか？",
         "title_is_required": "タイトルは必須です",
-        "content_is_required": "コンテンツは必須です",
+        "content_is_required": "内容は必須です",
         "start_date_is_required": "開始日は必須です",
         "end_date_is_required": "終了日は必須です",
         "news_delete_confirm": "ニュースを削除してよろしいですか？",
@@ -281,7 +305,7 @@
         "faq": "FAQ",
         "faq_mgmt": "FAQ",
 
-        "add_question": "質問追加",
+        "add_question": "質問登録",
         "praiority": "Priority",
 
         "section": "セクション",
@@ -292,9 +316,9 @@
         "action": "編集/削除",
 
         "add_section": "セクション名",
-        "edit_section": "FAQ編集",
+        "edit_section": "よくある質問編集",
 
-        "section_name": "セクション名",
+        "section_name": "分類登録",
         "section_private": "セクション非公開",
         "enter_section_name": "セクション名入力",
         "enter_order": "注文を入力",
@@ -323,6 +347,6 @@
         "disable_faq": "よくある質問を無効にする",
         "enable_section": "セクション公開",
         "enable_faq": " よくある質問を有効にする",
-        "priority": "ランク"
+        "priority": "順位"
     }
 }

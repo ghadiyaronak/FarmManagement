@@ -95,6 +95,13 @@ const FarmManagement = () => {
                     },
                     (successData: any) => {
                         resolve(successData?.data?.rows);
+                        toast({
+                            title: successData.message ? successData.message : successData?.data?.message,
+                            status: "success",
+                            duration: 3 * 1000,
+                            isClosable: true,
+                            position: "top-right"
+                        });
                     },
                     (errorData: any) => {
                         toast({
@@ -175,7 +182,7 @@ const FarmManagement = () => {
                             textTransform={"uppercase"}
                             cursor={"pointer"}
                         >
-                            {row.farm_name?.toString().substring(row.farm_name, row?.farm_name.length)}
+                            {row.farm_name ?? "--"}
                         </Text>
                     </Box>
                 );
@@ -330,13 +337,17 @@ const FarmManagement = () => {
     };
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getFarmList(false);
     }, []);
 
     return (
         <>
             <Flex justifyContent={"space-between"} alignItems={"center"}>
-                <MainHeading title={t("farm_mgmt.farm")} />
+                <MainHeading title={t("Farm")} />
                 <Button
                     size={"sm"}
                     rounded={"md"}
@@ -418,27 +429,27 @@ const FarmManagement = () => {
                     </ModalBody>
 
                     <ModalFooter display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                        <Button
+                            _hover={{ bgColor: "blue.300" }}
+                            bgColor="#4299e1"
+                            variant="ghost"
+                            color={"white"}
+                            mr={3}
+                            onClick={onClose}
+                        >
+                            {t("status.cancel")}
+                        </Button>
                         <Box onClick={onClose}>
                             <Button
-                                _hover={{ bgColor: "red.500" }}
+                                _hover={{ bgColor: "red.300" }}
                                 onClick={handleDelete}
                                 bgColor={"red.500"}
                                 color={"white"}
-                                mr={3}
                                 variant="ghost"
                             >
                                 {t("common.delete")}
                             </Button>
                         </Box>
-                        <Button
-                            _hover={{ bgColor: "#4299e1" }}
-                            bgColor="#4299e1"
-                            variant="ghost"
-                            color={"white"}
-                            onClick={onClose}
-                        >
-                            {t("status.cancel")}
-                        </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

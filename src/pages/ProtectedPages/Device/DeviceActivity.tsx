@@ -4,6 +4,8 @@ import {
     CardHeader,
     Divider,
     Flex,
+    Grid,
+    GridItem,
     Heading,
     SimpleGrid,
     Stack,
@@ -11,62 +13,18 @@ import {
     Text,
     useToast
 } from "@chakra-ui/react";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ReturnButton from "../../../components/fields/ReturnButton";
 import DeviceService from "../../../services/DeviceService";
 import dayjs from "dayjs";
-import { id } from "date-fns/locale";
+import "chartjs-adapter-date-fns";
+import { Chart as ChartJS, LinearScale, PointElement, Tooltip, Legend, TimeScale, CategoryScale } from "chart.js";
+import { Bubble } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-export const options = {
-    plugins: {
-        title: {
-            display: true
-            // text: "Chart.js Bar Chart - Stacked"
-        }
-    },
-    responsive: true,
-    interaction: {
-        // mode: "index" as const
-        // intersect: false
-    },
-    scales: {
-        x: {
-            stacked: true
-        },
-        y: {
-            stacked: true
-        }
-    }
-};
-
-const labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-export const data = {
-    labels,
-    datasets: [
-        {
-            label: "OPEN",
-            data: labels.map(() => faker.datatype.number({ min: 2, max: 5 })),
-            backgroundColor: "rgb(75, 192, 192)",
-            stack: "Stack 0"
-        },
-        {
-            label: "CLOSE",
-            data: labels.map(() => faker.datatype.number({ min: 1, max: 7 })),
-            backgroundColor: "rgb(53, 162, 235)",
-            stack: "Stack 1"
-        }
-    ]
-};
+ChartJS.register(LinearScale, PointElement, Tooltip, Legend, TimeScale, CategoryScale);
 
 const DeviceActivity = () => {
     const { t } = useTranslation();
@@ -75,7 +33,9 @@ const DeviceActivity = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [deviceData, setDeviceData] = useState<any>([]);
-    console.log(_id);
+    const [chartData, setChartData] = useState<any>([]);
+    const [startData, setStartData] = useState<any>([]);
+    const [endData, setEndData] = useState<any>([]);
 
     const getDeviceList = () => {
         dispatch(
@@ -100,12 +60,124 @@ const DeviceActivity = () => {
         );
     };
 
+    const emptyArray: any = [];
+    chartData?.map((data: any) => {
+        if (data.day === "Sun") {
+            data.day = "日";
+        }
+        if (data.day === "Mon") {
+            data.day = "月";
+        }
+        if (data.day === "Tue") {
+            data.day = "火";
+        }
+        if (data.day === "Wed") {
+            data.day = "水";
+        }
+        if (data.day === "Thu") {
+            data.day = "木";
+        }
+        if (data.day === "Fri") {
+            data.day = "金";
+        }
+        if (data.day === "Sat") {
+            data.day = "土";
+        }
+        emptyArray.push({
+            x: data.day,
+            y: data.hours,
+            r: data.count * 3
+        });
+    });
+
+    const getDeviceChartList = () => {
+        dispatch(
+            DeviceService.getGrapgActivity(
+                {
+                    deviceId: _id
+                },
+                (success: any) => {
+                    setChartData(success?.data?.GraphData);
+                    setStartData(success?.data);
+                    setEndData(success?.data);
+                },
+                (errorData: any) => {
+                    toast({
+                        title: errorData.message ? errorData.message : errorData?.data?.message,
+                        status: "error",
+                        duration: 3 * 1000,
+                        isClosable: true,
+                        position: "top-right"
+                    });
+                }
+            )
+        );
+    };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
     useEffect(() => {
         getDeviceList();
+        getDeviceChartList();
     }, []);
+
+    const data = {
+        datasets: [
+            {
+                label: "Closing Time",
+                data: emptyArray,
+                backgroundColor: "#4299e199",
+                borderWidth: 1,
+                borderColor: "#084577"
+            }
+        ]
+    };
+
+    const options = {
+        legend: {
+            display: false
+        },
+
+        scales: {
+            y: {
+                beginAtZero: true,
+                min: 0,
+                max: 24,
+                ticks: {
+                    stepSize: 3,
+                    callback: function (value: any) {
+                        return value + " 時";
+                    }
+                }
+            },
+            x: {
+                type: "category" as const,
+                labels: ["", "月", "火", "水", "木", "金", "土", "日 ", " "],
+                max: 8
+            }
+        },
+
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function (context: any) {
+                        const dataPoint = context.dataset.data[context.dataIndex];
+                        const x = dataPoint.x;
+                        const y = dataPoint.y;
+                        const r = dataPoint.r / 3;
+                        // Customize the tooltip label with the desired data
+                        return `Day: ${x}, Hours: ${y}, Close: ${r}`;
+                    }
+                }
+            }
+        }
+    };
+
     return (
         <>
-            <Box pt={4}>
+            <Box w={"full"} pt={4}>
                 <SimpleGrid gap={{ sm: 4 }} columns={{ sm: 2 }}>
                     <Card>
                         <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
@@ -132,47 +204,69 @@ const DeviceActivity = () => {
                         </Box>
 
                         <Box pb={10} px={5}>
-                            <Divider />
-                            <Stack divider={<StackDivider />} spacing="4">
-                                <Flex>
-                                    <Heading
-                                        w={"full"}
-                                        p={4}
-                                        bg={"#f9fafa"}
-                                        textAlign={"center"}
-                                        fontSize={19}
-                                        textTransform="capitalize"
-                                    >
-                                        The Automatic OPEN/CLOSE box has been
-                                    </Heading>
-                                </Flex>
-                            </Stack>
-                            <Divider />
-
                             <Stack divider={<StackDivider />} spacing="4">
                                 {deviceData.length > 0 ? (
                                     <>
                                         {deviceData.map((elem: any, index: any) => {
                                             return (
-                                                <Flex h={"16"}>
-                                                    <Heading
-                                                        w={60}
-                                                        p={3}
-                                                        // bg={"#f9fafa"}
-                                                        pl={12}
-                                                        fontSize={19}
-                                                        textTransform="capitalize"
-                                                    >
-                                                        {elem?.current_value === "OPEN"
-                                                            ? t("status.open")
-                                                            : t("status.close")}
-                                                    </Heading>
-                                                    <Text p={3} ml={5} fontSize="md">
-                                                        {elem?.createdAt
-                                                            ? dayjs(elem?.createdAt).format("YYYY/MM/DD HH:MM")
-                                                            : "--"}
-                                                    </Text>
-                                                </Flex>
+                                                <Box key={index} pt={2}>
+                                                    <Grid pb={2} gap={6} rounded={"lg"}>
+                                                        <GridItem w="full" boxShadow={"md"} px={4} pt={2} bg="#f4f7fe">
+                                                            <Flex py={2}>
+                                                                <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                                    {"ID"}
+                                                                </Text>
+                                                                <Text flex={"0.8"} fontSize="md">
+                                                                    {elem?.deviceId?._id ?? "--"}
+                                                                </Text>
+                                                            </Flex>
+
+                                                            <Flex py={2}>
+                                                                <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                                    {t("auth_header.name")}
+                                                                </Text>
+                                                                <Text flex={"0.8"} fontSize="md">
+                                                                    {elem?.deviceId?.name ?? "--"}
+                                                                </Text>
+                                                            </Flex>
+
+                                                            <Flex py={2}>
+                                                                <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                                    {t("device_mgmt.current_value")}
+                                                                </Text>
+                                                                <Text flex={"0.8"} fontSize="md">
+                                                                    {/* {elem?.current_value === 0 ? t("status.open") ? t("status.close") : "--"} */}
+                                                                    {elem?.deviceId?.deviceType === "CYLINDER" ? (
+                                                                        <>
+                                                                            {elem?.current_value === "0"
+                                                                                ? t("status.open")
+                                                                                : t("status.close")}
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            {elem?.current_value === "0"
+                                                                                ? t("status.running")
+                                                                                : t("status.stop")}
+                                                                        </>
+                                                                    )}
+                                                                </Text>
+                                                            </Flex>
+
+                                                            <Flex py={2}>
+                                                                <Text fontWeight={"semibold"} flex={"0.2"}>
+                                                                    {t("camera_mgmt.activity_timt")}
+                                                                </Text>
+                                                                <Text flex={"0.8"} fontSize="md">
+                                                                    {elem?.createdAt
+                                                                        ? dayjs(elem?.createdAt).format(
+                                                                              "YYYY-MM-DD HH:mm"
+                                                                          )
+                                                                        : "--"}
+                                                                </Text>
+                                                            </Flex>
+                                                        </GridItem>
+                                                    </Grid>
+                                                </Box>
                                             );
                                         })}
                                     </>
@@ -184,20 +278,35 @@ const DeviceActivity = () => {
                             </Stack>
                         </Box>
                     </Card>
-                    <Box>
+                    <Box w={"full"} bgColor={"white"} height={"lg"} pt={5}>
+                        <Heading fontSize={"2xl"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                            {t("device_mgmt.device_activity_graph")}
+                        </Heading>
                         <Box
                             style={{
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
-                                width: "500px",
                                 margin: "auto",
                                 justifyContent: "center",
                                 marginTop: "40px"
                             }}
                         >
-                            <Bar options={options} data={data} />;
+                            <Bubble data={data} options={options} width={"sm"} />
                         </Box>
+                        <Flex display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                            <Text p={3} fontSize="md">
+                                {startData?.startOfWeekDate1
+                                    ? dayjs(startData?.startOfWeekDate1).format("YYYY/MM/DD")
+                                    : "--"}
+                            </Text>
+                            -
+                            <Flex>
+                                <Text p={3} fontSize="md">
+                                    {endData?.endOfWeekDate ? dayjs(endData?.endOfWeekDate).format("YYYY/MM/DD") : "--"}
+                                </Text>
+                            </Flex>
+                        </Flex>
                     </Box>
                 </SimpleGrid>
             </Box>

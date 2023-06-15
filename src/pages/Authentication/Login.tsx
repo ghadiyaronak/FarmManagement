@@ -46,7 +46,6 @@ const Login = () => {
 
                     TokenService.setUser(responseData?.data);
                     navigate("/home");
-                    actions.resetForm();
                     setIsLoading(false);
                 },
                 (errorData: any) => {
@@ -89,7 +88,7 @@ const Login = () => {
                 <Box h={"32"} w={"20"} mb={"-8"} mt={"2"}>
                     <Image rounded={"sm"} src="./loginLOGO.png" />
                 </Box>
-                <Text fontSize="3xl" fontWeight="bold" my={1}>
+                <Text fontSize="3xl" fontWeight="bold" my={5}>
                     {t("heading")}
                 </Text>
             </Box>

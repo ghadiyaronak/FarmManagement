@@ -259,15 +259,7 @@ export default function BasicStatistics() {
                     (success: any) => {
                         setDashboardData(success);
                     },
-                    (errorData: any) => {
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
-                    }
+                    (errorData: any) => {}
                 )
             );
         } else {
@@ -277,19 +269,15 @@ export default function BasicStatistics() {
                     (success: any) => {
                         setDashboardData(success.data.rows);
                     },
-                    (errorData: any) => {
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
-                    }
+                    (errorData: any) => {}
                 )
             );
         }
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     useEffect(() => {
         getDashboardList(false);
@@ -376,10 +364,12 @@ export default function BasicStatistics() {
                                 <Thead bg={"#ecf4fc"} fontSize={16} fontWeight={"bold"}>
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
-                                        <Td>{t("Farm")}</Td>
+                                        <Td>{t("farm_mgmt.farm_name")}</Td>
                                         <Td>{t("common.contact_number")}</Td>
                                         <Td>{t("common.register_date")}</Td>
-                                        <Td>{t("view")}</Td>
+                                        <Td w={"48"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                                            {t("common.status")}
+                                        </Td>
                                     </Tr>
                                 </Thead>
                                 <Tbody fontSize={14}>
@@ -393,11 +383,7 @@ export default function BasicStatistics() {
                                             >
                                                 <Td w={"60"} alignItems={"center"} gap={"3"}>
                                                     <Flex alignItems={"center"} gap={"3"}>
-                                                        <Avatar
-                                                            size={"sm"}
-                                                            src={data?.profile_image?.url}
-                                                            name={data?.user_name}
-                                                        />
+                                                        <Avatar size={"sm"} src={data?.profile_image?.url} />
                                                         <Text>{data?.user_name ?? "--"}</Text>
                                                     </Flex>
                                                 </Td>
@@ -408,14 +394,12 @@ export default function BasicStatistics() {
                                                         ? dayjs(data?.register_date).format("YYYY/MM/DD")
                                                         : "--"}
                                                 </Td>
-                                                <Td
-                                                    w={"30"}
-                                                    fontSize={"lg"}
-                                                    display={"inline-block"}
-                                                    _hover={{ color: "#4299e1" }}
-                                                    cursor={"pointer"}
-                                                >
-                                                    <FaEye />
+                                                <Td>
+                                                    <Badge variant={data?.status === "ACTIVE" ? "success" : "danger"}>
+                                                        {data?.status === "ACTIVE"
+                                                            ? t("status.active")
+                                                            : t("status.block")}
+                                                    </Badge>
                                                 </Td>
                                             </Tr>
                                         </>
@@ -462,9 +446,11 @@ export default function BasicStatistics() {
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
                                         <Td>{t("Farm")}</Td>
-                                        <Td>{t("common.status")}</Td>
+                                        <Td>{t("device_mgmt.current_value")}</Td>
                                         <Td>{t("device_mgmt.location")}</Td>
-                                        <Td>{t("view")}</Td>
+                                        <Td w={"48"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                                            {t("common.status")}
+                                        </Td>
                                     </Tr>
                                 </Thead>
                                 <Tbody fontSize={14}>
@@ -478,16 +464,30 @@ export default function BasicStatistics() {
                                             >
                                                 <Td w={"60"}>{data.name ?? "--"}</Td>
                                                 <Td w={"60"}>{data.farm_id?.farm_name ?? "--"}</Td>
-                                                <Td w={"60"}>{data.status ?? "--"}</Td>
+                                                <Td w={"60"}>
+                                                    {data.deviceType === "CYLINDER" ? (
+                                                        <>
+                                                            {data?.current_value === "0"
+                                                                ? t("status.open")
+                                                                : t("status.close")}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {deviceData?.current_value === "0"
+                                                                ? t("status.running")
+                                                                : t("status.stop")}
+                                                        </>
+                                                    )}
+                                                </Td>
                                                 <Td w={"60"}>{data.location ?? "--"}</Td>
-                                                <Td
-                                                    w={"30"}
-                                                    fontSize={"lg"}
-                                                    display={"inline-block"}
-                                                    _hover={{ color: "#4299e1" }}
-                                                    cursor={"pointer"}
-                                                >
-                                                    <FaEye />
+                                                <Td>
+                                                    <Badge
+                                                        variant={data?.status === "OPERATIONAL" ? "success" : "danger"}
+                                                    >
+                                                        {data?.status === "OPERATIONAL"
+                                                            ? t("status.operational")
+                                                            : t("status.non_operational")}
+                                                    </Badge>
                                                 </Td>
                                             </Tr>
                                         </>
@@ -536,7 +536,9 @@ export default function BasicStatistics() {
                                         <Td>{t("farm_mgmt.owner_name")}</Td>
                                         <Td>{t("common.contact_number")}</Td>
                                         <Td>{t("common.register_date")}</Td>
-                                        <Td>{t("view")}</Td>
+                                        <Td w={"48"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                                            {t("common.status")}
+                                        </Td>
                                     </Tr>
                                 </Thead>
                                 <Tbody fontSize={14}>
@@ -563,14 +565,12 @@ export default function BasicStatistics() {
                                                         ? dayjs(data?.register_date).format("YYYY/MM/DD")
                                                         : "--"}
                                                 </Td>
-                                                <Td
-                                                    w={"30"}
-                                                    fontSize={"lg"}
-                                                    display={"inline-block"}
-                                                    _hover={{ color: "#4299e1" }}
-                                                    cursor={"pointer"}
-                                                >
-                                                    <FaEye />
+                                                <Td>
+                                                    <Badge variant={data?.status === "ACTIVE" ? "success" : "danger"}>
+                                                        {data?.status === "ACTIVE"
+                                                            ? t("status.active")
+                                                            : t("status.block")}
+                                                    </Badge>
                                                 </Td>
                                             </Tr>
                                         </>
@@ -616,10 +616,12 @@ export default function BasicStatistics() {
                                 <Thead fontSize={16} bg={"#ecf4fc"} fontWeight={"bold"}>
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
+                                        <Td>{t("device_mgmt.mac_address")}</Td>
                                         <Td>{t("Farm")}</Td>
-                                        <Td>{t("common.status")}</Td>
                                         <Td>{t("common.register_date")}</Td>
-                                        <Td>{t("view")}</Td>
+                                        <Td w={"48"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                                            {t("common.status")}
+                                        </Td>
                                     </Tr>
                                 </Thead>
                                 <Tbody fontSize={14}>
@@ -632,21 +634,21 @@ export default function BasicStatistics() {
                                                 cursor={"pointer"}
                                             >
                                                 <Td w={"60"}>{data.name}</Td>
+                                                <Td w={"60"}>{data.mac_address ?? "--"}</Td>
                                                 <Td w={"60"}>{data.farm_id?.farm_name ?? "--"}</Td>
-                                                <Td w={"60"}>{data.status}</Td>
                                                 <Td w={"60"}>
                                                     {data.register_date
                                                         ? dayjs(data?.register_date).format("YYYY/MM/DD")
                                                         : "--"}
                                                 </Td>
-                                                <Td
-                                                    w={"30"}
-                                                    fontSize={"lg"}
-                                                    display={"inline-block"}
-                                                    _hover={{ color: "#4299e1" }}
-                                                    cursor={"pointer"}
-                                                >
-                                                    <FaEye />
+                                                <Td>
+                                                    <Badge
+                                                        variant={data?.status === "OPERATIONAL" ? "success" : "danger"}
+                                                    >
+                                                        {data?.status === "OPERATIONAL"
+                                                            ? t("status.operational")
+                                                            : t("status.non_operational")}
+                                                    </Badge>
                                                 </Td>
                                             </Tr>
                                         </>

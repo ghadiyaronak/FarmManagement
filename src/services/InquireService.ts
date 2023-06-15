@@ -4,12 +4,13 @@ import {
     GET_ALL_INQUIRY_DETAILS,
     GET_EXCEL_DATA,
     GET_INQUIRY_DETAILS,
+    GET_INQUIRY_DOWNLOAD,
     SELECTED_INQUIRY,
     UPDATE_INQUIRY,
     UPDATE_INQUIRY_DETAILS
 } from "../store/actionTypes";
 import { DELETE, GET, POST, PUT } from "../utils/apiConstant";
-import { ALL_INQUIRY_URL, EXCELINQUIRY, UPDATE_INQUIRY_DETAILS_API } from "../utils/url";
+import { ALL_INQUIRY_URL, EXCELINQUIRY, GET_INQUIRY_DOWNLOAD_API, UPDATE_INQUIRY_DETAILS_API } from "../utils/url";
 
 class InquiryService {
     getInquiryByDate(_payload: any, resolve: any, reject: any) {
@@ -104,6 +105,19 @@ class InquiryService {
             method: POST,
             apiConfing: {},
             url: EXCELINQUIRY,
+            resolve,
+            reject,
+            data: _payload
+        };
+        return { type: API_INVOCATION, payload };
+    }
+
+    DownloadDeviceList(_payload: any, resolve: any, reject: any) {
+        const payload = {
+            action: GET_INQUIRY_DOWNLOAD,
+            method: POST,
+            apiConfig: {},
+            url: `${GET_INQUIRY_DOWNLOAD_API}`,
             resolve,
             reject,
             data: _payload

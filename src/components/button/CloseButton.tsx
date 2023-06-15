@@ -9,12 +9,7 @@ interface CloseButtonProps {
 const CloseButton = ({ handleClose }: CloseButtonProps) => {
     const { t } = useTranslation();
     return (
-        <Button
-            bgColor={globalStyles.colors.btn.blue}
-            _hover={{ bgColor: "blue.300" }}
-            color={"white"}
-            onClick={handleClose}
-        >
+        <Button bgColor={"red.500"} _hover={{ bgColor: "red.400" }} color={"white"} onClick={handleClose}>
             {t("common.cancel")}
         </Button>
     );

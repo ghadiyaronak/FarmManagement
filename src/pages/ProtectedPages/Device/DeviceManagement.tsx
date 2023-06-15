@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import DeviceService from "../../../services/DeviceService";
 import FarmServices from "../../../services/FarmServices";
 import ExportExcel from "../../../components/button/Excelexport";
+import ja from "date-fns/locale/ja";
 
 const DeviceManagement = () => {
     const { t } = useTranslation();
@@ -87,13 +88,13 @@ const DeviceManagement = () => {
                         });
                     },
                     (errorData: any) => {
-                        // toast({
-                        //     title: errorData.message ? errorData.message : errorData?.data?.message,
-                        //     status: "error",
-                        //     duration: 3 * 1000,
-                        //     isClosable: true,
-                        //     position: "top-right"
-                        // });
+                        toast({
+                            title: errorData.message ? errorData.message : errorData?.data?.message,
+                            status: "error",
+                            duration: 3 * 1000,
+                            isClosable: true,
+                            position: "top-right"
+                        });
                         reject();
                     }
                 )
@@ -116,6 +117,10 @@ const DeviceManagement = () => {
                 value: ""
             },
             status: {
+                label: "",
+                value: ""
+            },
+            device_type: {
                 label: "",
                 value: ""
             },
@@ -153,8 +158,23 @@ const DeviceManagement = () => {
             },
             width: "150px"
         },
+
         {
             id: 2,
+            name: <Text fontWeight={"bold"}>{t("device_mgmt.device_type")}</Text>,
+            selector: (row: any) => (
+                <Text flexWrap={"wrap"}>
+                    {" "}
+                    {row?.deviceType === "CYLINDER" ? t("status.cylinder") : "SENSOR" ? t("status.sensor") : "--"}
+                </Text>
+            ),
+            sortable: true,
+            wrap: true,
+            width: "180px"
+        },
+
+        {
+            id: 3,
             name: <Text fontWeight={"bold"}>{t("farm_mgmt.farm")}</Text>,
             selector: (row: any) => (
                 <Text flexWrap={"wrap"}>{row?.farm_id?.farm_name ? row?.farm_id?.farm_name : "--"}</Text>
@@ -164,15 +184,23 @@ const DeviceManagement = () => {
             width: "150px"
         },
         {
-            id: 3,
+            id: 4,
             name: <Text fontWeight={"bold"}>{t("device_mgmt.current_value")}</Text>,
-            selector: (row: any) => <Text flexWrap={"wrap"}>{row?.current_value}</Text>,
+            selector: (row: any) => (
+                <Text flexWrap={"wrap"}>
+                    {row.deviceType === "CYLINDER" ? (
+                        <>{row?.current_value === "0" ? t("status.open") : t("status.close")}</>
+                    ) : (
+                        <>{row?.current_value === "0" ? t("status.running") : t("status.stop")}</>
+                    )}
+                </Text>
+            ),
             sortable: true,
             wrap: true,
             width: "180px"
         },
         {
-            id: 4,
+            id: 5,
             name: <Text fontWeight={"bold"}>{t("device_mgmt.location")}</Text>,
             selector: (row: any) => <Text flexWrap={"wrap"}>{row?.location}</Text>,
             sortable: true,
@@ -180,7 +208,7 @@ const DeviceManagement = () => {
             width: "180px"
         },
         {
-            id: 5,
+            id: 6,
             name: <Text fontWeight={"bold"}>{t("common.register_date")}</Text>,
             selector: (row: any) => row?.register_date,
             sortable: true,
@@ -191,7 +219,7 @@ const DeviceManagement = () => {
             width: "160px"
         },
         {
-            id: 6,
+            id: 7,
             name: (
                 <Text fontWeight={"bold"} w={"full"} display={"flex"} justifyContent={"center"}>
                     {t("common.status")}
@@ -251,6 +279,7 @@ const DeviceManagement = () => {
             const farm = values.farm_id.value;
             const registerDate = values.registerDate;
             const device_access = values.device_access.value;
+            const device_type = values.device_type.value;
             let formattedRegisterDate = "";
             if (registerDate) {
                 formattedRegisterDate = dayjs(registerDate).format("YYYY-MM-DD");
@@ -264,7 +293,8 @@ const DeviceManagement = () => {
                         farm_id: farm ?? undefined,
                         status: status ?? undefined,
                         register_date: formattedRegisterDate ?? undefined,
-                        device_access: device_access ?? undefined
+                        device_access: device_access ?? undefined,
+                        device_type: device_type ?? undefined
                     },
                     (success: any) => {
                         setDeviceData(success.data.rows);
@@ -272,13 +302,6 @@ const DeviceManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
                     }
                 )
             );
@@ -292,18 +315,15 @@ const DeviceManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
                     }
                 )
             );
         }
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     useEffect(() => {
         getDeviceList(false), getFarmName();
@@ -347,6 +367,7 @@ const DeviceManagement = () => {
                                 <ReactDatePicker
                                     dateFormat="yyyy/MM/dd"
                                     className="form-date"
+                                    locale={ja}
                                     selected={values.registerDate}
                                     onChange={(date: any) => {
                                         setFieldValue("registerDate", date);
@@ -365,6 +386,18 @@ const DeviceManagement = () => {
                                 onBlur={setFieldTouched}
                                 options={config.DEVICE_STATUS}
                                 name="status"
+                                multi={false}
+                            />
+                        </Flex>
+
+                        <Flex justifyContent={"space-between"}>
+                            <SmallFormLabel title={t("device_mgmt.device_type")} />
+                            <MySelect
+                                value={values.device_type}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                options={config.DEVICE_TYPE}
+                                name="device_type"
                                 multi={false}
                             />
                         </Flex>

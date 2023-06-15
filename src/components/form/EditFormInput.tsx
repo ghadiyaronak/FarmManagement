@@ -28,7 +28,7 @@ const EditFormInput = ({
     min
 }: InputsProp) => {
     return (
-        <Flex borderTop={"1px solid #E0E0E0"} alignItems={"center"}>
+        <Flex borderTop={"1px solid #E0E0E0"} borderBottom={"1px solid #E0E0E0"} alignItems={"center"}>
             <FormLabel fontWeight={"extrabold"} p={5} px={12} w={"72"} backgroundColor={"#F9FAFA"} m={"0"}>
                 {label}
             </FormLabel>

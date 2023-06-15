@@ -127,23 +127,22 @@ const DeleteFAQ = ({ isOpen, onClose }: IProps) => {
 
                 <ModalFooter>
                     <Button
+                        bgColor={globalStyles.colors.btn.blue}
+                        _hover={{ bgColor: "blue.300" }}
+                        color="white"
+                        mr={3}
+                        onClick={onClose}
+                    >
+                        {t("common.cancel")}
+                    </Button>
+                    <Button
                         bgColor={"red.500"}
                         _hover={{ bgColor: "red.300" }}
                         color={"white"}
-                        mr={3}
                         onClick={handleConfirmDelete}
                         isLoading={isLoading}
                     >
                         {t("common.delete")}
-                    </Button>
-                    <Button
-                        bgColor={globalStyles.colors.btn.blue}
-                        _hover={{ bgColor: "blue.300" }}
-                        color="white"
-                        mr={2}
-                        onClick={onClose}
-                    >
-                        {t("common.cancel")}
                     </Button>
                 </ModalFooter>
             </ModalContent>

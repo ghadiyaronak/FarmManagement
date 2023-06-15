@@ -1,9 +1,17 @@
-import { Box } from "@chakra-ui/react";
-import React from "react";
+import { Box, Flex } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import MainHeading from "../../../components/menu/MainHeading";
 
 const Userguide = () => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
     return (
         <Box w={"full"} bgColor={"white"} px={5} py={4} rounded={"md"}>
+            <Flex display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                <MainHeading title={"利用規約"} />
+            </Flex>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum nihil veritatis sit sunt optio odio quaerat
             delectus iusto ullam consequuntur impedit beatae doloremque voluptas, vel quam fugit possimus inventore,
             cumque enim perspiciatis culpa aut rerum. Quaerat dolorem ipsa molestiae veritatis quidem officiis, vero

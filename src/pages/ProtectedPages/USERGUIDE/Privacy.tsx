@@ -1,8 +1,12 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import MainHeading from "../../../components/menu/MainHeading";
 
 const Privacy = () => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
     return (
         <>
             <Box w={"full"} mt={4} bgColor={"white"}>

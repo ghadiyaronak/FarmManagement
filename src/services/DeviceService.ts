@@ -21,6 +21,7 @@ import {
     GETPROFILE,
     GET_DEVICE_ACTIVITY_API,
     GET_DEVICE_API,
+    GET_DEVICE_CHART_ACTIVITY_API,
     GET_DEVICE_DOWNLOAD_API,
     GET_FARM_API,
     REFRESH_TOKEN_URL,
@@ -50,6 +51,9 @@ class DeviceService {
         }
         if (_payload?.status) {
             query.append("status", _payload?.status);
+        }
+        if (_payload?.device_type) {
+            query.append("deviceType", _payload?.device_type);
         }
         if (_payload?.deviceId) {
             query.append("_id", _payload?.deviceId);
@@ -103,6 +107,30 @@ class DeviceService {
         return { type: API_INVOCATION, payload };
     }
 
+    getGrapgActivity(_payload: any, resolve: any, reject: any) {
+        const URLSearchParams = window.URLSearchParams;
+
+        let query: any = new URLSearchParams();
+
+        if (_payload?.deviceId) {
+            query.append("deviceId", _payload?.deviceId);
+        }
+
+        const payload = {
+            action: GET_DEVICE_ACTIVITY,
+            method: GET,
+            apiConfig: {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            },
+            url: `${GET_DEVICE_CHART_ACTIVITY_API}?deviceId=${_payload.deviceId}`,
+            resolve,
+            reject
+        };
+        return { type: API_INVOCATION, payload };
+    }
+
     DownloadDeviceList(_payload: any, resolve: any, reject: any) {
         const payload = {
             action: GET_DEVICE_DOWNLOAD,
@@ -115,40 +143,6 @@ class DeviceService {
         };
         return { type: API_INVOCATION, payload };
     }
-
-    // deleteFarm(_payload: any, resolve: any, reject: any) {
-    //     const payload = {
-    //         action: DELETE_FARM,
-    //         method: DELETE,
-    //         apiConfig: {
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             }
-    //         },
-    //         url: DELETE_FARM_API + _payload.id,
-    //         resolve,
-    //         reject
-    //     };
-    //     return { type: API_INVOCATION, payload };
-    // }
-
-    // addFarm(_payload: any, resolve: any, reject: any) {
-    //     const payload = {
-    //         action: ADD_FARM,
-    //         method: POST,
-    //         apiConfig: {
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             }
-    //         },
-    //         url: ADD_FARM_DETAILS,
-    //         resolve,
-    //         reject,
-    //         data: _payload.data
-    //     };
-    //     return { type: API_INVOCATION, payload };
-    // }
-
     updateDevice(_payload: any, resolve: any, reject: any) {
         const payload = {
             action: UPDATE_DEVICE,

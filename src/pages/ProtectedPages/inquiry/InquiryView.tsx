@@ -1,4 +1,5 @@
 import {
+    Badge,
     Box,
     Card,
     CardBody,
@@ -19,6 +20,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import InquireService from "../../../services/InquireService";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
+import { BiLinkExternal } from "react-icons/bi";
+import { globalStyles } from "../../../theme/styles";
 
 const InquiryView = () => {
     const { t } = useTranslation();
@@ -52,12 +55,16 @@ const InquiryView = () => {
     };
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getInquiryList();
     }, []);
 
     return (
         <>
-            <Box w={"4xl"} pt={4}>
+            <Box w={"3xl"} width={{ base: "full", md: "3xl" }} pt={4}>
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
@@ -99,8 +106,32 @@ const InquiryView = () => {
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
                                     {t("inquiry_mgmt.user_name")}
                                 </Heading>
+                                <Text
+                                    p={3}
+                                    fontSize="md"
+                                    cursor={"pointer"}
+                                    display={"Flex"}
+                                    alignItems={"center"}
+                                    color={globalStyles.colors.mainColor}
+                                    onClick={() =>
+                                        navigate({
+                                            pathname: `/user-view/${inquiryData?.userName}`
+                                        })
+                                    }
+                                >
+                                    {inquiryData?.user ?? "--"} <BiLinkExternal />
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                    {t("common.email")}
+                                </Heading>
                                 <Text p={3} fontSize="md">
-                                    {inquiryData?.user ?? "--"}
+                                    {inquiryData?.email ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -129,11 +160,11 @@ const InquiryView = () => {
                         <Divider />
 
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
+                            <Flex flex={"0.3"}>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("inquiry_mgmt.inquiry_description")}
                                 </Heading>
-                                <Text p={3} fontSize="md">
+                                <Text whiteSpace={"pre-line"} flex={"0.7"} p={3} fontSize="md">
                                     {inquiryData?.description ?? "--"}
                                 </Text>
                             </Flex>
@@ -143,11 +174,11 @@ const InquiryView = () => {
                         <Stack divider={<StackDivider />} spacing="4">
                             <Flex>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                    {t("inquiry_mgmt.date_time")}
+                                    {t("common.register_date")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {inquiryData?.dateOfContact
-                                        ? dayjs(inquiryData?.dateOfContact).format("YYYY/MM/DD")
+                                        ? dayjs(inquiryData?.dateOfContact).format("YYYY/MM/DD HH:mm")
                                         : "--"}
                                 </Text>
                             </Flex>
@@ -160,12 +191,23 @@ const InquiryView = () => {
                                     {t("common.status")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {/* {inquiryData?.status ?? "--"} */}
-                                    {inquiryData?.status === "CONFIRMED"
-                                        ? t("status.confirming")
-                                        : inquiryData?.status === "UNCONFIRMED"
-                                        ? t("status.unconfirmed")
-                                        : t("status.completed")}
+                                    <Badge
+                                        variant={
+                                            inquiryData?.status === "CONFIRMED"
+                                                ? "blue"
+                                                : inquiryData?.status === "UNCONFIRMED"
+                                                ? "danger"
+                                                : inquiryData?.status === "COMPLETED"
+                                                ? "success"
+                                                : "black"
+                                        }
+                                    >
+                                        {inquiryData?.status === "CONFIRMED"
+                                            ? t("status.confirming")
+                                            : inquiryData?.status === "UNCONFIRMED"
+                                            ? t("status.unconfirmed")
+                                            : t("status.completed")}
+                                    </Badge>
                                 </Text>
                             </Flex>
                         </Stack>
@@ -175,7 +217,7 @@ const InquiryView = () => {
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo")}
                                 </Heading>
-                                <Text p={3} fontSize="md">
+                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {inquiryData?.memo ? inquiryData?.memo : "--"}
                                 </Text>
                             </Flex>

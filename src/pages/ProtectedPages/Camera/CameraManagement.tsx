@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import CameraService from "../../../services/CameraService";
 import FarmServices from "../../../services/FarmServices";
 import ExportExcel from "../../../components/button/Excelexport";
+import ja from "date-fns/locale/ja";
 
 const CameraManagement = () => {
     const { t } = useTranslation();
@@ -72,6 +73,13 @@ const CameraManagement = () => {
                     },
                     (successData: any) => {
                         resolve(successData?.data?.rows);
+                        toast({
+                            title: successData.message ? successData.message : successData?.data?.message,
+                            status: "success",
+                            duration: 3 * 1000,
+                            isClosable: true,
+                            position: "top-right"
+                        });
                     },
                     (errorData: any) => {
                         toast({
@@ -143,14 +151,22 @@ const CameraManagement = () => {
         },
         {
             id: 2,
+            name: <Text fontWeight={"bold"}>{t("device_mgmt.mac_address")}</Text>,
+            selector: (row: any) => row?.mac_address,
+            sortable: true,
+            wrap: true,
+            width: "180px"
+        },
+        {
+            id: 3,
             name: <Text fontWeight={"bold"}>{t("farm_mgmt.farm")}</Text>,
             selector: (row: any) => (row?.farm_id?.farm_name ? row?.farm_id?.farm_name : "--"),
             sortable: true,
             wrap: true,
-            width: "130px"
+            width: "150px"
         },
         {
-            id: 3,
+            id: 4,
             name: <Text fontWeight={"bold"}>{t("device_mgmt.location")}</Text>,
             selector: (row: any) => (row?.location ? row?.location : "--"),
             sortable: true,
@@ -158,7 +174,7 @@ const CameraManagement = () => {
             width: "180px"
         },
         {
-            id: 4,
+            id: 5,
             name: <Text fontWeight={"bold"}>{t("common.register_date")}</Text>,
             selector: (row: any) => row?.register_date,
             cell: (row: any) => (
@@ -169,7 +185,7 @@ const CameraManagement = () => {
             width: "150px"
         },
         {
-            id: 5,
+            id: 6,
             name: (
                 <Text fontWeight={"bold"} w={"full"} display={"flex"} justifyContent={"center"}>
                     {t("common.status")}
@@ -251,13 +267,6 @@ const CameraManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
                     }
                 )
             );
@@ -271,18 +280,15 @@ const CameraManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
                     }
                 )
             );
         }
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     useEffect(() => {
         getCameraList(false), getFarmName();
@@ -326,6 +332,7 @@ const CameraManagement = () => {
                                 <ReactDatePicker
                                     dateFormat="yyyy/MM/dd"
                                     className="form-date"
+                                    locale={ja}
                                     selected={values.registerDate}
                                     onChange={(date: any) => {
                                         setFieldValue("registerDate", date);

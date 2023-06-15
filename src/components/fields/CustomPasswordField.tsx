@@ -34,11 +34,11 @@ const CustomPasswordField: React.FC<InputFieldProps> = (props) => {
                 <InputRightElement width="4.5rem">
                     {show ? (
                         <Box onClick={handleClick} cursor={"pointer"}>
-                            <PasswordHidden />
+                            <PasswordVisible />
                         </Box>
                     ) : (
                         <Box onClick={handleClick} cursor={"pointer"}>
-                            <PasswordVisible />
+                            <PasswordHidden />
                         </Box>
                     )}
                 </InputRightElement>

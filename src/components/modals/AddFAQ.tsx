@@ -55,8 +55,9 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
         question: yup.string().required(t("form_errors.required_fields")),
         answer: yup.string().required(t("form_errors.required_fields")),
         priority: yup
-            .string()
-            .max(3, t("messages.enter_priority_between_1_to_100"))
+            .number()
+            .min(0, t("messages.enter_priority_between_1_to_100"))
+            .max(99, t("messages.enter_priority_between_1_to_100"))
             .required(t("form_errors.required_fields"))
     });
 
@@ -108,7 +109,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                     { data },
                     (responseData: any) => {
                         toast({
-                            title: "FAQーを更新しました",
+                            title: responseData?.message ? responseData?.message : responseData.response?.data?.message,
                             status: "success",
                             variant: "solid",
                             duration: 2000,
@@ -181,7 +182,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                     <ModalBody>
                         <Stack spacing={4}>
                             <CustomSelect
-                                label={t("質問名")}
+                                label={t("faq_mgmt.section_name")}
                                 selectData={sectionList}
                                 errors={errors.faq_section}
                                 handleBlur={handleBlur}
@@ -193,7 +194,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                             />
 
                             <CustomTextArea
-                                label={t("faq_mgmt.question")}
+                                label={t("質問名")}
                                 name="question"
                                 type="text"
                                 value={values.question}

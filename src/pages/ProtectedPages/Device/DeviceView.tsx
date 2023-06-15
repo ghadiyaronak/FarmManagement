@@ -1,4 +1,5 @@
 import {
+    Badge,
     Box,
     Button,
     Card,
@@ -22,6 +23,7 @@ import dayjs from "dayjs";
 import { BiLinkExternal } from "react-icons/bi";
 import HeadingButtonRight from "../../../components/button/HeadingButton";
 import CloseEditButtonNew from "../../../components/button/CloseEditButton";
+import { IoMdClose } from "react-icons/io";
 
 const DeviceView = () => {
     const { t } = useTranslation();
@@ -54,15 +56,19 @@ const DeviceView = () => {
     };
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getDeviceList();
     }, []);
     return (
         <>
-            <Box w={"4xl"} pt={4}>
+            <Box w={"4xl"} width={{ base: "full", md: "4xl" }} pt={4}>
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
-                            <ReturnButton link={"/device-management"} />
+                            <ReturnButton />
                         </Stack>
                         <CardHeader
                             p={0}
@@ -75,15 +81,10 @@ const DeviceView = () => {
                             <Heading justifyContent={"center"} alignItems={"center"} alignContent={"center"} size="lg">
                                 {t("device_mgmt.device_details")}
                             </Heading>
-                            {deviceData ? (
-                                <Box position={"absolute"} right={"0"} top={"-3"}>
-                                    <HeadingButtonRight path={`/device-edit/${deviceData?._id}`} />
-                                </Box>
-                            ) : (
-                                <Box position={"absolute"} right={"0"} top={"-3"}>
-                                    <CloseEditButtonNew path={`/device-view/${deviceData?._id}`} />
-                                </Box>
-                            )}
+
+                            <Box position={"absolute"} right={"0"} top={"-3"}>
+                                <HeadingButtonRight path={`/device-edit/${deviceData?._id}`} />
+                            </Box>
                         </CardHeader>
                     </Box>
 
@@ -95,7 +96,7 @@ const DeviceView = () => {
                                     {"ID"}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {deviceData?._id ? deviceData?._id : "--"}
+                                    {deviceData?._id ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -106,7 +107,55 @@ const DeviceView = () => {
                                     {t("common.name")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {deviceData?.name ? deviceData?.name : "--"}
+                                    {deviceData?.name ?? "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                    {t("device_mgmt.device_type")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {deviceData?.deviceType === "CYLINDER"
+                                        ? t("status.cylinder")
+                                        : "SENSOR"
+                                        ? t("status.sensor")
+                                        : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                    {t("device_mgmt.client_id")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {deviceData?.client_id ?? "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                    {t("device_mgmt.pubTopic")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {deviceData?.pubTopic ?? "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                    {t("device_mgmt.SubTopic")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {deviceData?.subTopic ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -117,7 +166,13 @@ const DeviceView = () => {
                                     {t("device_mgmt.current_value")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {deviceData?.current_value === "OPEN" ? t("status.open") : t("status.close")}
+                                    {deviceData.deviceType === "CYLINDER" ? (
+                                        <>{deviceData?.current_value === "0" ? t("status.open") : t("status.close")}</>
+                                    ) : (
+                                        <>
+                                            {deviceData?.current_value === "0" ? t("status.running") : t("status.stop")}
+                                        </>
+                                    )}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -128,7 +183,7 @@ const DeviceView = () => {
                                     {t("device_mgmt.mac_address")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {deviceData?.mac_address ? deviceData?.mac_address : "--"}
+                                    {deviceData?.mac_address ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -139,7 +194,7 @@ const DeviceView = () => {
                                     {t("device_mgmt.location")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {deviceData?.location ? deviceData?.location : "--"}
+                                    {deviceData?.location ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -160,8 +215,7 @@ const DeviceView = () => {
                                         navigate({ pathname: `/viewfarm/${deviceData?.farm_id._id}`, search: `?tab=0` })
                                     }
                                 >
-                                    {deviceData?.farm_id?.farm_name ? deviceData?.farm_id?.farm_name : "--"}{" "}
-                                    <BiLinkExternal />
+                                    {deviceData?.farm_id?.farm_name ?? "--"} <BiLinkExternal />
                                 </Text>
                             </Flex>
                         </Stack>
@@ -185,21 +239,11 @@ const DeviceView = () => {
                                     {t("common.status")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {/* {deviceData?.status ? deviceData?.status : "--"} */}
-                                    {deviceData?.status === "OPERATIONAL"
-                                        ? t("status.operational")
-                                        : t("status.non_operational")}
-                                </Text>
-                            </Flex>
-                        </Stack>
-                        <Divider />
-                        <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
-                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                    {t("device_mgmt.device_access")}
-                                </Heading>
-                                <Text p={3} fontSize="md">
-                                    {deviceData?.deviceAccess === "ENABLE" ? t("status.enable") : t("status.disable")}
+                                    <Badge variant={deviceData?.status === "OPERATIONAL" ? "success" : "danger"}>
+                                        {deviceData?.status === "OPERATIONAL"
+                                            ? t("status.operational")
+                                            : t("status.non_operational")}
+                                    </Badge>
                                 </Text>
                             </Flex>
                         </Stack>
@@ -210,7 +254,7 @@ const DeviceView = () => {
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo")}
                                 </Heading>
-                                <Text p={3} fontSize="md">
+                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {deviceData?.memo ? deviceData?.memo : "--"}
                                 </Text>
                             </Flex>
@@ -221,7 +265,7 @@ const DeviceView = () => {
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo_developer")}
                                 </Heading>
-                                <Text p={3} fontSize="md">
+                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {deviceData?.memoDeveloper ? deviceData?.memoDeveloper : "--"}
                                 </Text>
                             </Flex>
@@ -234,7 +278,7 @@ const DeviceView = () => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {deviceData?.register_date
-                                        ? dayjs(deviceData?.register_date).format("YYYY/MM/DD")
+                                        ? dayjs(deviceData?.register_date).format("YYYY/MM/DD HH:mm")
                                         : "--"}
                                 </Text>
                             </Flex>
@@ -248,7 +292,7 @@ const DeviceView = () => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {deviceData?.lastDateTime
-                                        ? dayjs(deviceData?.lastDateTime).format("YYYY/MM/DD HH:MM")
+                                        ? dayjs(deviceData?.lastDateTime).format("YYYY/MM/DD HH:mm")
                                         : "--"}
                                 </Text>
                             </Flex>

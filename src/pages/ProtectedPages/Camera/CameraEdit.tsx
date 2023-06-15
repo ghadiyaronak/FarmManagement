@@ -149,6 +149,10 @@ const CameraEdit = () => {
     });
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getCameraList();
     }, []);
     return (
@@ -196,13 +200,14 @@ const CameraEdit = () => {
                     </Stack>
                     <Divider />
                     <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
+                        <Flex flex={"0.2"}>
                             <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                 {t("camera_mgmt.link_id")}
                             </Heading>
                             <Text
                                 p={3}
                                 as={"a"}
+                                flex={"0.8"}
                                 fontSize="md"
                                 cursor={"pointer"}
                                 display={"Flex"}
@@ -336,7 +341,7 @@ const CameraEdit = () => {
                             </Heading>
                             <Text p={3} fontSize="md">
                                 {cameraData?.register_date
-                                    ? dayjs(cameraData?.register_date).format("YYYY/MM/DD")
+                                    ? dayjs(cameraData?.register_date).format("YYYY/MM/DD HH:mm")
                                     : "--"}
                             </Text>
                         </Flex>

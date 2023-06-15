@@ -17,6 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import InquireService from "../../../services/InquireService";
+import ja from "date-fns/locale/ja";
 
 const InquiryManagement = () => {
     const [searchForm, setSearchForm] = useState({
@@ -61,6 +62,41 @@ const InquiryManagement = () => {
         onSubmit: handleSearchData
     });
 
+    const getExcelData = async () => {
+        const arrayOfId = inquirydata.map((data: any) => data._id);
+        const excelData: any = await new Promise((resolve, reject) => {
+            dispatch(
+                InquireService.DownloadDeviceList(
+                    {
+                        id: arrayOfId
+                    },
+                    (successData: any) => {
+                        resolve(successData?.data?.rows);
+                        toast({
+                            title: successData.message ? successData.message : successData?.data?.message,
+                            status: "success",
+                            duration: 3 * 1000,
+                            isClosable: true,
+                            position: "top-right"
+                        });
+                    },
+                    (errorData: any) => {
+                        toast({
+                            title: errorData.message ? errorData.message : errorData?.data?.message,
+                            status: "error",
+                            duration: 3 * 1000,
+                            isClosable: true,
+                            position: "top-right"
+                        });
+                        reject();
+                    }
+                )
+            );
+        });
+
+        return excelData;
+    };
+
     const column = [
         {
             id: 1,
@@ -69,12 +105,7 @@ const InquiryManagement = () => {
             cell: (row: any) => {
                 return (
                     <Flex alignItems={"center"} onClick={() => navigate(`/inquiry-view/${row._id}`, { state: row })}>
-                        <Text
-                            color={globalStyles.colors.mainColor}
-                            fontWeight={"normal"}
-                            textTransform={"uppercase"}
-                            cursor={"pointer"}
-                        >
+                        <Text fontWeight={"normal"} cursor={"pointer"}>
                             {row.user?.toString().substring(row?.user, row?.user.length)}
                         </Text>
                     </Flex>
@@ -102,7 +133,7 @@ const InquiryManagement = () => {
         },
         {
             id: 4,
-            name: <Text fontWeight={"bold"}>{t("inquiry_mgmt.date_time")}</Text>,
+            name: <Text fontWeight={"bold"}>{t("common.register_date")}</Text>,
             selector: (row: any) => row?.dateOfContact,
             cell: (row: any) => (
                 <Text>{row?.dateOfContact ? dayjs(row?.dateOfContact).format("YYYY/MM/DD") : "--"}</Text>
@@ -113,17 +144,21 @@ const InquiryManagement = () => {
         },
         {
             id: 5,
-            name: <Text fontWeight={"bold"}>{t("common.status")}</Text>,
+            name: (
+                <Text fontWeight={"bold"} w={"full"} display={"flex"} justifyContent={"center"}>
+                    {t("common.status")}
+                </Text>
+            ),
             selector: (row: any) => row?.status,
             cell: (row: any) => (
                 <Badge
                     variant={
                         row?.status === "CONFIRMED"
-                            ? "success"
+                            ? "blue"
                             : row?.status === "UNCONFIRMED"
                             ? "danger"
                             : row?.status === "COMPLETED"
-                            ? "blue"
+                            ? "success"
                             : "black"
                     }
                 >
@@ -137,7 +172,7 @@ const InquiryManagement = () => {
 
             sortable: true,
             wrap: true,
-            width: "250px"
+            width: "180px"
         }
     ];
 
@@ -168,14 +203,6 @@ const InquiryManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData?.message ? errorData?.message : errorData.response?.data?.message,
-                            status: "error",
-                            variant: "solid",
-                            duration: 2000,
-                            position: "top-right",
-                            isClosable: true
-                        });
                     }
                 )
             );
@@ -191,19 +218,15 @@ const InquiryManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData?.message ? errorData?.message : errorData.response?.data?.message,
-                            status: "error",
-                            variant: "solid",
-                            duration: 2000,
-                            position: "top-right",
-                            isClosable: true
-                        });
                     }
                 )
             );
         }
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     useEffect(() => {
         getInquiry(false);
@@ -243,6 +266,7 @@ const InquiryManagement = () => {
                                 <ReactDatePicker
                                     dateFormat="yyyy/MM/dd"
                                     className="form-date"
+                                    locale={ja}
                                     selected={values.dateOfContact}
                                     onChange={(date: any) => {
                                         setFieldValue("dateOfContact", date);
@@ -268,7 +292,7 @@ const InquiryManagement = () => {
                     <Flex gap={2} mb={2} flexDir={"column"} ml={4}>
                         {/* <ExportExcel /> */}
                         <Box w="36"></Box>
-                        <ExportExcel fileName={"Inquiry"} />
+                        <ExportExcel getExcelData={getExcelData} fileName={"Inquiry"} />
                         <SearchButton isLoading={isLoading} handleSearchData={handleSubmit} />
                         <ResetButton isDisabled={!dirty && disableReset} handleReset={handleReset} />
                     </Flex>

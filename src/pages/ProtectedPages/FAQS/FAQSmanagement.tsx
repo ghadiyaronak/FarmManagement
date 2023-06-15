@@ -132,7 +132,7 @@ const FAQSmanagement = () => {
         },
         {
             id: 2,
-            name: t("faq_mgmt.add_section"),
+            name: t("faq_mgmt.section_name"),
             selector: (row: any) => row.name,
             sortable: true,
             omit: false,
@@ -211,7 +211,7 @@ const FAQSmanagement = () => {
         },
         {
             id: 2,
-            name: t("faq_mgmt.add_section"),
+            name: t("faq_mgmt.section_name"),
             selector: (row: any) => row?.faq_section?.name,
             sortable: true,
             omit: false,
@@ -236,7 +236,7 @@ const FAQSmanagement = () => {
 
         {
             id: 4,
-            name: t("faq_mgmt.question"),
+            name: t("質問名"),
             selector: (row: any) => row.question,
             sortable: true,
             omit: false,
@@ -315,7 +315,7 @@ const FAQSmanagement = () => {
         }
     ];
 
-    const tabs = [{ name: "セクション" }, { name: t("faq_mgmt.question") }];
+    const tabs = [{ name: "分類名" }, { name: t("faq_mgmt.question") }];
 
     return (
         <>
@@ -333,9 +333,9 @@ const FAQSmanagement = () => {
 
             <Box w="100%" position="relative">
                 <Flex justify="space-between" align="center">
-                    <MainHeading title={t("faq_mgmt.faq")} />
+                    <MainHeading title={t("faqs.faq")} />
                     <Flex gap={3}>
-                        <AddButton handleAdd={hanldeAddSection} title="セクション追加" />
+                        <AddButton handleAdd={hanldeAddSection} title="分類登録" />
                         <AddButton handleAdd={hanldeAddFAQ} title={t("faq_mgmt.add_question")} />
                     </Flex>
                 </Flex>
@@ -351,7 +351,6 @@ const FAQSmanagement = () => {
                                             background: globalStyles.colors.mainColor,
                                             color: "gray.100"
                                         }}
-                                        _hover={{ bgColor: "blue.300" }}
                                     >
                                         {tab.name}
                                     </Tab>

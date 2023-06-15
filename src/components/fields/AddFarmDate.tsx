@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Flex, FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
 import dayjs from "dayjs";
+import "moment/locale/ja";
+import moment from "moment/moment.js";
 
 interface InputFieldProps {
     label: string;
@@ -12,6 +14,7 @@ interface InputFieldProps {
     errors: any;
     touched: any;
     isMandatory?: any;
+    locale?: any;
 }
 
 const AddFarmDate: React.FC<InputFieldProps> = (props, isMandatory) => {
@@ -32,7 +35,7 @@ const AddFarmDate: React.FC<InputFieldProps> = (props, isMandatory) => {
                     type={props.type}
                     value={props.value}
                     onChange={props.handleChange}
-                    // min={dayjs(new Date()).format("YYYY-MM-DD")}
+                    min={moment().format("LL")}
                     onBlur={props.handleBlur}
                     isInvalid={props.errors && props.touched}
                     errorBorderColor="red.300"

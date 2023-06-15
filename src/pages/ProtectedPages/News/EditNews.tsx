@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Divider, Flex, Heading, Stack, useToast } from "@chakra-ui/react";
+import { Box, Divider, Flex, FormLabel, Heading, Stack, useToast } from "@chakra-ui/react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
@@ -13,6 +13,9 @@ import FormTextArea from "../../../components/form/FormTextArea";
 import LabelTextField from "../../../components/form/LabelTextField";
 import dayjs from "dayjs";
 import EditInputField from "../../../components/fields/EditInputField";
+import DatePickerCustom from "../../../components/fields/DatePickerCustom";
+import ReactDatePicker from "react-datepicker";
+import ja from "date-fns/locale/ja";
 
 interface FarmFormProps {
     value?: any;
@@ -31,6 +34,8 @@ const EditNews = ({ value }: FarmFormProps) => {
     const params = useParams();
     const [newsData, setNewsData] = useState<any>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [newsStartDateDate, setStartDateDate] = useState<Date | null>(null);
+    const [newsEndDateDate, setEndDateDate] = useState<Date | null>(null);
 
     const getNewsList = () => {
         dispatch(
@@ -43,8 +48,8 @@ const EditNews = ({ value }: FarmFormProps) => {
                     const news = success.data.rows[0];
                     setFieldValue("title", news?.title);
                     setFieldValue("content", news?.content);
-                    setFieldValue("startDate", news?.startDate);
-                    setFieldValue("endDate", news?.endDate);
+                    setFieldValue("start_date", dayjs(news?.start_date).format("YYYY/MM/DD "));
+                    setFieldValue("end_date", dayjs(news?.end_date).format("YYYY/MM/DD "));
 
                     setNewsData(news);
                 },
@@ -61,13 +66,20 @@ const EditNews = ({ value }: FarmFormProps) => {
         );
     };
 
+    const productSchema = yup.object().shape({
+        title: yup.string().required(t("messages.title_is_required")),
+        content: yup.string().max(1500, t("messages.maximum_1500_words")).required(t("messages.content_is_required")),
+        start_date: yup.string().required(t("messages.start_date_is_required")),
+        end_date: yup.string().required(t("messages.end_date_is_required"))
+    });
+
     const onSubmit = () => {
         setIsLoading(true);
         const data = {
             title: values.title,
-            startDate: values.startDate,
+            start_date: dayjs(values.start_date).format("YYYY-MM-DD"),
             content: values.content,
-            endDate: values.endDate
+            end_date: dayjs(values.end_date).format("YYYY-MM-DD")
         };
         dispatch(
             NewsService.updateNews(
@@ -81,7 +93,7 @@ const EditNews = ({ value }: FarmFormProps) => {
                         position: "top-right",
                         isClosable: true
                     });
-                    navigate(`/news-view/${newsData.id}`);
+                    navigate(`/news-view/${newsData._id}`);
                     setIsLoading(false);
                 },
                 (errorData: any) => {
@@ -113,11 +125,16 @@ const EditNews = ({ value }: FarmFormProps) => {
         initialValues: {
             title: "",
             content: "",
-            startDate: "",
-            endDate: ""
+            start_date: "",
+            end_date: ""
         },
-        onSubmit
+        onSubmit,
+        validationSchema: productSchema
     });
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     useEffect(() => {
         getNewsList();
@@ -171,29 +188,66 @@ const EditNews = ({ value }: FarmFormProps) => {
                             />
                         </Flex>
 
-                        <EditInputField
-                            label={t("news.start_date")}
-                            name={"startDate"}
-                            type={"date"}
-                            value={dayjs(values?.startDate).format("YYYY-MM-DD")}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors.startDate}
-                            touched={touched.startDate}
-                        />
-                        <Divider />
-                        <Divider />
+                        <Flex flex={1} fontSize={"sm"} borderBottom={"1px solid #E0E0E0"} alignItems={"center"}>
+                            <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
+                                {t("news.start_date")}
+                            </FormLabel>
+                            <Box ps={3} w={"lg"}>
+                                <ReactDatePicker
+                                    className={`custom ${touched.start_date && !newsStartDateDate}`}
+                                    locale={ja}
+                                    name="start_date"
+                                    placeholderText={String(t(""))}
+                                    onChange={(date: any) => {
+                                        setFieldValue("start_date", dayjs(date).format("YYYY/MM/DD"));
+                                    }}
+                                    dateFormat={"YYYY/MM/DD"}
+                                    value={values.start_date}
+                                    popperClassName="popper-class"
+                                    popperPlacement="bottom-start"
+                                    showPopperArrow={false}
+                                />
+                                {/* {touched.contractStartDate && !contractStartDateDate ? (
+                                <Text fontSize={"sm"} mt={1} color={"red.300"}>
+                                    {t("messages.register_date_is_required")}
+                                </Text>
+                            ) : (
+                                ""
+                            )} */}
+                            </Box>
+                        </Flex>
 
-                        <EditInputField
-                            label={t("news.end_date")}
-                            name={"endDate"}
-                            type={"date"}
-                            value={dayjs(values?.endDate).format("YYYY-MM-DD")}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors.endDate}
-                            touched={touched.endDate}
-                        />
+                        <Flex flex={1} fontSize={"sm"} borderBottom={"1px solid #E0E0E0"} alignItems={"center"}>
+                            <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
+                                {t("news.end_date")}
+                            </FormLabel>
+                            <Box ps={3} w={"lg"}>
+                                <ReactDatePicker
+                                    className={`custom ${touched.end_date && !newsEndDateDate}`}
+                                    locale={ja}
+                                    name="end_date"
+                                    placeholderText={String(t(""))}
+                                    onChange={(date: any) => {
+                                        setFieldValue(
+                                            "end_date",
+                                            dayjs(date).format("YYYY/MM/DD") ? dayjs(date).format("YYYY/MM/DD") : "--"
+                                        );
+                                    }}
+                                    dateFormat={"YYYY/MM/DD"}
+                                    value={values.end_date}
+                                    popperClassName="popper-class"
+                                    popperPlacement="bottom-start"
+                                    showPopperArrow={false}
+                                />
+                                {/* {touched.contractStartDate && !contractStartDateDate ? (
+                                <Text fontSize={"sm"} mt={1} color={"red.300"}>
+                                    {t("messages.register_date_is_required")}
+                                </Text>
+                            ) : (
+                                ""
+                            )} */}
+                            </Box>
+                        </Flex>
 
                         <SaveButton isLoading={isLoading} title={t("farm_mgmt.update")} onClick={handleSubmit} />
                     </Flex>

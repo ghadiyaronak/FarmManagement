@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Flex, FormLabel, Heading, Stack, Text, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -19,6 +19,11 @@ import AddFarmMemo from "../../../components/form/AddFarmMemo";
 import CustomTextArea from "../../../components/form/CustomTextArea";
 import ReactDatePicker from "react-datepicker";
 import { projectTypes } from "../../../types/data.types";
+import ja from "date-fns/locale/ja";
+import DatePickerCustom from "../../../components/fields/DatePickerCustom";
+import ReactDatePickerComponent from "../../../components/form/ReactDatePickerComponent";
+import moment from "moment/moment.js";
+import "moment/locale/ja";
 
 interface FarmFormProps {
     value?: any;
@@ -31,26 +36,34 @@ interface FarmFormProps {
 
 const EditForm = ({}: FarmFormProps) => {
     const dispatch = useDispatch();
+    const formated_date: any = moment().format("MMMM Do YYYY, h:mm:ss a");
+
     const navigate = useNavigate();
     const { t } = useTranslation();
     const toast = useToast();
     const [isLoading, setIsLoading] = useState<any>(false);
     const today = new Date();
     const [contractStartDate, setContractStartDate] = useState<Date | null>(null);
+    const [registerDate, setRegisterDate] = useState<any>(null);
+    // const [registerDate, setRegisterDate] = useState<Date | null>(null);
+
     const [contractEndDate, setContractEndDate] = useState<Date | null>(null);
+    const [startDate, setStartDate] = useState(new Date());
+    const [date, setDate] = useState(new Date());
+
+    const handleCalendarClose = () => console.log("Calendar closed");
+    const handleCalendarOpen = () => console.log("Calendar opened");
 
     const onSubmit = () => {
         setIsLoading(true);
         const data = {
             farm_name: values.farm_name,
             email: values.email,
-            AppPin: values.AppPin,
             contact_number: values.contact_number,
-            register_date: values.register_date,
+            register_date: registerDate,
             status: values.status.value,
             owner_name: values.owner_name,
             subArea: values.subArea,
-            subAreaNumber: values.subAreaNumber,
             contractStartDate: contractStartDate,
             contractEndDate: contractEndDate,
             construction_period: values.construction_period,
@@ -98,20 +111,20 @@ const EditForm = ({}: FarmFormProps) => {
         farm_name: yup.string().required(t("messages.farm_name_is_required")),
         owner_name: yup.string().required(t("messages.owner_name_is_required")),
         email: yup.string().required(t("messages.email_field_is_required")),
-        register_date: yup.string().required(t("messages.register_date_is_required")),
-        // construction_period: yup.string().required(t("messages.construction_period")),
+        // register_date: yup.string().required(t("messages.register_date_is_required")),
         contact_number: yup
             .string()
             .min(10, t("messages.10_digit_contact_number_is_required!"))
             .max(10, t("messages.10_digit_contact_number_is_required!"))
             .required(t("messages.contact_number_field_is_required")),
-        postalCode: yup.string().required(t("messages.postal_code")),
+        postalCode: yup
+            .string()
+            .min(7, t("messages.minimum_7_character"))
+            .max(7, t("messages.maximum_7_character"))
+            .required(t("messages.postal_code")),
         prefecture: yup.string().required(t("messages.prefecture")),
         city: yup.string().required(t("messages.city")),
-        subArea: yup.string().required(t("messages.sub_area")),
-        subAreaNumber: yup.string().required(t("messages.subarea_number")),
-
-        AppPin: yup.string().max(4, "Maximum 4 character").required(t("messages.app_pin_is_required")),
+        subArea: yup.string().max(1000, t("messages.maximum_1000_words")).required(t("messages.sub_area")),
         status: yup.object().shape({
             value: yup.string().required(t("messages.status_field_is_required"))
         })
@@ -136,12 +149,10 @@ const EditForm = ({}: FarmFormProps) => {
             endDate: "",
             construction_period: "",
             contact_number: "",
-            AppPin: "",
             email: "",
             memo: "",
             city: "",
             postalCode: "",
-            subAreaNumber: "",
             subArea: "",
             prefecture: "",
             status: {
@@ -151,9 +162,14 @@ const EditForm = ({}: FarmFormProps) => {
             contractStartDate: "",
             contractEndDate: ""
         },
-        onSubmit,
-        validationSchema: productSchema
+        validationSchema: productSchema,
+        onSubmit
     });
+    console.log(values.register_date);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     return (
         <>
@@ -201,26 +217,48 @@ const EditForm = ({}: FarmFormProps) => {
                             isMandatory={true}
                         />
 
-                        <AddFarmDate
-                            label={t("common.register_date")}
-                            name={"register_date"}
-                            type={"date"}
-                            value={values.register_date}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors.register_date}
-                            touched={touched.register_date}
-                            isMandatory={true}
-                        />
-                        {/* 
-                        <DateSelect
-                            label={t("farm_mgmt.construction_period")}
-                            startDate={contractStartDate}
-                            endDate={contractEndDate}
-                            setStartDate={setContractStartDate}
-                            setEndDate={setContractEndDate}
-                            isMandatory={true}
-                        /> */}
+                        <Flex flex={1} fontSize={"sm"} borderTop={"1px solid #E0E0E0"} alignItems={"center"}>
+                            <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
+                                {t("common.register_date")}
+                                <Text color={"red"} as="span">
+                                    *
+                                </Text>
+                            </FormLabel>
+                            <Box ps={3} w={"lg"}>
+                                <ReactDatePicker
+                                    className={`custom ${
+                                        touched.register_date && !registerDate
+                                            ? // (touched.contractEndDate && !contractEndDate)
+                                              "border-red"
+                                            : ""
+                                    }`}
+                                    dateFormat="yyyy/MM/dd"
+                                    selected={registerDate}
+                                    locale={ja}
+                                    minDate={new Date()}
+                                    placeholderText={String(t(""))}
+                                    onChange={(dates: any) => {
+                                        const start = dates;
+                                        setRegisterDate(start);
+                                    }}
+                                    onChangeRaw={() => {
+                                        setFieldTouched("register_date", true);
+                                    }}
+                                    startDate={new Date()}
+                                    popperClassName="popper-class"
+                                    popperPlacement="bottom-start"
+                                    // todayButton={t("common.today")}
+                                    showPopperArrow={false}
+                                />
+                                {touched.register_date && !registerDate ? (
+                                    <Text fontSize={"sm"} mt={1} color={"red.300"}>
+                                        {t("messages.register_date_is_required")}
+                                    </Text>
+                                ) : (
+                                    ""
+                                )}
+                            </Box>
+                        </Flex>
 
                         <Flex flex={1} fontSize={"sm"} borderTop={"1px solid #E0E0E0"} alignItems={"center"}>
                             <FormLabel fontWeight={"500"} p={5} w={"2xs"} backgroundColor={"#F9FAFA"} m={"0"}>
@@ -239,6 +277,8 @@ const EditForm = ({}: FarmFormProps) => {
                                     }`}
                                     dateFormat="yyyy/MM/dd"
                                     selected={contractStartDate}
+                                    locale={ja}
+                                    minDate={new Date(registerDate)}
                                     placeholderText={String(t(""))}
                                     onChange={(dates: any) => {
                                         const [start, end] = dates;
@@ -255,11 +295,10 @@ const EditForm = ({}: FarmFormProps) => {
                                     // className="custom custom-date"
                                     popperClassName="popper-class"
                                     popperPlacement="bottom-start"
-                                    minDate={today}
-                                    todayButton={t("common.today")}
+                                    // minDate={today}
+                                    // todayButton={t("common.today")}
                                     showPopperArrow={false}
                                     isClearable
-                                    locale={"ja"}
                                 />
                                 {(touched.contractStartDate && !contractStartDate) ||
                                 (touched.contractEndDate && !contractEndDate) ? (
@@ -294,20 +333,6 @@ const EditForm = ({}: FarmFormProps) => {
                             maxValue={10}
                             minValue={10}
                             label={t("common.contact_number")}
-                            isMandatory={true}
-                        />
-
-                        <FormInput
-                            name="AppPin"
-                            Type="number"
-                            values={values.AppPin}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            minValue={4}
-                            maxValue={4}
-                            errors={errors.AppPin}
-                            touched={touched.AppPin}
-                            label={t("farm_mgmt.app_pin")}
                             isMandatory={true}
                         />
 
@@ -360,18 +385,6 @@ const EditForm = ({}: FarmFormProps) => {
                             />
                         </Flex>
 
-                        <FormInput
-                            name="subAreaNumber"
-                            Type="text"
-                            values={values.subAreaNumber}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors.subAreaNumber}
-                            touched={touched.subAreaNumber}
-                            label={t("farm_mgmt.subarea_number")}
-                            isMandatory={true}
-                        />
-
                         <AddFormStatus
                             touched={touched.status}
                             error={errors.status}
@@ -385,17 +398,19 @@ const EditForm = ({}: FarmFormProps) => {
                             onBlur={handleBlur}
                         />
 
-                        <AddFarmMemo
-                            name="memo"
-                            Type="text"
-                            values={values.memo}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors.memo}
-                            touched={touched.memo}
-                            label={t("farm_mgmt.memo")}
-                            isMandatory={true}
-                        />
+                        <Flex w={"full"} borderTop={"1px solid #E0E0E0"}>
+                            <FormTextArea label={t("farm_mgmt.memo")} isMandatory={false} />
+                            <CustomTextArea
+                                name="memo"
+                                value={values.memo}
+                                handleChange={handleChange}
+                                handleBlur={handleBlur}
+                                errors={errors.memo}
+                                touched={touched.memo}
+                                isMandatory={false}
+                                style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
+                            />
+                        </Flex>
 
                         <SaveButton isLoading={isLoading} title={t("farm_mgmt.save")} />
                     </Flex>

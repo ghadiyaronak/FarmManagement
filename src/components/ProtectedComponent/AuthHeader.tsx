@@ -55,24 +55,22 @@ import HeadingButtonRight from "../button/HeadingButton";
 import { globalStyles } from "../../theme/styles";
 
 const AuthHeader = ({ open }: any) => {
-    const [name, setName] = useState<any>("");
     const navigate = useNavigate();
     const toast = useToast();
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
-
+    const [isLoading, setIsLoading] = useState<any>(false);
     const Email = useSelector((state: any) => state?.Auth?.profile);
     const data = useSelector((state: any) => state?.Auth);
-
     const [authData, setAuthData] = useState<any>([]);
-
+    const [name, setName] = useState<any>("");
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleLogout = () => {
         localStorage.removeItem("user");
         TokenService.removeUser();
-        navigate("/login");
         sessionStorage.removeItem("selectedtabadmin");
+        navigate("/login");
         toast({
             title: t("messages.logout_success"),
             status: "success",
@@ -108,6 +106,8 @@ const AuthHeader = ({ open }: any) => {
         );
     };
     const onSubmit = () => {
+        setIsLoading(true);
+
         const data = {
             name: name
             // accessToken: user
@@ -128,6 +128,7 @@ const AuthHeader = ({ open }: any) => {
                     });
                     onClose();
                     getProfile(false);
+                    setIsLoading(false);
                 },
                 (errorData: any) => {
                     toast({
@@ -138,6 +139,7 @@ const AuthHeader = ({ open }: any) => {
                         position: "top-right",
                         isClosable: true
                     });
+                    setIsLoading(false);
                 }
             )
         );
@@ -183,7 +185,7 @@ const AuthHeader = ({ open }: any) => {
                 alignItems={"center"}
             >
                 <Box rounded={"sm"} w={"32"} h={"8"} p={0} ml={"-1"}>
-                    <Image src="./navLogo.png" alt="navlogo" />
+                    <Image src="/navLogo.png" alt="navlogo" />
                 </Box>
             </Box>
 
@@ -200,7 +202,15 @@ const AuthHeader = ({ open }: any) => {
                             <PopoverTrigger>
                                 <Flex gap={5} justifyContent={"center"} alignItems={"center"}>
                                     {authData.name ? (
-                                        <Text cursor={"pointer"} onClick={onOpen}>
+                                        <Text
+                                            cursor={"pointer"}
+                                            onClick={() => {
+                                                if (authData.name) {
+                                                    setName(authData.name);
+                                                }
+                                                onOpen();
+                                            }}
+                                        >
                                             {authData.name}
                                         </Text>
                                     ) : (
@@ -265,21 +275,21 @@ const AuthHeader = ({ open }: any) => {
                             <ModalCloseButton />
                             <ModalHeader pl={0}>{t("auth_header.add_your_name")}</ModalHeader>
                             <FormLabel fontWeight={"bold"}>{t("auth_header.name")}:</FormLabel>
-                            <Input placeholder={authData.name} onChange={(e) => setName(e.target.value)} />
+                            <Input value={name} onChange={(e) => setName(e.target.value)} />
                             <ModalFooter>
                                 <Button
                                     onClick={() => {
                                         onSubmit();
                                         setUserName(true);
                                     }}
+                                    isLoading={isLoading}
+                                    mr={3}
                                     bgColor={globalStyles.colors.mainColor}
                                     _hover={{ bgColor: "blue.300" }}
                                     color={"white"}
-                                    mr={3}
                                 >
                                     {t("auth_header.save")}
                                 </Button>
-
                                 <Button
                                     bgColor={"red.500"}
                                     color={"white"}

@@ -50,7 +50,7 @@ export const ALL_INQUIRY = BASE_URL + "/inquiry/store?offset=0&limit=20";
 export const CREATE_INQUIRY = BASE_URL + "/inquiry/store";
 export const UPDATE_INQUIRY = BASE_URL + "/inquiry/comment";
 export const DELETE_INQUIRY = BASE_URL + "/inquiry";
-export const EXCELINQUIRY = BASE_URL;
+export const EXCELINQUIRY = BASE_URL + "/inquiry/excel";
 
 //ORDERS
 export const ALL_ORDER = BASE_URL + "/order?limit=10";
@@ -67,6 +67,8 @@ export const DASHBOARD_URL = BASE_URL + "/adminDashboard/dashboard";
 //inquiry
 export const ALL_INQUIRY_URL = BASE_URL + "/admin/inquiry";
 export const UPDATE_INQUIRY_DETAILS_API = BASE_URL + "/admin/inquiry/";
+export const GET_INQUIRY_DOWNLOAD_API = BASE_URL + "/admin/inquiry/excel";
+
 
 // Invoice
 export const DOWNLOADINVOICE = BASE_URL + "/order/invoice";
@@ -92,6 +94,9 @@ export const GET_DEVICE_DOWNLOAD_API = BASE_URL + "/admin/device/excel";
 
 export const GET_DEVICE_ACTIVITY_API = BASE_URL + "/admin/device/activity";
 
+export const GET_DEVICE_CHART_ACTIVITY_API = BASE_URL + "/admin/weekly/data";
+
+
 
 //Camera
 export const GET_CAMERA_API = BASE_URL + "/admin/camera/list";
@@ -110,7 +115,7 @@ export const UPDATE_USER_DETAILS = BASE_URL + "/admin/";
 // News
 export const GET_NEWS_API = BASE_URL + "/admin/news";
 export const DELETE_NEWS_API = BASE_URL + "/admin/news/";
-export const ADD_NEWS_API = BASE_URL + "/admin/news/";
+export const ADD_NEWS_API = BASE_URL + "/admin/news";
 export const UPDATE_NEWS_DETAILS = BASE_URL + "/admin/news/";
 
 export const GET_NEWS_DOWNLOAD_API = BASE_URL + "/admin/news/excel";

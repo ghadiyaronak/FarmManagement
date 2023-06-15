@@ -56,7 +56,7 @@ class UserService {
             query.append("_id", _payload?.userId);
         }
         if (_payload?.role) {
-            query.append("isOwner", _payload?.role);
+            query.append("role", _payload?.role);
         }
         if (_payload?.farm_Id) {
             query.append("farm_id", _payload?.farm_Id);

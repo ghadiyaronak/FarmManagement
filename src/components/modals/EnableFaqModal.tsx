@@ -8,19 +8,12 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Text,
     useToast
 } from "@chakra-ui/react";
-
-// redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-
 import FaqService from "../../services/FaqService";
-
 import { useTranslation } from "react-i18next";
-
-import FooterModal from "./FooterModal";
 import { globalStyles } from "../../theme/styles";
 
 interface IProps {
@@ -53,7 +46,7 @@ const SectionModal = ({ isOpen, onClose, getAllFaq, getAllSection }: IProps) => 
                     (responseData: any) => {
                         setIsLoading(false);
                         toast({
-                            title: "セクションを更新しました",
+                            title: "'FAQセクションを更新しました'",
                             status: "success",
                             variant: "solid",
                             duration: 2000,
@@ -79,8 +72,6 @@ const SectionModal = ({ isOpen, onClose, getAllFaq, getAllSection }: IProps) => 
         } else {
             const data = {
                 faq_id: faqDetails?._id,
-                // sectionId: faqDetails?._id,
-
                 enabled: !faqDetails?.enabled
             };
             dispatch(
@@ -89,7 +80,7 @@ const SectionModal = ({ isOpen, onClose, getAllFaq, getAllSection }: IProps) => 
                     (responseData: any) => {
                         setIsLoading(false);
                         toast({
-                            title: "FAQーを更新しました",
+                            title: responseData?.message ? responseData?.message : responseData.response?.data?.message,
                             status: "success",
                             variant: "solid",
                             duration: 2000,
@@ -148,56 +139,57 @@ const SectionModal = ({ isOpen, onClose, getAllFaq, getAllSection }: IProps) => 
                 </ModalBody>
 
                 <ModalFooter>
-                    {/* <FooterModal
-                        type="delete"
-                        isLoading={isLoading}
-                        handleDelete={handleConfirm}
-                        handleClose={onClose}
-                    />
-                     */}
-                    <Button
-                        colorScheme={
-                            faqDetails?.enabled
-                                ? faqDetails?.type === "section"
-                                    ? "green"
+                    {faqDetails?.type === "faq" ? (
+                        <Button
+                            colorScheme={
+                                faqDetails?.enabled
+                                    ? faqDetails?.type === "faq"
+                                        ? "green"
+                                        : "green"
+                                    : faqDetails?.type === "faq"
+                                    ? "red"
                                     : "green"
+                            }
+                            mr={2}
+                            onClick={handleConfirm}
+                            isLoading={isLoading}
+                        >
+                            {faqDetails?.enabled
+                                ? faqDetails?.type === "faq"
+                                    ? t("common.private")
+                                    : t("common.keep")
+                                : faqDetails?.type === "faq"
+                                ? t("common.keep")
+                                : t("common.keep")}
+                        </Button>
+                    ) : (
+                        <Button
+                            colorScheme={
+                                faqDetails?.enabled
+                                    ? faqDetails?.type === "section"
+                                        ? "green"
+                                        : "green"
+                                    : faqDetails?.type === "section"
+                                    ? "red"
+                                    : "green"
+                            }
+                            mr={2}
+                            onClick={handleConfirm}
+                            isLoading={isLoading}
+                        >
+                            {faqDetails?.enabled
+                                ? faqDetails?.type === "section"
+                                    ? t("common.private")
+                                    : t("common.keep")
                                 : faqDetails?.type === "section"
-                                ? "red"
-                                : "green"
-                        }
-                        mr={2}
-                        onClick={handleConfirm}
-                        isLoading={isLoading}
-                    >
-                        {" "}
-                        {faqDetails?.enabled
-                            ? faqDetails?.type === "section"
-                                ? t("common.private")
-                                : t("common.keep")
-                            : faqDetails?.type === "section"
-                            ? t("common.keep")
-                            : t("common.keep")}
-                    </Button>
-                    <Button
-                        bgColor={globalStyles.colors.btn.blue}
-                        _hover={{ bgColor: "blue.300" }}
-                        color="white"
-                        mr={3}
-                        onClick={onClose}
-                    >
+                                ? t("common.keep")
+                                : t("common.keep")}
+                        </Button>
+                    )}
+
+                    <Button bgColor={globalStyles.colors.mainColor} color="white" mr={3} onClick={onClose}>
                         {t("common.cancel")}
-                    </Button>{" "}
-                    {/* <Button colorScheme="blue" mr={3} onClick={() => setShow(!show)}>
-                        {t("faq.cancel")}
                     </Button>
-                    <Button
-                        isLoading={isLoading}
-                        loadingText="Loading..."
-                        colorScheme="red"
-                        onClick={() => handleConfirm()}
-                    >
-                        {t("faq.confirm")}
-                    </Button> */}
                 </ModalFooter>
             </ModalContent>
         </Modal>

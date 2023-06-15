@@ -93,12 +93,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                 return (
                     <Flex alignItems={"center"} onClick={() => navigate(`/user-view/${row._id}`, { state: row })}>
                         <WrapItem pr={2}>
-                            <Avatar
-                                size="md"
-                                // name="Segun Adebayo"
-                                // src={"https://bit.ly/sage-adebayo" ? "https://bit.ly/sage-adebayo" : `noimg1.jpg`}
-                                src={userData?.profile_image?.url ?? "--"}
-                            />
+                            <Avatar size="md" src={userData?.profile_image?.url ?? "--"} />
                         </WrapItem>
                         <Text
                             color={globalStyles.colors.mainColor}
@@ -121,16 +116,9 @@ const ViewFarm = ({ mode }: EditProps) => {
             wrap: true,
             width: "130px"
         },
+
         {
             id: 3,
-            name: <Text fontWeight={"bold"}>{t("common.email")}</Text>,
-            selector: (row: any) => row?.email,
-            sortable: true,
-            wrap: true,
-            width: "250px"
-        },
-        {
-            id: 4,
             name: <Text fontWeight={"bold"}>{t("common.contact_number")}</Text>,
             selector: (row: any) => row?.contact_number,
             sortable: true,
@@ -138,7 +126,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             width: "150px"
         },
         {
-            id: 5,
+            id: 4,
             name: <Text fontWeight={"bold"}>{t("common.register_date")}</Text>,
             selector: (row: any) => row?.register_date,
             cell: (row: any) => (
@@ -149,7 +137,27 @@ const ViewFarm = ({ mode }: EditProps) => {
             width: "150px"
         },
         {
+            id: 5,
+            name: <Text fontWeight={"bold"}>{t("common.email")}</Text>,
+            selector: (row: any) => row?.email,
+            sortable: true,
+            wrap: true,
+            width: "250px"
+        },
+        {
             id: 6,
+            name: <Text fontWeight={"bold"}>{t("user_mgmt.role")}</Text>,
+            selector: (row: any) => (
+                <Text flexWrap={"wrap"}>
+                    {row?.role === "WRITE" ? t("status.write") : "READ" ? t("status.read") : "--"}
+                </Text>
+            ),
+            sortable: true,
+            wrap: true,
+            width: "150px"
+        },
+        {
+            id: 7,
             name: (
                 <Text fontWeight={"bold"} w={"full"} display={"flex"} justifyContent={"center"}>
                     {t("common.status")}
@@ -204,7 +212,15 @@ const ViewFarm = ({ mode }: EditProps) => {
         {
             id: 3,
             name: <Text fontWeight={"bold"}>{t("device_mgmt.current_value")}</Text>,
-            selector: (row: any) => <Text flexWrap={"wrap"}>{row?.current_value}</Text>,
+            selector: (row: any) => (
+                <Text flexWrap={"wrap"}>
+                    {row.deviceType === "CYLINDER" ? (
+                        <>{row?.current_value === "0" ? t("status.open") : t("status.close")}</>
+                    ) : (
+                        <>{row?.current_value === "0" ? t("status.running") : t("status.stop")}</>
+                    )}
+                </Text>
+            ),
             sortable: true,
             wrap: true,
             width: "180px"
@@ -274,6 +290,14 @@ const ViewFarm = ({ mode }: EditProps) => {
         },
         {
             id: 2,
+            name: <Text fontWeight={"bold"}>{t("device_mgmt.mac_address")}</Text>,
+            selector: (row: any) => row?.mac_address,
+            sortable: true,
+            wrap: true,
+            width: "180px"
+        },
+        {
+            id: 3,
             name: <Text fontWeight={"bold"}>{t("farm_mgmt.farm")}</Text>,
             selector: (row: any) => row?.farm_id?.farm_name,
             sortable: true,
@@ -281,7 +305,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             width: "130px"
         },
         {
-            id: 3,
+            id: 4,
             name: <Text fontWeight={"bold"}>{t("device_mgmt.location")}</Text>,
             selector: (row: any) => row?.location,
             sortable: true,
@@ -289,7 +313,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             width: "180px"
         },
         {
-            id: 4,
+            id: 5,
             name: <Text fontWeight={"bold"}>{t("common.register_date")}</Text>,
             selector: (row: any) => row?.register_date,
             cell: (row: any) => (
@@ -300,7 +324,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             width: "150px"
         },
         {
-            id: 5,
+            id: 6,
             name: (
                 <Text fontWeight={"bold"} w={"full"} display={"flex"} justifyContent={"center"}>
                     {t("common.status")}
@@ -539,7 +563,7 @@ const ViewFarm = ({ mode }: EditProps) => {
 
                     <TabPanels>
                         {/* View Farm */}
-                        <TabPanel w={"full"} px={0}>
+                        <TabPanel px={0}>
                             <Card boxShadow={"none"}>
                                 <CardBody>
                                     <Divider />
@@ -649,7 +673,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                                                 {farmData?.register_date
                                                     ? dayjs(farmData?.register_date).format("YYYY/MM/DD")
                                                     : "--"}
-                                                {/* {row?.register_date ? dayjs(row?.register_date).format("YYYY/MM/DD") : "--"} */}
                                             </Text>
                                         </Flex>
                                     </Stack>
@@ -664,16 +687,20 @@ const ViewFarm = ({ mode }: EditProps) => {
                                                 fontSize={20}
                                                 textTransform="capitalize"
                                             >
-                                                {t("farm_mgmt.contract_start_date")}
+                                                {t("farm_mgmt.construction_period")}
                                             </Heading>
                                             <Text p={3} fontSize="md">
                                                 {farmData?.contractStartDate
                                                     ? dayjs(farmData?.contractStartDate).format("YYYY/MM/DD")
+                                                    : "--"}{" "}
+                                                -{" "}
+                                                {farmData?.contractEndDate
+                                                    ? dayjs(farmData?.contractEndDate).format("YYYY/MM/DD")
                                                     : "--"}
                                             </Text>
                                         </Flex>
                                     </Stack>
-                                    <Divider />
+                                    {/* <Divider />
                                     <Stack divider={<StackDivider />} spacing="4">
                                         <Flex>
                                             <Heading
@@ -692,7 +719,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                                     : "--"}
                                             </Text>
                                         </Flex>
-                                    </Stack>
+                                    </Stack> */}
                                     <Divider />
                                     <Stack divider={<StackDivider />} spacing="4">
                                         <Flex>
@@ -707,7 +734,11 @@ const ViewFarm = ({ mode }: EditProps) => {
                                                 {t("common.status")}
                                             </Heading>
                                             <Text p={3} fontSize="md">
-                                                {farmData?.status === "ACTIVE" ? t("status.active") : t("status.block")}
+                                                <Badge variant={farmData?.status === "ACTIVE" ? "success" : "danger"}>
+                                                    {farmData?.status === "ACTIVE"
+                                                        ? t("status.active")
+                                                        : t("status.block")}
+                                                </Badge>
                                             </Text>
                                         </Flex>
                                     </Stack>
@@ -794,27 +825,9 @@ const ViewFarm = ({ mode }: EditProps) => {
                                                 fontSize={20}
                                                 textTransform="capitalize"
                                             >
-                                                {t("farm_mgmt.subarea_number")}
-                                            </Heading>
-                                            <Text p={3} fontSize="md">
-                                                {farmData?.subAreaNumber ? farmData?.subAreaNumber : "--"}
-                                            </Text>
-                                        </Flex>
-                                    </Stack>
-                                    <Divider />
-                                    <Stack divider={<StackDivider />} spacing="4">
-                                        <Flex>
-                                            <Heading
-                                                w={"72"}
-                                                p={3}
-                                                bg={"#f9fafa"}
-                                                pl={12}
-                                                fontSize={20}
-                                                textTransform="capitalize"
-                                            >
                                                 {t("farm_mgmt.memo")}
                                             </Heading>
-                                            <Text p={3} fontSize="md">
+                                            <Text whiteSpace={"pre-line"} p={3} fontSize="md">
                                                 {farmData?.memo ? farmData?.memo : "--"}
                                             </Text>
                                         </Flex>
@@ -834,7 +847,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                             </Heading>
                                             <Text p={3} fontSize="md">
                                                 {farmData?.lastLoginTime
-                                                    ? dayjs(farmData?.lastLoginTime).format("YYYY/MM/DD HH:MM")
+                                                    ? dayjs(farmData?.lastLoginTime).format("YYYY/MM/DD HH:mm")
                                                     : "--"}
                                             </Text>
                                         </Flex>
@@ -847,12 +860,12 @@ const ViewFarm = ({ mode }: EditProps) => {
                                 <Button
                                     onClick={onOpen}
                                     isLoading={isLoading}
-                                    bgColor={farmData?.status === "ACTIVE" ? "#4299e1" : "red"}
-                                    _hover={{ bgColor: farmData?.status === "ACTIVE" ? "blue.300" : "red.300" }}
+                                    bgColor={farmData?.status === "ACTIVE" ? "red.400" : "#4299e1"}
+                                    _hover={{ bgColor: farmData?.status === "ACTIVE" ? "red.300" : "blue.300" }}
                                     color={"white"}
                                     w={"36"}
                                 >
-                                    {farmData?.status === "ACTIVE" ? t("status.active") : t("status.block")}
+                                    {farmData?.status === "ACTIVE" ? t("status.block") : t("status.active")}
                                 </Button>
                             </Box>
 
@@ -874,7 +887,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     </ModalBody>
                                     <ModalFooter>
                                         <Box
-                                            gap={10}
                                             w={"full"}
                                             display="flex"
                                             justifyContent={"center"}
@@ -883,6 +895,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                             <Button
                                                 bgColor={globalStyles.colors.mainColor}
                                                 _hover={{ bgColor: "blue.300" }}
+                                                isLoading={isLoading}
                                                 onClick={() => {
                                                     setScrollTop(true);
                                                     handleUpdateFarmStatus();
@@ -893,7 +906,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                                 {t("status.yes")}
                                             </Button>
                                             <Button
-                                                bgColor={"red.500"}
+                                                bgColor={"red.400"}
                                                 _hover={{ bgColor: "red.300" }}
                                                 color={"white"}
                                                 onClick={onClose}

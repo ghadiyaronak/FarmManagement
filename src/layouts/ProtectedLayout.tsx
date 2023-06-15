@@ -36,6 +36,7 @@ const NavItem = (props: any) => {
     const { t } = useTranslation();
 
     const currentTab = window.location.pathname;
+
     return (
         <Flex
             align="center"
@@ -47,8 +48,10 @@ const NavItem = (props: any) => {
             color={currentTab?.includes(path) && "white"}
             {...rest}
         >
-            {icon && <Icon boxSize="4" as={icon} />}
-            <Text ml={2} color="gray.800" cursor="pointer">
+            {/* {icon && <Icon boxSize="4" as={icon} />} */}
+            {icon && icon(currentTab?.includes(path) ? "white" : "black")}
+
+            <Text ml={2} fontSize={"sm"} color={currentTab?.includes(path) ? "white" : "black"}>
                 {children}
             </Text>
         </Flex>

@@ -18,6 +18,7 @@ import dayjs from "dayjs";
 import UserService from "../../../services/UserService";
 import FarmServices from "../../../services/FarmServices";
 import ExportExcel from "../../../components/button/Excelexport";
+import ja from "date-fns/locale/ja";
 
 const UserManagement = () => {
     const { t } = useTranslation();
@@ -45,7 +46,7 @@ const UserManagement = () => {
     const [closingDate, setClosingDate] = useState(today);
     const [userData, setUserData] = useState<any>([]);
     const dispatch = useDispatch();
-
+    const [scrollTop, setScrollTop] = useState<boolean>(false);
     const [farmName, setFarmName] = useState<any>([]);
     const toast = useToast();
     function handleClick(row: any) {
@@ -130,7 +131,7 @@ const UserManagement = () => {
                 return (
                     <Flex alignItems={"center"} onClick={() => navigate(`/user-view/${row._id}`, { state: row })}>
                         <WrapItem pr={2}>
-                            <Avatar src={row?.profile_image?.url} name={row?.user_name} />
+                            <Avatar src={row?.profile_image?.url} />
                         </WrapItem>
                         <Text
                             color={globalStyles.colors.mainColor}
@@ -143,7 +144,7 @@ const UserManagement = () => {
                     </Flex>
                 );
             },
-            width: "250px"
+            width: "200px"
         },
         {
             id: 2,
@@ -155,14 +156,27 @@ const UserManagement = () => {
         },
         {
             id: 3,
+            name: <Text fontWeight={"bold"}>{t("user_mgmt.role")}</Text>,
+            selector: (row: any) => (
+                <Text flexWrap={"wrap"}>
+                    {row?.role === "WRITE" ? t("status.write") : "READ" ? t("status.read") : "--"}
+                </Text>
+            ),
+            sortable: true,
+            wrap: true,
+            width: "150px"
+        },
+        {
+            id: 4,
             name: <Text fontWeight={"bold"}>{t("common.email")}</Text>,
             selector: (row: any) => row?.email,
             sortable: true,
             wrap: true,
-            width: "250px"
+            width: "270px"
         },
+
         {
-            id: 4,
+            id: 5,
             name: <Text fontWeight={"bold"}>{t("common.contact_number")}</Text>,
             selector: (row: any) => row?.contact_number,
             sortable: true,
@@ -170,7 +184,7 @@ const UserManagement = () => {
             width: "150px"
         },
         {
-            id: 5,
+            id: 6,
             name: <Text fontWeight={"bold"}>{t("common.register_date")}</Text>,
             selector: (row: any) => row?.register_date,
             cell: (row: any) => (
@@ -181,7 +195,7 @@ const UserManagement = () => {
             width: "150px"
         },
         {
-            id: 6,
+            id: 7,
             name: (
                 <Text fontWeight={"bold"} w={"full"} display={"flex"} justifyContent={"center"}>
                     {t("common.status")}
@@ -263,16 +277,7 @@ const UserManagement = () => {
                         setUserData(success.data.rows);
                         setIsLoading(false);
                     },
-                    (errorData: any) => {
-                        setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
-                    }
+                    (errorData: any) => {}
                 )
             );
         } else {
@@ -285,20 +290,21 @@ const UserManagement = () => {
                     },
                     (errorData: any) => {
                         setIsLoading(false);
-                        toast({
-                            title: errorData.message ? errorData.message : errorData?.data?.message,
-                            status: "error",
-                            duration: 3 * 1000,
-                            isClosable: true,
-                            position: "top-right"
-                        });
                     }
                 )
             );
         }
     };
 
-    console.log(userData);
+    useEffect(() => {
+        scrollTopFunction(), [scrollTop];
+    });
+
+    const scrollTopFunction = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }, 100);
+    };
 
     useEffect(() => {
         getUserList(false), getFarmName();
@@ -344,6 +350,7 @@ const UserManagement = () => {
                                 <ReactDatePicker
                                     dateFormat="yyyy/MM/dd"
                                     className="form-date"
+                                    locale={ja}
                                     selected={values.registerDate}
                                     onChange={(date: any) => {
                                         setFieldValue("registerDate", date);
@@ -370,7 +377,7 @@ const UserManagement = () => {
                                 value={values.status}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
-                                options={config.FARM_STATUS}
+                                options={config.USER_STATUS}
                                 name="status"
                                 multi={false}
                             />

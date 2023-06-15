@@ -35,7 +35,7 @@ const DeviceEdit = () => {
         dispatch(
             DeviceService.getDevice(
                 {
-                    deviceId: params.id
+                    deviceId: params._id
                 },
 
                 (success: any) => {
@@ -52,7 +52,10 @@ const DeviceEdit = () => {
                     setFieldValue("farm_name", device?.farm_id?.farm_name);
                     setFieldValue("memoDeveloper", device?.memoDeveloper);
                     setFieldValue("memo", device?.memo);
-                    setFieldValue("status", device?.status);
+                    setFieldValue("status", {
+                        label: device?.status === "OPERATIONAL" ? "稼働中 " : "停止中 ",
+                        value: device?.status
+                    });
 
                     setDeviceData(device);
                 },
@@ -146,12 +149,16 @@ const DeviceEdit = () => {
     });
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getDeviceList();
     }, []);
 
     return (
         <>
-            <Box w={"4xl"} pt={4} bg={"white"} rounded={"lg"} mt={4}>
+            <Box w={"4xl"} width={{ base: "full", md: "4xl" }} pt={4} bg={"white"} rounded={"lg"} mt={4}>
                 <Box my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                     <Stack position={"absolute"} mx={5}>
                         <ReturnButton />
@@ -188,6 +195,50 @@ const DeviceEdit = () => {
                             </Heading>
                             <Text p={3} fontSize="md">
                                 {deviceData?.name ? deviceData?.name : "--"}
+                            </Text>
+                        </Flex>
+                    </Stack>
+                    <Divider />
+                    <Stack divider={<StackDivider />} spacing="4">
+                        <Flex>
+                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                {t("device_mgmt.client_id")}
+                            </Heading>
+                            <Text p={3} fontSize="md">
+                                {deviceData?.client_id ?? "--"}
+                            </Text>
+                        </Flex>
+                    </Stack>
+                    <Divider />
+                    <Stack divider={<StackDivider />} spacing="4">
+                        <Flex>
+                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                {"pubTopic"}
+                            </Heading>
+                            <Text p={3} fontSize="md">
+                                {deviceData?.pubTopic ?? "--"}
+                            </Text>
+                        </Flex>
+                    </Stack>
+                    <Divider />
+                    <Stack divider={<StackDivider />} spacing="4">
+                        <Flex>
+                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                {"subTopic"}
+                            </Heading>
+                            <Text p={3} fontSize="md">
+                                {deviceData?.subTopic ?? "--"}
+                            </Text>
+                        </Flex>
+                    </Stack>
+                    <Divider />
+                    <Stack divider={<StackDivider />} spacing="4">
+                        <Flex>
+                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                {t("device_mgmt.current_value")}
+                            </Heading>
+                            <Text p={3} fontSize="md">
+                                {deviceData?.current_value === "0" ? t("status.open") : t("status.close")}
                             </Text>
                         </Flex>
                     </Stack>
@@ -260,22 +311,7 @@ const DeviceEdit = () => {
                     </Stack>
                     <Divider />
 
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("common.status")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {/* {deviceData?.status ? deviceData?.status : "--"} */}
-                                {deviceData?.status === "OPERATIONAL"
-                                    ? t("status.operational")
-                                    : t("status.non_operational")}
-                            </Text>
-                        </Flex>
-                    </Stack>
-                    <Divider />
-
-                    {/* <FarmStatusSelect
+                    <FarmStatusSelect
                         touched={touched.status}
                         error={errors.status}
                         isMandatory={true}
@@ -287,18 +323,21 @@ const DeviceEdit = () => {
                         multi={false}
                         onBlur={handleBlur}
                     />
-                    <Divider /> */}
+                    <Divider />
 
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("device_mgmt.device_access")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {deviceData?.deviceAccess === "ENABLE" ? t("status.enable") : t("status.disable")}
-                            </Text>
-                        </Flex>
-                    </Stack>
+                    <Flex w={"full"}>
+                        <FormFildLabel label={t("farm_mgmt.memo")} isMandatory={false} />
+                        <CustomTextArea
+                            name="memo"
+                            value={values.memo}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            errors={errors.memo}
+                            touched={touched.memo}
+                            isMandatory={false}
+                            style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
+                        />
+                    </Flex>
                     <Divider />
 
                     <Flex w={"full"}>
@@ -316,21 +355,6 @@ const DeviceEdit = () => {
                     </Flex>
                     <Divider />
 
-                    <Flex w={"full"}>
-                        <FormFildLabel label={t("farm_mgmt.memo")} isMandatory={false} />
-                        <CustomTextArea
-                            name="memo"
-                            value={values.memo}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors.memo}
-                            touched={touched.memo}
-                            isMandatory={false}
-                            style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
-                        />
-                    </Flex>
-
-                    <Divider />
                     <Stack divider={<StackDivider />} spacing="4">
                         <Flex>
                             <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
@@ -338,7 +362,7 @@ const DeviceEdit = () => {
                             </Heading>
                             <Text p={3} fontSize="md">
                                 {deviceData?.register_date
-                                    ? dayjs(deviceData?.register_date).format("YYYY/MM/DD")
+                                    ? dayjs(deviceData?.register_date).format("YYYY-MM-DD HH:mm")
                                     : "--"}
                             </Text>
                         </Flex>
@@ -352,7 +376,7 @@ const DeviceEdit = () => {
                             </Heading>
                             <Text p={3} fontSize="md">
                                 {deviceData?.lastDateTime
-                                    ? dayjs(deviceData?.lastDateTime).format("YYYY/MM/DD HH:MM")
+                                    ? dayjs(deviceData?.lastDateTime).format("YYYY-MM-DD HH:mm")
                                     : "--"}
                             </Text>
                         </Flex>

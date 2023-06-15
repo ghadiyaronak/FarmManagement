@@ -14,7 +14,7 @@ const Footer = () => {
     };
 
     const FooterItem = {
-        label: "Smart Farm",
+        label: "マイミル",
         href: "https://www.instagram.com/happy_lotus2212/",
         icon: <FaInstagram />
     };
@@ -31,7 +31,7 @@ const Footer = () => {
         >
             <Container as={Stack} maxW={"6xl"} py={2}>
                 <Flex alignItems={"center"} justifyContent={"space-around"}>
-                    <Text fontSize={"sm"}> {t("footer.all_rights_reserved")}</Text>
+                    <Text fontSize={"sm"}> {"© Copyright 2023 （資）羽生惣吾商店 All rights reserved."}</Text>
 
                     <Flex alignItems={"center"} gap={3}>
                         <chakra.button

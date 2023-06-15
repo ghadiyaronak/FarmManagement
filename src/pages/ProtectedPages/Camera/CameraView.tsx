@@ -1,4 +1,5 @@
 import {
+    Badge,
     Box,
     Button,
     Card,
@@ -22,6 +23,7 @@ import dayjs from "dayjs";
 import { globalStyles } from "../../../theme/styles";
 import { BiLinkExternal } from "react-icons/bi";
 import HeadingButtonRight from "../../../components/button/HeadingButton";
+import CameraActivity from "./CameraActivity";
 
 const CameraView = () => {
     const { t } = useTranslation();
@@ -47,16 +49,20 @@ const CameraView = () => {
     };
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getCameraList();
     }, []);
 
     return (
         <>
-            <Box w={"4xl"} pt={4}>
+            <Box w={"4xl"} width={{ base: "full", md: "4xl" }} pt={4}>
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
-                            <ReturnButton link={"/camera-management"} />
+                            <ReturnButton link="/camera-management" />
                         </Stack>
                         <CardHeader
                             p={0}
@@ -101,34 +107,22 @@ const CameraView = () => {
                         </Stack>
                         <Divider />
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
+                            <Flex flex={"0.3"}>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("camera_mgmt.link_id")}
                                 </Heading>
                                 <Text
+                                    flex={"0.7"}
                                     p={3}
                                     as={"a"}
                                     fontSize="md"
                                     cursor={"pointer"}
-                                    display={"Flex"}
                                     alignItems={"center"}
                                     color={globalStyles.colors.mainColor}
                                     href={cameraData?.live_view_link ? cameraData?.live_view_link : "--"}
-                                    target="_blank"
                                 >
                                     {cameraData?.live_view_link ? cameraData?.live_view_link : "--"}
                                     <BiLinkExternal />
-                                </Text>
-                            </Flex>
-                        </Stack>
-                        <Divider />
-                        <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
-                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
-                                    {t("camera_mgmt.camera_type")}
-                                </Heading>
-                                <Text p={3} fontSize="md">
-                                    {cameraData?.cameraType ? cameraData?.cameraType : "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -175,10 +169,6 @@ const CameraView = () => {
                                               })
                                             : ""
                                     }
-                                    // onClick={() =>
-                                    //     cameraData?.farm_id?.farm_name ?
-                                    //     navigate({ pathname: `/viewfarm/${cameraData?.farm_id._id}`, search: `?tab=0` }) : ""
-                                    // }
                                 >
                                     {cameraData?.farm_id?.farm_name ? cameraData?.farm_id?.farm_name : "--"}
                                     <BiLinkExternal />
@@ -205,20 +195,11 @@ const CameraView = () => {
                                     {t("common.status")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {cameraData?.status === "OPERATIONAL"
-                                        ? t("status.operational")
-                                        : t("status.non_operational")}
-                                </Text>
-                            </Flex>
-                        </Stack>
-                        <Divider />
-                        <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
-                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                    {t("camera_mgmt.camera_access")}
-                                </Heading>
-                                <Text p={3} fontSize="md">
-                                    {cameraData?.cameraAccess === "ENABLE" ? t("status.enable") : t("status.disable")}
+                                    <Badge variant={cameraData?.status === "OPERATIONAL" ? "success" : "danger"}>
+                                        {cameraData?.status === "OPERATIONAL"
+                                            ? t("status.operational")
+                                            : t("status.non_operational")}
+                                    </Badge>
                                 </Text>
                             </Flex>
                         </Stack>
@@ -228,7 +209,7 @@ const CameraView = () => {
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo")}
                                 </Heading>
-                                <Text p={3} fontSize="md">
+                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {cameraData?.memo ?? "--"}
                                 </Text>
                             </Flex>
@@ -239,7 +220,7 @@ const CameraView = () => {
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo_developer")}
                                 </Heading>
-                                <Text p={3} fontSize="md">
+                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {cameraData?.memoDeveloper ?? "--"}
                                 </Text>
                             </Flex>
@@ -252,7 +233,7 @@ const CameraView = () => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {cameraData?.register_date
-                                        ? dayjs(cameraData?.register_date).format("YYYY/MM/DD")
+                                        ? dayjs(cameraData?.register_date).format("YYYY/MM/DD HH:mm")
                                         : "--"}
                                 </Text>
                             </Flex>

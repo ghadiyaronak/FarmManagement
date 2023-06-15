@@ -131,6 +131,10 @@ const InquiryEdit = () => {
     });
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    useEffect(() => {
         getInquiryList();
     }, []);
 
@@ -150,7 +154,7 @@ const InquiryEdit = () => {
                         width="full"
                     >
                         <Heading justifyContent={"center"} alignItems={"center"} alignContent={"center"} size="lg">
-                            {"Inquiry Edit"}
+                            {t("inquiry_mgmt.Inquiry_edit")}
                         </Heading>
                     </Box>
                 </Box>
@@ -202,11 +206,11 @@ const InquiryEdit = () => {
                     <Divider />
 
                     <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
+                        <Flex flex={"0.3"}>
                             <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                 {t("inquiry_mgmt.inquiry_description")}
                             </Heading>
-                            <Text p={3} fontSize="md">
+                            <Text whiteSpace={"pre-line"} flex={"0.7"} p={3} fontSize="md">
                                 {inquiryData?.description ?? "--"}
                             </Text>
                         </Flex>
@@ -216,11 +220,11 @@ const InquiryEdit = () => {
                     <Stack divider={<StackDivider />} spacing="4">
                         <Flex>
                             <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("inquiry_mgmt.date_time")}
+                                {t("common.register_date")}
                             </Heading>
                             <Text p={3} fontSize="md">
                                 {inquiryData?.dateOfContact
-                                    ? dayjs(inquiryData?.dateOfContact).format("YYYY/MM/DD")
+                                    ? dayjs(inquiryData?.dateOfContact).format("YYYY/MM/DD HH:mm")
                                     : "--"}
                             </Text>
                         </Flex>

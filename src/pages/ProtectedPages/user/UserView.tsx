@@ -1,5 +1,6 @@
 import {
     Avatar,
+    Badge,
     Box,
     Button,
     Card,
@@ -103,7 +104,6 @@ const ViewFarm = ({ mode }: EditProps) => {
             )
         );
     };
-
     useEffect(() => {
         getUserList();
     }, []);
@@ -119,7 +119,7 @@ const ViewFarm = ({ mode }: EditProps) => {
 
     return (
         <>
-            <Box w={"3xl"} pt={4}>
+            <Box w={"4xl"} width={{ base: "full", md: "4xl" }} pt={4}>
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
@@ -144,7 +144,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                             size="2xl"
                             borderRadius={"md"}
                             src={userData?.profile_image?.url}
-                            name={userData?.user_name}
+                            // name={userData?.user_name}
                         />
                     </WrapItem>
 
@@ -175,10 +175,25 @@ const ViewFarm = ({ mode }: EditProps) => {
                         <Stack divider={<StackDivider />} spacing="4">
                             <Flex>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
+                                    {t("user_mgmt.user_furigana")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {userData?.userFurigana ? userData?.userFurigana : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
                                     {t("common.gender")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {userData?.gender ? t("user_mgmt.male") : t("user_mgmt.female")}
+                                    {userData?.gender === "MALE"
+                                        ? t("user_mgmt.male")
+                                        : userData?.gender === "FEMALE"
+                                        ? t("user_mgmt.female")
+                                        : "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -268,10 +283,21 @@ const ViewFarm = ({ mode }: EditProps) => {
                         <Stack divider={<StackDivider />} spacing="4">
                             <Flex>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                    {t("farm_mgmt.subarea_number")}
+                                    {t("farm_mgmt.city")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {userData?.subAreaNumber ? userData?.subAreaNumber : "--"}
+                                    {userData?.city ? userData?.city : "--"}
+                                </Text>
+                            </Flex>
+                        </Stack>
+                        <Divider />
+                        <Stack divider={<StackDivider />} spacing="4">
+                            <Flex>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                    {t("farm_mgmt.sub_area")}
+                                </Heading>
+                                <Text p={3} fontSize="md">
+                                    {userData?.subArea ? userData?.subArea : "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -282,7 +308,8 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     {t("user_mgmt.role")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {userData?.isOwner ? t("user_status.admin") : t("user_status.red_only")}
+                                    {/* {userData?.isOwner ? t("user_status.admin") : t("user_status.red_only")} */}
+                                    {userData?.role === "WRITE" ? t("status.write") : "READ" ? t("status.read") : "--"}
                                 </Text>
                             </Flex>
                         </Stack>
@@ -293,7 +320,10 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     {t("common.status")}
                                 </Heading>
                                 <Text p={3} fontSize="md">
-                                    {userData?.status === "ACTIVE" ? t("status.active") : t("status.block")}
+                                    {/* {userData?.status === "ACTIVE" ? t("status.active") : t("status.block")} */}
+                                    <Badge variant={userData?.status === "ACTIVE" ? "success" : "danger"}>
+                                        {userData?.status === "ACTIVE" ? t("status.active") : t("status.block")}
+                                    </Badge>
                                 </Text>
                             </Flex>
                         </Stack>
@@ -305,7 +335,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {userData?.register_date
-                                        ? dayjs(userData?.register_date).format("YYYY/MM/DD")
+                                        ? dayjs(userData?.register_date).format("YYYY/MM/DD HH:mm")
                                         : "--"}
                                 </Text>
                             </Flex>
@@ -318,7 +348,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                 </Heading>
                                 <Text p={3} fontSize="md">
                                     {userData?.last_login
-                                        ? dayjs(userData?.last_login).format("YYYY/MM/DD HH:MM")
+                                        ? dayjs(userData?.last_login).format("YYYY/MM/DD HH:mm")
                                         : "--"}
                                 </Text>
                             </Flex>
@@ -330,12 +360,12 @@ const ViewFarm = ({ mode }: EditProps) => {
                         <Button
                             onClick={onOpen}
                             isLoading={isLoading}
-                            bgColor={userData?.status === "ACTIVE" ? "#4299e1" : "red"}
-                            _hover={{ bgColor: userData?.status === "ACTIVE" ? "blue.300" : "red.300" }}
+                            bgColor={userData?.status === "ACTIVE" ? "red.400" : "#4299e1"}
+                            _hover={{ bgColor: userData?.status === "ACTIVE" ? "red.300" : "blue.300" }}
                             color={"white"}
                             w={"36"}
                         >
-                            {userData?.status == "ACTIVE" ? t("status.active") : t("status.block")}
+                            {userData?.status == "ACTIVE" ? t("status.block") : t("status.active")}
                         </Button>
                     </Box>
 
@@ -357,7 +387,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                             </ModalBody>
                             <ModalFooter>
                                 <Box
-                                    gap={10}
                                     w={"full"}
                                     display="flex"
                                     justifyContent={"center"}
@@ -366,6 +395,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     <Button
                                         bgColor={globalStyles.colors.mainColor}
                                         _hover={{ bgColor: "blue.300" }}
+                                        isLoading={isLoading}
                                         onClick={() => {
                                             setScrollTop(true);
                                             handleUpdateStatus();
@@ -379,7 +409,10 @@ const ViewFarm = ({ mode }: EditProps) => {
                                         bgColor={"red.500"}
                                         _hover={{ bgColor: "red.300" }}
                                         color={"white"}
-                                        onClick={onClose}
+                                        onClick={() => {
+                                            setScrollTop(true);
+                                            onClose();
+                                        }}
                                     >
                                         {t("status.no")}
                                     </Button>

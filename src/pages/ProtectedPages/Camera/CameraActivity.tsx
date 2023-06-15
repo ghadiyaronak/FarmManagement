@@ -7,13 +7,20 @@ import ReturnButton from "../../../components/fields/ReturnButton";
 import CameraService from "../../../services/CameraService";
 import dayjs from "dayjs";
 
-const CameraActivity = () => {
+interface HeadingProps {
+    name?: any;
+}
+const CameraActivity = ({ name }: HeadingProps) => {
+    console.log(name);
+
     const { t } = useTranslation();
     const { _id } = useParams();
     const toast = useToast();
+    const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [cameraData, setCameraData] = useState<any>([]);
+    const [ActivityData, setActivityData] = useState<any>([]);
 
     const getCameraActivityList = () => {
         dispatch(
@@ -24,6 +31,7 @@ const CameraActivity = () => {
                 },
                 (success: any) => {
                     setCameraData(success.data.rows);
+                    console.log("dattatta", success.data);
                 },
                 (errorData: any) => {
                     toast({
@@ -38,8 +46,29 @@ const CameraActivity = () => {
         );
     };
 
+    const getCameraList = () => {
+        dispatch(
+            CameraService.getCamera(
+                {
+                    cameraId: params._id
+                },
+                (success: any) => {
+                    setActivityData(success.data.rows[0]);
+                },
+                (error: any) => {
+                    console.log(error);
+                }
+            )
+        );
+    };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
     useEffect(() => {
         getCameraActivityList();
+        getCameraList();
     }, []);
     return (
         <>
@@ -63,19 +92,33 @@ const CameraActivity = () => {
                         </CardHeader>
                     </Box>
 
+                    <Flex gap={"5"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                        <Text fontWeight={"semibold"}>{t("common.name")}</Text>
+                        <Text fontSize="md">{ActivityData?.name ?? "--"}</Text>|
+                        <Text fontWeight={"semibold"}>{t("device_mgmt.location")}</Text>
+                        <Text fontSize="md">{ActivityData?.location ?? "--"}</Text>
+                    </Flex>
+
                     {cameraData.length > 0 ? (
                         <>
                             {cameraData.map((elem: any, index: any) => {
                                 return (
-                                    <Box key={index}>
-                                        <Grid pb={2} gap={6} px={5} rounded={"lg"}>
-                                            <GridItem w="full" boxShadow={"md"} px={4} pt={2} bg="white">
+                                    <Box key={index} px={5}>
+                                        <Grid pb={3} gap={6} rounded={"lg"}>
+                                            <GridItem w="full" boxShadow={"md"} px={4} pt={2} bg="#f4f7fe">
                                                 <Flex py={2}>
                                                     <Text fontWeight={"semibold"} flex={"0.2"}>
                                                         {"ID"}
                                                     </Text>
                                                     <Text flex={"0.8"} fontSize="md">
                                                         {elem?.cameraId ?? "--"}
+                                                    </Text>
+
+                                                    <Text fontWeight={"semibold"} flex={"0.4"}>
+                                                        {t("user_mgmt.user_name")}
+                                                    </Text>
+                                                    <Text flex={"0.6"} fontSize="md">
+                                                        {elem?.user?.user_name ?? "--"}
                                                     </Text>
                                                 </Flex>
 
@@ -84,26 +127,17 @@ const CameraActivity = () => {
                                                         {t("news.action")}
                                                     </Text>
                                                     <Text flex={"0.8"} fontSize="md">
-                                                        {elem?.captureVideo ? "Capture Video" : "Capture ScreenShot"}
+                                                        {elem?.captureVideo
+                                                            ? t("camera_mgmt.capture_video")
+                                                            : t("camera_mgmt.capture_screenShot")}
                                                     </Text>
-                                                </Flex>
 
-                                                <Flex py={2}>
-                                                    <Text fontWeight={"semibold"} flex={"0.2"}>
-                                                        {t("user_mgmt.user_name")}
+                                                    <Text fontWeight={"semibold"} flex={"0.4"}>
+                                                        {t("camera_mgmt.capture_time")}
                                                     </Text>
-                                                    <Text flex={"0.8"} fontSize="md">
-                                                        {elem?.user?.user_name ?? "--"}
-                                                    </Text>
-                                                </Flex>
-
-                                                <Flex py={2}>
-                                                    <Text fontWeight={"semibold"} flex={"0.2"}>
-                                                        {t("camera_mgmt.activity_timt")}
-                                                    </Text>
-                                                    <Text flex={"0.8"} fontSize="md">
+                                                    <Text flex={"0.6"} fontSize="md">
                                                         {elem?.ActivityAt
-                                                            ? dayjs(elem?.ActivityAt).format("YYYY/MM/DD HH:MM")
+                                                            ? dayjs(elem?.ActivityAt).format("YYYY/MM/DD HH:mm")
                                                             : "--"}
                                                     </Text>
                                                 </Flex>

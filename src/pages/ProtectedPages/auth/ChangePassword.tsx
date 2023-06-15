@@ -107,7 +107,7 @@ const ChangePassword = () => {
             <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
                 <Stack align="center">
                     <Flex alignItems="center" direction="column">
-                        <Text fontSize="3xl" fontWeight="bold" my={1}>
+                        <Text fontSize="3xl" fontWeight="bold">
                             {t("login.change_password")}
                         </Text>
                     </Flex>

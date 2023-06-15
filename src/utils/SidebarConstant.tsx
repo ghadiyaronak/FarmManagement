@@ -1,17 +1,11 @@
 import { AiOutlineCamera, AiOutlineControl, AiOutlineQuestion, AiOutlineQuestionCircle } from "react-icons/ai";
-import { BiCategory, BiDevices } from "react-icons/bi";
-import { BsCurrencyYen } from "react-icons/bs";
-import { FaCcStripe, FaLine, FaQuestion, FaUsers } from "react-icons/fa";
+import { BiCategory, BiDevices, BiTransfer } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
-import { GiFarmTractor, GiWheat } from "react-icons/gi";
-import { ImPriceTag } from "react-icons/im";
+import { GiWheat } from "react-icons/gi";
 import { MdHome, MdOutlineEmail, MdOutlinePrivacyTip, MdOutlineRateReview } from "react-icons/md";
-import { SiGoogleanalytics } from "react-icons/si";
 import { ImNewspaper } from "react-icons/im";
-import { TbArrowGuide } from "react-icons/tb";
 import { RxQuestionMark } from "react-icons/rx";
 import { RiContactsBookLine } from "react-icons/ri";
-import { GrTransaction } from "react-icons/gr";
 
 //react scripts flag if heap memory is not enough --max_old_space_size=8000
 export interface INavItem {
@@ -82,7 +76,7 @@ export const NAV_ITEMS: Array<INavItem> = [
     },
     {
         id: 10,
-        icon: () => <GrTransaction />,
+        icon: () => <BiTransfer />,
         path: "/notaion",
         label: "特定商取引法に基づく表記"
     },
@@ -90,6 +84,6 @@ export const NAV_ITEMS: Array<INavItem> = [
         id: 11,
         icon: () => <RiContactsBookLine />,
         path: "/user-guide",
-        label: "利用ガイド"
+        label: "利用規約"
     }
 ];

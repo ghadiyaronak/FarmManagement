@@ -1,127 +1,24 @@
 export default {
-    // USER
-    GENDER: ["MALE", "FEMALE", "OTHER"],
-    USER_PROFILE_STATUS: [
-        {
-            label: "all",
-            value: ""
-        },
-        {
-            label: "active",
-            value: "ACTIVE"
-        },
-        {
-            label: "deleted",
-            value: "DELETED"
-        },
-        {
-            label: "deactivated",
-            value: "DEACTIVATED"
-        }
-    ],
-
-    // PRODUCT
-    PRODUCT_FLAG: ["NEW", "OLD"],
-    PRODUCT_STATUS: [
-        {
-            label: "all",
-            value: ""
-        },
-        {
-            label: "ACTIVE",
-            value: "ACTIVE"
-        },
-        {
-            label: "DEACTIVATED",
-            value: "DEACTIVATED"
-        }
-    ],
-
-    CATEGORY_STATUS: [
-        {
-            label: "ALL",
-            value: ""
-        },
-        {
-            label: "active",
-            value: "true"
-        },
-        {
-            label: "deactive",
-            value: "false"
-        }
-    ],
-
-    // ORDER
-    ORDER_STATUS: [
-        {
-            label: "all",
-            value: ""
-        },
-        {
-            label: "ORDER",
-            value: "ORDER"
-        },
-        {
-            label: "PAYMENT-PENDING",
-            value: "PAYMENT-PENDING"
-        },
-        // {
-        //     label: "OUT-OF-DELIVERED",
-        //     value: "OUT-OF-DELIVERED"
-        // },
-
-        {
-            label: "DELIVERED",
-            value: "DELIVERED"
-        },
-        {
-            label: "CANCEL",
-            value: "CANCEL"
-        }
-    ],
-    ORDER_STATUS2: [
-        {
-            label: "ORDER",
-            value: "ORDER"
-        },
-        {
-            label: "DELIVERED",
-            value: "DELIVERED"
-        },
-        {
-            label: "CANCEL",
-            value: "CANCEL"
-        }
-    ],
-    ORDER_CANCEL_STATUS: ["ORDER"],
-    ORDER_PAYMENT_TYPE: ["COD", "LINE"],
-    ORDER_CANCEL_BY: ["USER", "ADMIN"],
-    ORDER_PAYMENT_STATUS: [
-        "INITIATED",
-        "PROCESSING",
-        "SUCCESS",
-        "FAILED",
-        "REQUEST_FOR_REFUND",
-        "REFUND_SUCCESS",
-        "REFUND_FAILED"
-    ], // 0 = Initiated, 1 = Success, 2 = Failed, 3 = Request For Refund, 4 = Refund Success, 5 = Refund Faile
-    ORDER_CANCEL_PAYMENT_STATUS: ["REQUEST_FOR_REFUND", "REFUND_SUCCESS", "REFUND_FAILED"],
-
-    // REVIEW
-    REVIEW_POINTS: [0, 1, 2, 3, 4, 5],
-
-    // Status   //
-
     // farm status
 
     FARM_STATUS: [
         {
-            label: "アクティブ ",
+            label: "有効 ",
             value: "ACTIVE"
         },
         {
-            label: "ブロック ",
+            label: "無効 ",
+            value: "BLOCK"
+        }
+    ],
+
+    USER_STATUS: [
+        {
+            label: "有効 ",
+            value: "ACTIVE"
+        },
+        {
+            label: "無効 ",
             value: "BLOCK"
         }
     ],
@@ -151,11 +48,11 @@ export default {
     USER_ROLE: [
         {
             label: "管理者",
-            value: "true"
+            value: "WRITE"
         },
         {
-            label: "読み取り",
-            value: "false"
+            label: "閲覧者",
+            value: "READ"
         }
     ],
 
@@ -167,6 +64,17 @@ export default {
         {
             label: "停止中",
             value: "NOT-OPERATIONAL"
+        }
+    ],
+
+    DEVICE_TYPE: [
+        {
+            label: "シリンダー",
+            value: "CYLINDER"
+        },
+        {
+            label: "センサー",
+            value: "SENSOR"
         }
     ],
 
@@ -183,11 +91,11 @@ export default {
 
     INQUIRY_STATUS: [
         {
-            label: "未確認",
+            label: "未対応",
             value: "UNCONFIRMED"
         },
         {
-            label: "確認中",
+            label: "対応中",
             value: "CONFIRMED"
         },
         {

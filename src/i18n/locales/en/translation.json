@@ -43,7 +43,13 @@
         "completed": "Completed",
         "confirming": "Confirming",
         "unconfirmed": "Unconfirmed",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "cylinder": "Cylinder",
+        "sensor": "Sensor",
+        "running": "Running",
+        "stop": "Stop",
+        "write": "Write",
+        "read": "Read"
     },
 
     "auth_header": {
@@ -124,7 +130,8 @@
         "user_id": "UserID",
         "change_status": "Change status",
         "male": "male",
-        "female": "female"
+        "female": "female",
+        "user_furigana": "userFurigana"
     },
 
     "device_mgmt": {
@@ -137,7 +144,12 @@
         "Device_ID": "Device ID",
         "current_value": "Current value",
         "view_activity": "View Activity",
-        "device_edit": "Device edit"
+        "device_edit": "Device edit",
+        "client_id": "client_id",
+        "device_activity_graph": "Device Activity Graph",
+        "pubTopic": "pubTopic",
+        "SubTopic": "SubTopic ",
+        "device_type": "Device type"
     },
 
     "camera_mgmt": {
@@ -148,7 +160,10 @@
         "camera_edit": "Camera Edit",
         "camera_activity": "View Activity",
         "camera_type": "Camera type",
-        "activity_timt": "Activity Tim"
+        "activity_timt": "Activity Tim",
+        "capture_screenShot": "Capture ScreenShot",
+        "capture_video": "Capture Video",
+        "capture_time": "Capture time"
     },
 
     "news": {
@@ -170,7 +185,9 @@
         "inquiry_title": "Inquiry title",
         "inquiry_id": "Inquiry ID",
         "inquiry_details": "Inquiry Details",
-        "inquiry_description": "Inquiry description"
+        "inquiry_description": "Inquiry description",
+        "Inquiry_edit": "Inquiry Edit",
+        "query": "query"
     },
 
     "faq_mgmt": {
@@ -239,11 +256,15 @@
         "invalid_email": "Please enter a valid email address",
         "required_fields": "Required Fields",
         "password_minimum_characters": "password must be at least 6 characters",
-        "both_password_needs_to_be_the_same": "Both password need to be the same"
+        "both_password_needs_to_be_the_same": "Both password need to be the same",
+
+        "faq_section": "Section Name is required",
+        "question_fields_required": "question fields is required",
+        "answer_fields_required": "answer fields is required"
     },
 
     "footer": {
-        "all_rights_reserved": "©  Copyright 2022 （資）羽生惣吾商店 全て 権利 予約済み."
+        "all_rights_reserved": "©  Copyright 2023 （資）羽生惣吾商店 全て 権利 予約済み."
     },
 
     "messages": {
@@ -256,6 +277,10 @@
         "same_name_error": "This Same name is also available in Market",
         "this_action_is_irreversible": "This action is irreversible.",
         "profile_update_success": "Profile Updated Successfully",
+        "maximum_1000_words": "Maximum 1000 words",
+
+        "minimum_7_character": "minimum 7 character",
+        "maximum_7_character": "maximum 7 character",
 
         "farm_name_is_required": "Farm name is required",
         "owner_name_is_required": "Owner name is required",
