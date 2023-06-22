@@ -1,3 +1,3 @@
-# Happy Lotus Admin
+# Farm Admin Panel
 
-EC Website Admin App
+Maimiru Admin Panel
