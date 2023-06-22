@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { globalStyles } from "../../theme/styles";
 
 interface ReturnButtonProps {
-    link?: string;
+    link?: any;
 }
 
 const ReturnButton = ({ link }: ReturnButtonProps) => {
@@ -15,7 +15,7 @@ const ReturnButton = ({ link }: ReturnButtonProps) => {
 
     const handleReturn = () => {
         if (link) {
-            navigate(link);
+            navigate(link, { replace: true });
         } else {
             navigate(-1);
         }

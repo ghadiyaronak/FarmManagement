@@ -46,8 +46,8 @@ const AddSection = ({ isOpen, onClose, getAll }: IProps) => {
         name: yup.string().required(t("form_errors.required_fields")),
         priority: yup
             .number()
-            .min(0, t("messages.enter_priority_between_1_to_100"))
-            .max(99, t("messages.enter_priority_between_1_to_100"))
+            .min(1, t("messages.enter_priority_between_1_to_100"))
+            .max(100, t("messages.enter_priority_between_1_to_100"))
             .required(t("form_errors.required_fields"))
     });
 

@@ -36,6 +36,7 @@ const EditNews = ({ value }: FarmFormProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [newsStartDateDate, setStartDateDate] = useState<Date | null>(null);
     const [newsEndDateDate, setEndDateDate] = useState<Date | null>(null);
+    const [rangOfEndDate, setrangOfEndDate] = useState<Date | null>(null);
 
     const getNewsList = () => {
         dispatch(
@@ -46,6 +47,7 @@ const EditNews = ({ value }: FarmFormProps) => {
 
                 (success: any) => {
                     const news = success.data.rows[0];
+                    setrangOfEndDate(news?.end_date);
                     setFieldValue("title", news?.title);
                     setFieldValue("content", news?.content);
                     setFieldValue("start_date", dayjs(news?.start_date).format("YYYY/MM/DD "));
@@ -201,7 +203,7 @@ const EditNews = ({ value }: FarmFormProps) => {
                                     onChange={(date: any) => {
                                         setFieldValue("start_date", dayjs(date).format("YYYY/MM/DD"));
                                     }}
-                                    dateFormat={"YYYY/MM/DD"}
+                                    dateFormat={"yyyy/MM/dd"}
                                     value={values.start_date}
                                     popperClassName="popper-class"
                                     popperPlacement="bottom-start"
@@ -227,13 +229,15 @@ const EditNews = ({ value }: FarmFormProps) => {
                                     locale={ja}
                                     name="end_date"
                                     placeholderText={String(t(""))}
+                                    minDate={rangOfEndDate ? new Date(rangOfEndDate) : null}
                                     onChange={(date: any) => {
+                                        setStartDateDate(null);
                                         setFieldValue(
                                             "end_date",
                                             dayjs(date).format("YYYY/MM/DD") ? dayjs(date).format("YYYY/MM/DD") : "--"
                                         );
                                     }}
-                                    dateFormat={"YYYY/MM/DD"}
+                                    dateFormat={"yyyy/MM/dd"}
                                     value={values.end_date}
                                     popperClassName="popper-class"
                                     popperPlacement="bottom-start"

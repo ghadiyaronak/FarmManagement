@@ -66,7 +66,7 @@ const DeviceManagement = () => {
     };
 
     function handleDevice(row: any) {
-        navigate(`/device-view/${row._id}`);
+        navigate(`/device-view/${row._id}`, { state: "/device-management" });
     }
 
     const getExcelData = async () => {
@@ -143,7 +143,7 @@ const DeviceManagement = () => {
             wrap: true,
             cell: (row: any) => {
                 return (
-                    <Box onClick={() => navigate(`/device-view/${row._id}`, { state: row })}>
+                    <Box>
                         <Text
                             color={globalStyles.colors.mainColor}
                             fontWeight={"normal"}
@@ -151,7 +151,7 @@ const DeviceManagement = () => {
                             flexWrap={"wrap"}
                             cursor={"pointer"}
                         >
-                            {row.name?.toString().substring(row.name, row?.name.length)}
+                            {row.name ?? "--"}
                         </Text>
                     </Box>
                 );
@@ -285,7 +285,6 @@ const DeviceManagement = () => {
                 formattedRegisterDate = dayjs(registerDate).format("YYYY-MM-DD");
             }
             const status = values.status.value;
-
             dispatch(
                 DeviceService.getDevice(
                     {
@@ -294,7 +293,8 @@ const DeviceManagement = () => {
                         status: status ?? undefined,
                         register_date: formattedRegisterDate ?? undefined,
                         device_access: device_access ?? undefined,
-                        device_type: device_type ?? undefined
+                        device_type: device_type ?? undefined,
+                        limit: 5000
                     },
                     (success: any) => {
                         setDeviceData(success.data.rows);
@@ -406,7 +406,7 @@ const DeviceManagement = () => {
                     <Box w={"0.5px"} h={"28"} bgColor={globalStyles.colors.mainColor} />
                     <Flex gap={2} mb={2} flexDir={"column"} ml={4}>
                         <Box w="36"></Box>
-                        <ExportExcel getExcelData={getExcelData} fileName={"Device"} />
+                        <ExportExcel getExcelData={getExcelData} fileName={"デバイス"} />
                         <SearchButton isLoading={isLoading} handleSearchData={handleSubmit} />
                         <ResetButton isDisabled={!dirty && disableReset} handleReset={handleReset} />
                     </Flex>

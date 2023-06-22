@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Divider, Flex, FormLabel, Heading, Stack, StackDivider, Text, useToast } from "@chakra-ui/react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import config from "../../../utils/config";
@@ -38,7 +38,7 @@ const EditForm = ({ value }: ProductFormProps) => {
     const [registerDate, setRegisterDate] = useState<Date | null>(null);
     const [contractStartDateDate, setcontractStartDateDate] = useState<Date | null>(null);
     const [contractEndDateDate, setcontractEndDateDate] = useState<Date | null>(null);
-
+    const location = useLocation();
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const params = useParams();
@@ -97,7 +97,7 @@ const EditForm = ({ value }: ProductFormProps) => {
         contact_number: yup
             .string()
             .min(10, t("messages.10_digit_contact_number_is_required!"))
-            .max(10, t("messages.10_digit_contact_number_is_required!"))
+            .max(11, t("messages.11_digit_contact_number_is_required!"))
             .required(t("messages.contact_number_field_is_required")),
         postalCode: yup
             .string()
@@ -142,7 +142,7 @@ const EditForm = ({ value }: ProductFormProps) => {
                         isClosable: true
                     });
                     setIsLoading(false);
-                    navigate(`/viewfarm/${params.id}`);
+                    navigate(`/viewfarm/${params.id}` + "?tab=0");
                 },
                 (errorData: any) => {
                     setIsLoading(false);
@@ -198,8 +198,6 @@ const EditForm = ({ value }: ProductFormProps) => {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
     }, []);
-
-    console.log({ values });
 
     useEffect(() => {
         getFarmListById();
@@ -271,6 +269,8 @@ const EditForm = ({ value }: ProductFormProps) => {
                                 placeholderText={String(t(""))}
                                 minDate={new Date()}
                                 onChange={(date: any) => {
+                                    setcontractStartDateDate(null);
+                                    setcontractEndDateDate(null);
                                     setFieldValue("register_date", dayjs(date).format("YYYY/MM/DD"));
                                 }}
                                 dateFormat={"YYYY/MM/DD"}
@@ -341,55 +341,6 @@ const EditForm = ({ value }: ProductFormProps) => {
                     </Flex>
                     <Divider />
 
-                    {/* <Flex flex={1} fontSize={"sm"} borderBottom={"1px solid #E0E0E0"} alignItems={"center"}>
-                        <FormLabel fontWeight={"extrabold"} p={5} px={12} w={"72"} backgroundColor={"#F9FAFA"} m={"0"}>
-                            {t("farm_mgmt.contract_start_date")}
-                        </FormLabel>
-                        <Box ps={3} w={"lg"}>
-                            <ReactDatePicker
-                                className={`custom ${touched.contractStartDate && !contractStartDateDate}`}
-                                locale={ja}
-                                name="contractStartDate"
-                                placeholderText={String(t(""))}
-                                onChange={(date: any) => {
-                                    setFieldValue(
-                                        "contractStartDate",
-                                        dayjs(date).format("YYYY/MM/DD") ? dayjs(date).format("YYYY/MM/DD") : "--"
-                                    );
-                                }}
-                                dateFormat={"YYYY/MM/DD"}
-                                value={values.contractStartDate}
-                                popperClassName="popper-class"
-                                popperPlacement="bottom-start"
-                                showPopperArrow={false}
-                            />
-                        
-                        </Box>
-                    </Flex>
-
-                    <Flex flex={1} fontSize={"sm"} borderBottom={"1px solid #E0E0E0"} alignItems={"center"}>
-                        <FormLabel fontWeight={"extrabold"} p={5} px={12} w={"72"} backgroundColor={"#F9FAFA"} m={"0"}>
-                            {t("farm_mgmt.contract_end_date")}
-                        </FormLabel>
-                        <Box ps={3} w={"lg"}>
-                            <ReactDatePicker
-                                className={`custom ${touched.contractEndDate && !contractEndDateDate}`}
-                                locale={ja}
-                                name="contractEndDate"
-                                placeholderText={String(t(""))}
-                                onChange={(date: any) => {
-                                    setFieldValue("contractEndDate", dayjs(date).format("YYYY/MM/DD"));
-                                }}
-                                dateFormat={"YYYY/MM/DD"}
-                                value={values.contractEndDate}
-                                popperClassName="popper-class"
-                                popperPlacement="bottom-start"
-                                showPopperArrow={false}
-                            />
-                           
-                        </Box>
-                    </Flex> */}
-
                     <Stack divider={<StackDivider />} spacing="4">
                         <Flex>
                             <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
@@ -404,12 +355,14 @@ const EditForm = ({ value }: ProductFormProps) => {
 
                     <EditFormInput
                         name="contact_number"
-                        Type="text"
+                        Type="string"
                         values={values.contact_number}
                         handleChange={handleChange}
                         handleBlur={handleBlur}
                         errors={errors.contact_number}
                         touched={touched.contact_number}
+                        maxValue={11}
+                        minValue={10}
                         label={t("common.contact_number")}
                         isMandatory={true}
                     />
@@ -488,6 +441,7 @@ const EditForm = ({ value }: ProductFormProps) => {
                             style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
                         />
                     </Flex>
+                    <Divider />
 
                     <SaveButton isLoading={isLoading} title={t("farm_mgmt.update")} onClick={handleSubmit} />
                 </Flex>

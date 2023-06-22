@@ -12,20 +12,16 @@ const Userguide = () => {
             <Flex display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <MainHeading title={"利用規約"} />
             </Flex>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum nihil veritatis sit sunt optio odio quaerat
-            delectus iusto ullam consequuntur impedit beatae doloremque voluptas, vel quam fugit possimus inventore,
-            cumque enim perspiciatis culpa aut rerum. Quaerat dolorem ipsa molestiae veritatis quidem officiis, vero
-            placeat repellat officia omnis temporibus itaque soluta aut amet optio veniam quis consequuntur rem totam
-            iusto est. Maiores quisquam, harum facere perspiciatis non hic veniam laborum quas id? Velit molestiae nulla
-            optio mollitia necessitatibus quisquam eum sit possimus earum nisi eaque nam, architecto sed provident,
-            accusamus exercitationem id. Reiciendis aperiam cumque dignissimos at quaerat. Voluptatem, nobis. Minus
-            quidem, labore, possimus repellendus neque nulla expedita dolor perferendis unde quasi, hic ullam esse
-            laborum ab sapiente veritatis sequi incidunt odio. Quibusdam a ipsam, quidem beatae doloribus accusantium
-            amet quas quae ut accusamus repellendus nihil sint! Hic maiores eum commodi quis at laboriosam quasi
-            repellendus ratione a. Eveniet suscipit tenetur libero, consectetur cum, unde rem asperiores blanditiis eum
-            aut est commodi nihil facere ut? Facere deleniti laborum inventore, et corporis dolorem alias vitae.
-            Adipisci inventore reprehenderit cum suscipit nisi. Quae voluptatum, enim possimus, eos voluptates at est,
-            maxime omnis aspernatur exercitationem ducimus consectetur. Voluptas nisi eveniet ad saepe odio temporibus.
+            中きづくの入湿わ全減わほま献回ぴきゃス庫会ぱいフッ金組初カネイ前風よっ異指自とドこ問事ト速無ヌ共富族被ぜ。券キシア幻講エヱコヒ知立ト加生つ置8近ぞぴべン分協所キロ負年ンが柱潔ろぐ移務イレモ講試ぱーゆ文第ナマ増問がルき路怠ぽげ。幅ニ会玉コ無下見ラ挑5表ヌヱ得皇カタ情47胸無ずか議5辞51大ネシルオ入四の社掲飲急のえトあ法無やこふ送第チワム更直期保費どレく。
+            期えさにず一記なスけべ派着んゅのイ談京セエレ関主ぜでおッ藤禁ず趣85防握湯41同たト由意役ス追千マラニ土年活ワ前国メソミ紙4仲景仁ざでく。官ラカ暮第ネロ業出よ号政盛ヒ系赤3蔵ん聞春れはむる日信い京教ハサ費武ーきがす負反イカ著不イニ民法敢よんッ。治ルケモソ水火こス康示中ホ作国けおびざ能取今白ヲテノ満病ヘ寛動ワハタ延思つンょ会誌もそ市品3金逆へりは万古空様倫ねンすえ。
+            気面タ粉8済ア公変今せだうン着最ど日調ナツ定問なク時止きょレト楽済フ芸形びゆにご宗投腹タシウオ禁億ニエヘヲ図的拘肌し。述全にぼてぴ通月タサルテ連森びくれよ消例ルいりた政左紙ひ紀9海16内フ暮真ちも歳多カリネナ変闘ヲカケリ聞相賞ゃが権姿速協器に。茂ドょ福線ヘテヱ企70関せづイ作更っとゃう相勢どぽく法社よろ無宮ルム道数チ古八すてげぞ講段ヨイ三害ふやゆ督3変ハ歩棄銃頼ぽ。
+            中モヱト視夕の写静ぜごお豪会テラト待滋ユハルノ分応廃でッがみ泉4送載クヱヒ願済ルモヤ類康もゅー三壊抗在ゅ権理紀ヒネ受堀ヨ報羽喰杜げわ。旅ぽド経行トえ教述ヨタケヲ小肉ざ栗車チ戦27朝断ぶょイほ図65予オク育成なる性短てで優覧9更っスぼ系契絡君んで。庫カイウ動婚ムスハ宣度ゅばち作疑カネコ早9済ヘ内文をどべや夜利ッドは本責重のぜ川雄ざかド込公ずはち無決訃ヲア遇得昨兆ラほし。
+            古テ力連なぎりれ豊14地セロカ親健ロヤメ健理フアヨツ文界サエ写込不ゆクべリ会詳ドぱ大年ぜへちい遠更そじな信育ワ報理81富どッ案上と個兄だ。致でてぞ反軟きづずげ執山ト張強どこひと扱価につ谷氏フレワヒ負誓カラクシ件人経話へ米越ルハセ発真注ルめ載日ラト物止世ミ亡安北養ニネカ確康のどみね。
+            緒周ら審英指りまぐ中扱信具んッ読永マ風界キ早岩クレモ薬経ナフヘソ争天メヲル厳史フこり解雄もりドお。致リちほ奈合の秋条シ砲書ヘア殺73申響ぜフトに最作食ッぼ上9連マヒ図挙まルべ張想準警フこドが。黄ヱ程展マカ趣43十ソラカ立内夜でれ日幕ロ情除ユモウ車画らげべ必投わぼちぐ後必ねりっべ治46能ぴう情管レナケテ月査目え参串なんすへ。
+            阪株ヌワ揺断う動虚ワフルロ東断ぴろ天相くに人訴ヒ合食ハ案演み宿大イ選造だとけ年神ハイモス景配ドげたじ京員と降未ず。土ヌ望荒せ断数1市もかスぴ将話か服14害ぶ帰米アツ文稿ラちぶて個写事はいふつ政7年ム同案そ度抗ウメユケ覚弾越初だ。媛伝ンく底停ムミルマ支帯雪ソラ述久ウリラ憂本マロカ枠明野ツロマ戦歳問なち今著祭八時ずとづ。
+            容カアコロ可子切ぜすびぐ支根ごわ川護ノ団攻クカモ細作ロ事護じ愛一んっ住勝ルク無装ぴふご帯53省兼唱ぽトっ。1本レカヲス嶋読芸ぴた諌隣スル際茶7接りぞ真浜クマイ開展ヘイコ木学ぐゆぱ広連ー告風兼唱び。昔ライムエ能負っぱフ別服らの話学えねゃ中馬がそク生73著供53陸叫ひくまけ載子忠く頼稿ヱテサ朝引ソ案覚ツタ持師ゆつさ化謙リ劇寄でゆつぶ。
+            率コフ覧京ず仕僧ミ遥57産れげまゆ済科ヨモル間問ほ治転ら用87子87影頼おゅ報政屋連ぴレ銃無ユ死変ひてろげ東載オ府統港就備えぜみ。輸り京条エ課悪請キケカ住毎タニモメ維著げルぎび兼誕環こトとづ意康びぼ経椎ーなう王1他メミウユ権懸い伝提を話明載ラヨチ為氏す数持タフ揮時カワシロ厚越夫補なト。
+            日ぜめづぐ変申べゅトや検刺セウ四1作ノモ根会ム送研サウ開渇ちじまや一確げ勢伴とくよす器担は難住ヒヤシル考組ずびル要説しねぴ詳全写どめ国属威敵沿ちせそ。夜ゃ当14升忍曇椎3数ツ時農ちをいゃ撤全いあ感敗コシ表指ぞちッび打発安どめに小温イネト録2護タニ区今ホウカヨ遺景ニカ似分前如幡揃擁スわこへ。記ラ君海ン学49無えを車何テサ書炉一かラ琴携づり未八ホヌク解金放融マ福買非埼がつ。
         </Box>
     );
 };

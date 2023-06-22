@@ -12,6 +12,8 @@ interface InputsProp {
     label?: any;
     isMandatory?: any;
     min?: string;
+    minValue?: any;
+    maxValue?: any;
 }
 
 const EditFormInput = ({
@@ -25,7 +27,9 @@ const EditFormInput = ({
     touched,
     label,
     isMandatory,
-    min
+    min,
+    minValue,
+    maxValue
 }: InputsProp) => {
     return (
         <Flex borderTop={"1px solid #E0E0E0"} borderBottom={"1px solid #E0E0E0"} alignItems={"center"}>
@@ -43,6 +47,8 @@ const EditFormInput = ({
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values}
+                    minLength={minValue}
+                    maxLength={maxValue}
                     min={min ?? new Date().toISOString().split("T")[0]}
                     isInvalid={errors && touched}
                     errorBorderColor="red.300"

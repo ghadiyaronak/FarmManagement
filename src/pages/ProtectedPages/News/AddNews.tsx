@@ -32,16 +32,14 @@ const AddNews = ({ value }: FarmFormProps) => {
     const toast = useToast();
     const [newsData, setNewsData] = useState<any>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
 
     const onSubmit = () => {
         setIsLoading(true);
         const data = {
             title: values.title,
-            start_date: dayjs(startDate).format("YYYY-MM-DD"),
+            start_date: dayjs(values.start_date).format("YYYY-MM-DD"),
             content: values.content,
-            end_date: dayjs(endDate).format("YYYY-MM-DD")
+            end_date: dayjs(values.end_date).format("YYYY-MM-DD")
         };
 
         dispatch(
@@ -50,6 +48,13 @@ const AddNews = ({ value }: FarmFormProps) => {
                     data: data
                 },
                 (success: any) => {
+                    toast({
+                        title: success.message ? success.message : success?.data?.message,
+                        status: "success",
+                        duration: 3 * 1000,
+                        isClosable: true,
+                        position: "top-right"
+                    });
                     setNewsData(success.data.rows);
                     resetForm();
                     navigate(-1);
@@ -71,9 +76,9 @@ const AddNews = ({ value }: FarmFormProps) => {
 
     const productSchema = yup.object().shape({
         title: yup.string().required(t("messages.title_is_required")),
-        content: yup.string().max(1500, t("messages.maximum_1500_words")).required(t("messages.content_is_required"))
-        // start_date: yup.string().required(t("messages.start_date_is_required")),
-        // end_date: yup.string().required(t("messages.end_date_is_required"))
+        content: yup.string().max(1500, t("messages.maximum_1500_words")).required(t("messages.content_is_required")),
+        start_date: yup.string().required(t("messages.start_date_is_required")).nullable(),
+        end_date: yup.string().required(t("messages.end_date_is_required")).nullable()
     });
 
     const {
@@ -90,8 +95,8 @@ const AddNews = ({ value }: FarmFormProps) => {
         initialValues: {
             title: "",
             content: "",
-            start_date: "",
-            end_date: ""
+            start_date: null,
+            end_date: null
         },
         onSubmit,
         validationSchema: productSchema
@@ -157,35 +162,27 @@ const AddNews = ({ value }: FarmFormProps) => {
                             </FormLabel>
                             <Box ps={3} w={"lg"}>
                                 <ReactDatePicker
-                                    className={`custom ${
-                                        touched.start_date && !startDate
-                                            ? // (touched.contractEndDate && !contractEndDate)
-                                              "border-red"
-                                            : ""
-                                    }`}
+                                    className={`custom ${touched.start_date && !values.start_date ? "border-red" : ""}`}
                                     dateFormat="yyyy/MM/dd"
-                                    selected={startDate}
+                                    selected={values.start_date}
                                     locale={ja}
                                     placeholderText={String(t(""))}
-                                    onChange={(dates: any) => {
-                                        const start = dates;
-                                        setStartDate(start);
+                                    onChange={(date: any) => {
+                                        setFieldValue("start_date", date);
                                     }}
                                     onChangeRaw={() => {
-                                        setFieldValue("start_date", dayjs(startDate).format("YYYY/MM/DD"));
+                                        setFieldTouched("start_date", true, true);
                                     }}
                                     startDate={new Date()}
+                                    maxDate={values.end_date ?? null}
                                     popperClassName="popper-class"
                                     popperPlacement="bottom-start"
-                                    // todayButton={t("common.today")}
                                     showPopperArrow={false}
                                 />
-                                {touched.start_date && !startDate ? (
+                                {touched.start_date && errors.start_date && (
                                     <Text fontSize={"sm"} mt={1} color={"red.300"}>
                                         {t("messages.start_date_is_required")}
                                     </Text>
-                                ) : (
-                                    ""
                                 )}
                             </Box>
                         </Flex>
@@ -199,35 +196,27 @@ const AddNews = ({ value }: FarmFormProps) => {
                             </FormLabel>
                             <Box ps={3} w={"lg"}>
                                 <ReactDatePicker
-                                    className={`custom ${
-                                        touched.start_date && !endDate
-                                            ? // (touched.contractEndDate && !contractEndDate)
-                                              "border-red"
-                                            : ""
-                                    }`}
+                                    className={`custom ${touched.end_date && errors.end_date ? "border-red" : ""}`}
                                     dateFormat="yyyy/MM/dd"
-                                    selected={endDate}
+                                    selected={values.end_date}
                                     locale={ja}
                                     placeholderText={String(t(""))}
-                                    onChange={(dates: any) => {
-                                        const start = dates;
-                                        setEndDate(start);
+                                    minDate={values.start_date ?? null}
+                                    onChange={(date: any) => {
+                                        setFieldValue("end_date", date);
                                     }}
                                     onChangeRaw={() => {
-                                        setFieldValue("end_date", dayjs(endDate).format("YYYY/MM/DD"));
+                                        setFieldTouched("end_date", true, true);
                                     }}
                                     startDate={new Date()}
                                     popperClassName="popper-class"
                                     popperPlacement="bottom-start"
-                                    // todayButton={t("common.today")}
                                     showPopperArrow={false}
                                 />
-                                {touched.end_date && !endDate ? (
+                                {touched.end_date && errors.end_date && (
                                     <Text fontSize={"sm"} mt={1} color={"red.300"}>
                                         {t("messages.end_date_is_required")}
                                     </Text>
-                                ) : (
-                                    ""
                                 )}
                             </Box>
                         </Flex>

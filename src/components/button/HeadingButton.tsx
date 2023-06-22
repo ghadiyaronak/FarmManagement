@@ -31,9 +31,10 @@ import UserService from "../../services/UserService";
 interface HeadingProps {
     path?: any;
     row?: any;
+    state?: any;
 }
 
-const HeadingButtonRight = ({ path, row }: HeadingProps) => {
+const HeadingButtonRight = ({ path, row, state }: HeadingProps) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [modal, setModal] = useState<any>(false);
@@ -44,7 +45,7 @@ const HeadingButtonRight = ({ path, row }: HeadingProps) => {
             <Button
                 size={"md"}
                 fontWeight={"500"}
-                onClick={() => navigate(path)}
+                onClick={() => navigate(path, { state: state })}
                 _hover={{
                     bgColor: "white"
                 }}

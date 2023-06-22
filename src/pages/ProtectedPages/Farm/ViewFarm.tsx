@@ -60,7 +60,6 @@ const ViewFarm = ({ mode }: EditProps) => {
     const [farmUserData, setFarmUserData] = useState<any>([]);
     const [farmDeviceData, setFarmDeviceData] = useState<any>([]);
     const [farmCameraeData, setFarmCameraData] = useState<any>([]);
-    const [trueData, setTrue] = useState<any>(true);
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const navigate = useNavigate();
@@ -69,16 +68,18 @@ const ViewFarm = ({ mode }: EditProps) => {
     const [openTab, setOpenTab] = useState(searchParams.get("tab"));
     const [scrollTop, setScrollTop] = useState<boolean>(false);
 
+    const location = useLocation();
+
     function handleClick(row: any) {
         navigate(`/user-view/${row._id}`);
     }
 
     function handleCamera(row: any) {
-        navigate(`/camera-view/${row._id}`);
+        navigate(`/camera-view/${row._id}`, { state: location?.pathname + "?tab=3" });
     }
 
     function handleDevice(row: any) {
-        navigate(`/device-view/${row._id}`);
+        navigate(`/device-view/${row._id}`, { state: location?.pathname + "?tab=2" });
     }
 
     // user panel //
@@ -186,7 +187,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             wrap: true,
             cell: (row: any) => {
                 return (
-                    <Box onClick={() => navigate(`/device-view/${row._id}`, { state: row })}>
+                    <Box>
                         <Text
                             color={globalStyles.colors.mainColor}
                             fontWeight={"normal"}
@@ -274,7 +275,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             wrap: true,
             cell: (row: any) => {
                 return (
-                    <Box onClick={() => navigate(`/camera-view/${row._id}`, { state: row })}>
+                    <Box>
                         <Text
                             color={globalStyles.colors.mainColor}
                             fontWeight={"normal"}
@@ -503,12 +504,10 @@ const ViewFarm = ({ mode }: EditProps) => {
                             {t("farm_mgmt.farm_details")}
                         </Heading>
                     </Box>
-                    {trueData ? (
+                    {openTab == "0" && (
                         <Box position={"absolute"} right={0} top={"-6"}>
-                            <HeadingButtonRight path={`/edit-farm/${farmData?._id}`} />
+                            <HeadingButtonRight path={`/edit-farm/${farmData?._id}`} state={location?.state} />
                         </Box>
-                    ) : (
-                        ""
                     )}
                 </Box>
 
@@ -518,7 +517,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                             onClick={() => {
                                 navigate({ search: `?tab=0` });
                                 setOpenTab("0");
-                                setTrue(true);
                             }}
                         >
                             {t("farm_mgmt.farm_view")}
@@ -529,7 +527,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     getUserDetailsByFarmId();
                                     navigate({ search: `?tab=1` });
                                     setOpenTab("1");
-                                    setTrue(false);
                                 }}
                             >
                                 {t("user_mgmt.user")}
@@ -541,7 +538,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     getDeviceDetailsByFarmId();
                                     navigate({ search: `?tab=2` });
                                     setOpenTab("2");
-                                    setTrue(false);
                                 }}
                             >
                                 {t("Device")}
@@ -553,7 +549,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     getCameraDetailsByFarmId();
                                     navigate({ search: `?tab=3` });
                                     setOpenTab("3");
-                                    setTrue(false);
                                 }}
                             >
                                 {t("Camera")}
@@ -700,26 +695,6 @@ const ViewFarm = ({ mode }: EditProps) => {
                                             </Text>
                                         </Flex>
                                     </Stack>
-                                    {/* <Divider />
-                                    <Stack divider={<StackDivider />} spacing="4">
-                                        <Flex>
-                                            <Heading
-                                                w={"72"}
-                                                p={3}
-                                                bg={"#f9fafa"}
-                                                pl={12}
-                                                fontSize={20}
-                                                textTransform="capitalize"
-                                            >
-                                                {t("farm_mgmt.contract_end_date")}
-                                            </Heading>
-                                            <Text p={3} fontSize="md">
-                                                {farmData?.contractEndDate
-                                                    ? dayjs(farmData?.contractEndDate).format("YYYY/MM/DD")
-                                                    : "--"}
-                                            </Text>
-                                        </Flex>
-                                    </Stack> */}
                                     <Divider />
                                     <Stack divider={<StackDivider />} spacing="4">
                                         <Flex>
@@ -816,7 +791,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                     </Stack>
                                     <Divider />
                                     <Stack divider={<StackDivider />} spacing="4">
-                                        <Flex>
+                                        <Flex flex={0.2}>
                                             <Heading
                                                 w={"72"}
                                                 p={3}
@@ -827,7 +802,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                                             >
                                                 {t("farm_mgmt.memo")}
                                             </Heading>
-                                            <Text whiteSpace={"pre-line"} p={3} fontSize="md">
+                                            <Text flex={0.8} whiteSpace={"pre-line"} p={3} fontSize="md">
                                                 {farmData?.memo ? farmData?.memo : "--"}
                                             </Text>
                                         </Flex>

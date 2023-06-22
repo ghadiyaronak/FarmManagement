@@ -445,7 +445,7 @@ export default function BasicStatistics() {
                                 <Thead fontSize={16} bg={"#ecf4fc"} fontWeight={"bold"}>
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
-                                        <Td>{t("Farm")}</Td>
+                                        <Td>{t("farm_mgmt.farm_name")}</Td>
                                         <Td>{t("device_mgmt.current_value")}</Td>
                                         <Td>{t("device_mgmt.location")}</Td>
                                         <Td w={"48"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -617,7 +617,7 @@ export default function BasicStatistics() {
                                     <Tr>
                                         <Td>{t("common.name")}</Td>
                                         <Td>{t("device_mgmt.mac_address")}</Td>
-                                        <Td>{t("Farm")}</Td>
+                                        <Td>{t("farm_mgmt.farm_name")}</Td>
                                         <Td>{t("common.register_date")}</Td>
                                         <Td w={"48"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                                             {t("common.status")}

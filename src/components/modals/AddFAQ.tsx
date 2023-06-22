@@ -56,8 +56,8 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
         answer: yup.string().required(t("form_errors.required_fields")),
         priority: yup
             .number()
-            .min(0, t("messages.enter_priority_between_1_to_100"))
-            .max(99, t("messages.enter_priority_between_1_to_100"))
+            .min(1, t("messages.enter_priority_between_1_to_100"))
+            .max(100, t("messages.enter_priority_between_1_to_100"))
             .required(t("form_errors.required_fields"))
     });
 
@@ -103,7 +103,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
             );
         } else if (faqDetails?.edit) {
             data.faq_id = faqDetails?._id;
-
+            setIsLoading(true);
             dispatch(
                 FaqService.updateFaq(
                     { data },
@@ -120,6 +120,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                         getAll();
                         handleModalClose();
                         actions.resetForm();
+                        setIsLoading(false);
                     },
                     (errorData: any) => {
                         toast({
@@ -130,6 +131,7 @@ const AddFAQ = ({ isOpen, onClose, getAll }: IProps) => {
                             position: "top-right",
                             isClosable: true
                         });
+                        setIsLoading(false);
                     }
                 )
             );

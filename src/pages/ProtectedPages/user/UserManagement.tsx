@@ -139,7 +139,7 @@ const UserManagement = () => {
                             textTransform={"uppercase"}
                             cursor={"pointer"}
                         >
-                            {row.user_name?.toString().substring(row.user_name, row?.user_name.length)}
+                            {row.user_name ?? "--"}
                         </Text>
                     </Flex>
                 );
@@ -271,7 +271,8 @@ const UserManagement = () => {
                         contact_number: contactNumber ?? undefined,
                         status: status ?? undefined,
                         register_date: formattedRegisterDate ?? undefined,
-                        role: role ?? undefined
+                        role: role ?? undefined,
+                        limit: 5000
                     },
                     (success: any) => {
                         setUserData(success.data.rows);
@@ -397,7 +398,7 @@ const UserManagement = () => {
                     <Box w={"0.5px"} h={"32"} bgColor={globalStyles.colors.mainColor} />
                     <Flex gap={2} mb={2} flexDir={"column"} ml={4}>
                         <Box w="36"></Box>
-                        <ExportExcel getExcelData={getExcelData} fileName={"User"} />
+                        <ExportExcel getExcelData={getExcelData} fileName={"ユーザー"} />
                         <SearchButton isLoading={isLoading} handleSearchData={handleSubmit} />
                         <ResetButton isDisabled={!dirty && disableReset} handleReset={handleReset} />
                     </Flex>

@@ -121,6 +121,8 @@ const FarmManagement = () => {
     };
 
     const handleDelete = () => {
+        setIsLoading(true);
+
         dispatch(
             FarmServices.deleteFarm(
                 {
@@ -135,6 +137,7 @@ const FarmManagement = () => {
                         isClosable: true,
                         position: "top-right"
                     });
+                    setIsLoading(false);
                 },
                 (error: any) => {
                     toast({
@@ -144,6 +147,7 @@ const FarmManagement = () => {
                         isClosable: true,
                         position: "top-right"
                     });
+                    setIsLoading(false);
                 }
             )
         );
@@ -309,7 +313,8 @@ const FarmManagement = () => {
                         email: email ?? undefined,
                         contact_number: contactNumber ?? undefined,
                         status: status ?? undefined,
-                        register_date: formattedRegisterDate ?? undefined
+                        register_date: formattedRegisterDate ?? undefined,
+                        limit: 5000
                     },
                     (success: any) => {
                         setTableData(success.data.rows);
@@ -407,7 +412,7 @@ const FarmManagement = () => {
                     <Box w={"0.5px"} h={"28"} bgColor={globalStyles.colors.mainColor} />
                     <Flex gap={2} mb={2} flexDir={"column"} ml={4}>
                         <Box w="36"></Box>
-                        <ExportExcel getExcelData={getExcelData} fileName={"Device"} />
+                        <ExportExcel getExcelData={getExcelData} fileName={"農家"} />
                         <SearchButton isLoading={isLoading} handleSearchData={handleSubmit} />
                         <ResetButton isDisabled={!dirty && disableReset} handleReset={handleReset} />
                     </Flex>
@@ -444,6 +449,7 @@ const FarmManagement = () => {
                                 _hover={{ bgColor: "red.300" }}
                                 onClick={handleDelete}
                                 bgColor={"red.500"}
+                                isLoading={isLoading}
                                 color={"white"}
                                 variant="ghost"
                             >

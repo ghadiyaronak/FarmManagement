@@ -1,4 +1,4 @@
-import { Flex, Box, Checkbox, Stack, Button, Text, useToast, Image } from "@chakra-ui/react";
+import { Flex, Box, Checkbox, Stack, Button, Text, useToast, Image, Link } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 //  redux
@@ -118,6 +118,18 @@ const Login = () => {
                             errors={errors.password}
                             touched={touched.password}
                         />
+
+                        <Stack spacing={10}>
+                            <Stack direction={{ base: "column", sm: "row" }} align="start" justify="space-between">
+                                <Link
+                                    color="blue.400"
+                                    textDecoration="none"
+                                    onClick={() => navigate("/forgot-password")}
+                                >
+                                    {t("login.forgot_password") + "?"}
+                                </Link>
+                            </Stack>
+                        </Stack>
 
                         <Stack spacing={10}>
                             <Button

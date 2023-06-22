@@ -126,7 +126,7 @@ const DeviceActivity = () => {
     const data = {
         datasets: [
             {
-                label: "Closing Time",
+                label: "クローズ回数",
                 data: emptyArray,
                 backgroundColor: "#4299e199",
                 borderWidth: 1,
@@ -168,7 +168,7 @@ const DeviceActivity = () => {
                         const y = dataPoint.y;
                         const r = dataPoint.r / 3;
                         // Customize the tooltip label with the desired data
-                        return `Day: ${x}, Hours: ${y}, Close: ${r}`;
+                        return `${y}時, 回数: ${r}`;
                     }
                 }
             }
@@ -278,8 +278,14 @@ const DeviceActivity = () => {
                             </Stack>
                         </Box>
                     </Card>
-                    <Box w={"full"} bgColor={"white"} height={"lg"} pt={5}>
-                        <Heading fontSize={"2xl"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                    <Box w={"full"} pt={5}>
+                        <Heading
+                            fontSize={"2xl"}
+                            mb={"5"}
+                            display={"flex"}
+                            justifyContent={"center"}
+                            alignItems={"center"}
+                        >
                             {t("device_mgmt.device_activity_graph")}
                         </Heading>
                         <Box
@@ -287,7 +293,14 @@ const DeviceActivity = () => {
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
+                                backgroundColor: "white",
+                                borderRadius: "md",
                                 margin: "auto",
+                                paddingRight: "10px",
+                                paddingLeft: "10px",
+                                paddingTop: "10px",
+                                paddingBottom: "10px",
+                                width: "100%",
                                 justifyContent: "center",
                                 marginTop: "40px"
                             }}

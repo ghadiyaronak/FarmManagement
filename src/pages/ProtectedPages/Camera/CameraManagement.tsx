@@ -60,7 +60,7 @@ const CameraManagement = () => {
     };
 
     function handleCamera(row: any) {
-        navigate(`/camera-view/${row._id}`);
+        navigate(`/camera-view/${row._id}`, { state: "/camera-management" });
     }
 
     const getExcelData = async () => {
@@ -135,14 +135,14 @@ const CameraManagement = () => {
             wrap: true,
             cell: (row: any) => {
                 return (
-                    <Box onClick={() => navigate(`/camera-view/${row._id}`, { state: row })}>
+                    <Box>
                         <Text
                             color={globalStyles.colors.mainColor}
                             fontWeight={"normal"}
                             textTransform={"uppercase"}
                             cursor={"pointer"}
                         >
-                            {row.name?.toString().substring(row.name, row?.name.length)}
+                            {row.name ?? "--"}
                         </Text>
                     </Box>
                 );
@@ -231,14 +231,6 @@ const CameraManagement = () => {
         );
     };
 
-    const handlerSearchValue = useCallbackRef((event: any, keyName: any) => {
-        const value = event.target.value;
-
-        setSearchForm((prev) => {
-            return { ...prev, [keyName]: value };
-        });
-    }, []);
-
     const getCameraList = (isReset: boolean) => {
         setIsLoading(true);
         if (!isReset) {
@@ -259,7 +251,8 @@ const CameraManagement = () => {
                         farm_id: farm ?? undefined,
                         status: status ?? undefined,
                         camera_access: camera_access ?? undefined,
-                        register_date: formattedRegisterDate ?? undefined
+                        register_date: formattedRegisterDate ?? undefined,
+                        limit: 5000
                     },
                     (success: any) => {
                         setCameraData(success.data.rows);
@@ -360,7 +353,7 @@ const CameraManagement = () => {
                     <Flex gap={2} mb={2} flexDir={"column"} ml={4}>
                         {/* <ExportExcel /> */}
                         <Box w="36"></Box>
-                        <ExportExcel getExcelData={getExcelData} fileName={"Camera"} />
+                        <ExportExcel getExcelData={getExcelData} fileName={"カメラ"} />
                         <SearchButton isLoading={isLoading} handleSearchData={handleSubmit} />
                         <ResetButton isDisabled={!dirty && disableReset} handleReset={handleReset} />
                     </Flex>

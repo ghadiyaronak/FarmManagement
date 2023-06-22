@@ -16,7 +16,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import DeviceService from "../../../services/DeviceService";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { globalStyles } from "../../../theme/styles";
 import { BiLinkExternal } from "react-icons/bi";
 import dayjs from "dayjs";
@@ -25,7 +25,7 @@ const DeviceEdit = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const params = useParams();
-
+    const location = useLocation();
     const toast = useToast();
     const navigate = useNavigate();
     const [deviceData, setDeviceData] = useState<any>([]);
@@ -96,6 +96,7 @@ const DeviceEdit = () => {
                         isClosable: true
                     });
                     setIsLoading(false);
+                    navigate(`/device-view/${params._id}`, { state: location?.state });
                 },
                 (errorData: any) => {
                     toast({
@@ -110,9 +111,6 @@ const DeviceEdit = () => {
                 }
             )
         );
-        setTimeout(() => {
-            navigate(`/device-view/${params._id}`);
-        }, 2000);
     };
 
     const {
@@ -238,22 +236,17 @@ const DeviceEdit = () => {
                                 {t("device_mgmt.current_value")}
                             </Heading>
                             <Text p={3} fontSize="md">
-                                {deviceData?.current_value === "0" ? t("status.open") : t("status.close")}
+                                {/* {deviceData?.current_value === "0" ? t("status.open") : t("status.close")} */}
+                                {deviceData.deviceType === "CYLINDER" ? (
+                                    <>{deviceData?.current_value === "0" ? t("status.open") : t("status.close")}</>
+                                ) : (
+                                    <>{deviceData?.current_value === "0" ? t("status.running") : t("status.stop")}</>
+                                )}
                             </Text>
                         </Flex>
                     </Stack>
                     <Divider />
-                    <Stack divider={<StackDivider />} spacing="4">
-                        <Flex>
-                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
-                                {t("device_mgmt.current_value")}
-                            </Heading>
-                            <Text p={3} fontSize="md">
-                                {deviceData?.current_value === "OPEN" ? t("status.open") : t("status.close")}
-                            </Text>
-                        </Flex>
-                    </Stack>
-                    <Divider />
+
                     <Stack divider={<StackDivider />} spacing="4">
                         <Flex>
                             <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">

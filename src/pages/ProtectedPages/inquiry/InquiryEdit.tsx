@@ -85,9 +85,7 @@ const InquiryEdit = () => {
                         isClosable: true
                     });
                     setIsLoading(false);
-                    setTimeout(() => {
-                        navigate(`/inquiry-view/${params._id}`);
-                    }, 2000);
+                    navigate(`/inquiry-view/${params._id}`);
                 },
                 (errorData: any) => {
                     toast({
@@ -178,6 +176,17 @@ const InquiryEdit = () => {
                             </Heading>
                             <Text p={3} fontSize="md">
                                 {inquiryData?.user ?? "--"}
+                            </Text>
+                        </Flex>
+                    </Stack>
+                    <Divider />
+                    <Stack divider={<StackDivider />} spacing="4">
+                        <Flex>
+                            <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
+                                {t("common.email")}
+                            </Heading>
+                            <Text p={3} fontSize="md">
+                                {inquiryData?.email ?? "--"}
                             </Text>
                         </Flex>
                     </Stack>

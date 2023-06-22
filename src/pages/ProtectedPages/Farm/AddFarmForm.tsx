@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Flex, FormLabel, Heading, Stack, Text, useToast } from "@chakra-ui/react";
+import { Box, Divider, Flex, FormLabel, Heading, Stack, Text, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
@@ -50,9 +50,6 @@ const EditForm = ({}: FarmFormProps) => {
     const [contractEndDate, setContractEndDate] = useState<Date | null>(null);
     const [startDate, setStartDate] = useState(new Date());
     const [date, setDate] = useState(new Date());
-
-    const handleCalendarClose = () => console.log("Calendar closed");
-    const handleCalendarOpen = () => console.log("Calendar opened");
 
     const onSubmit = () => {
         setIsLoading(true);
@@ -115,7 +112,7 @@ const EditForm = ({}: FarmFormProps) => {
         contact_number: yup
             .string()
             .min(10, t("messages.10_digit_contact_number_is_required!"))
-            .max(10, t("messages.10_digit_contact_number_is_required!"))
+            .max(11, t("messages.11_digit_contact_number_is_required!"))
             .required(t("messages.contact_number_field_is_required")),
         postalCode: yup
             .string()
@@ -165,7 +162,6 @@ const EditForm = ({}: FarmFormProps) => {
         validationSchema: productSchema,
         onSubmit
     });
-    console.log(values.register_date);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
@@ -240,6 +236,11 @@ const EditForm = ({}: FarmFormProps) => {
                                     onChange={(dates: any) => {
                                         const start = dates;
                                         setRegisterDate(start);
+                                        if (contractStartDate && start > contractStartDate) {
+                                            setContractStartDate(null);
+                                            setContractEndDate(null);
+                                            setFieldTouched("contractStartDate", true, true);
+                                        }
                                     }}
                                     onChangeRaw={() => {
                                         setFieldTouched("register_date", true);
@@ -303,7 +304,7 @@ const EditForm = ({}: FarmFormProps) => {
                                 {(touched.contractStartDate && !contractStartDate) ||
                                 (touched.contractEndDate && !contractEndDate) ? (
                                     <Text fontSize={"sm"} mt={1} color={"red.300"}>
-                                        {t("farm_mgmt.construction_period")}必要
+                                        {t("messages.construction_period")}
                                     </Text>
                                 ) : (
                                     ""
@@ -324,13 +325,13 @@ const EditForm = ({}: FarmFormProps) => {
                         />
                         <FormInput
                             name="contact_number"
-                            Type="number"
+                            Type="string"
                             values={values.contact_number}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             errors={errors.contact_number}
                             touched={touched.contact_number}
-                            maxValue={10}
+                            maxValue={11}
                             minValue={10}
                             label={t("common.contact_number")}
                             isMandatory={true}
@@ -371,19 +372,18 @@ const EditForm = ({}: FarmFormProps) => {
                             label={t("farm_mgmt.city")}
                             isMandatory={true}
                         />
-                        <Flex w={"full"} borderTop={"1px solid #E0E0E0"}>
-                            <FormTextArea label={t("farm_mgmt.sub_area")} isMandatory={true} />
-                            <CustomTextArea
-                                name="subArea"
-                                value={values.subArea}
-                                handleChange={handleChange}
-                                handleBlur={handleBlur}
-                                errors={errors.subArea}
-                                touched={touched.subArea}
-                                isMandatory={false}
-                                style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
-                            />
-                        </Flex>
+
+                        <FormInput
+                            name="subArea"
+                            Type="text"
+                            values={values.subArea}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            errors={errors.subArea}
+                            touched={touched.subArea}
+                            label={t("farm_mgmt.sub_area")}
+                            isMandatory={true}
+                        />
 
                         <AddFormStatus
                             touched={touched.status}
@@ -411,6 +411,7 @@ const EditForm = ({}: FarmFormProps) => {
                                 style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
                             />
                         </Flex>
+                        <Divider />
 
                         <SaveButton isLoading={isLoading} title={t("farm_mgmt.save")} />
                     </Flex>

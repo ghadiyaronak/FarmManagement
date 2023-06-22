@@ -38,6 +38,7 @@ import InquiryManagement from "./pages/ProtectedPages/inquiry/InquiryManagement"
 import InquiryView from "./pages/ProtectedPages/inquiry/InquiryView";
 import InquiryEdit from "./pages/ProtectedPages/inquiry/InquiryEdit";
 import { useEffect } from "react";
+import ForgotPasswordPage from "./pages/Authentication/ForgotPasswordPage";
 
 const App = () => {
     return (
@@ -46,6 +47,7 @@ const App = () => {
                 {/* Authentication Routes */}
                 <Route index element={<Home />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
                 {/* protected routes */}
                 <Route element={<ProtectedLayout />}>

@@ -10,7 +10,7 @@ import config from "../../../utils/config";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CameraService from "../../../services/CameraService";
 import dayjs from "dayjs";
 import { globalStyles } from "../../../theme/styles";
@@ -24,6 +24,8 @@ const CameraEdit = () => {
     const navigate = useNavigate();
     const [cameraData, setCameraData] = useState<any>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const location = useLocation();
 
     const getCameraList = () => {
         dispatch(
@@ -96,6 +98,7 @@ const CameraEdit = () => {
                         isClosable: true
                     });
                     setIsLoading(false);
+                    navigate(`/camera-view/${params._id}`, { state: location?.state });
                 },
                 (errorData: any) => {
                     toast({
@@ -110,9 +113,6 @@ const CameraEdit = () => {
                 }
             )
         );
-        setTimeout(() => {
-            navigate(`/camera-view/${params._id}`);
-        }, 2000);
     };
 
     const productSchema = yup.object().shape({});
@@ -302,22 +302,6 @@ const CameraEdit = () => {
                         </Flex>
                     </Stack>
                     <Divider />
-
-                    <Flex w={"full"}>
-                        <FormFildLabel label={t("farm_mgmt.memo_developer")} isMandatory={false} />
-                        <CustomTextArea
-                            name="memoDeveloper"
-                            value={values.memoDeveloper}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors.memoDeveloper}
-                            touched={touched.memoDeveloper}
-                            isMandatory={false}
-                            style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
-                        />
-                    </Flex>
-                    <Divider />
-
                     <Flex w={"full"}>
                         <FormFildLabel label={t("farm_mgmt.memo")} isMandatory={false} />
                         <CustomTextArea
@@ -334,6 +318,22 @@ const CameraEdit = () => {
                     </Flex>
 
                     <Divider />
+
+                    <Flex w={"full"}>
+                        <FormFildLabel label={t("farm_mgmt.memo_developer")} isMandatory={false} />
+                        <CustomTextArea
+                            name="memoDeveloper"
+                            value={values.memoDeveloper}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            errors={errors.memoDeveloper}
+                            touched={touched.memoDeveloper}
+                            isMandatory={false}
+                            style={{ flex: "0.86", paddingTop: "7px", paddingBottom: "7px" }}
+                        />
+                    </Flex>
+                    <Divider />
+
                     <Stack divider={<StackDivider />} spacing="4">
                         <Flex borderBottom={"1px solid #E0E0E0"}>
                             <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">

@@ -4,6 +4,8 @@ export const REFRESH_TOKEN_URL = BASE_URL + "/admin/auth/refresh-token";
 export const UPDATEPASSWORD = BASE_URL + "/admin/auth/reset-password";
 export const GETPROFILE = BASE_URL + "/admin/profile";
 export const UPDATE_NAME = BASE_URL + "/admin/";
+export const FORGOT_PASSWORD_URL = BASE_URL + "/admin/forgot";
+
 
 //dashboard
 export const DASHBOARD_DETAILS_URL = BASE_URL + "/admin/dashboard";

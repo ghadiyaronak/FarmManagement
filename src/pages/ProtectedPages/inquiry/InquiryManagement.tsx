@@ -106,7 +106,7 @@ const InquiryManagement = () => {
                 return (
                     <Flex alignItems={"center"} onClick={() => navigate(`/inquiry-view/${row._id}`, { state: row })}>
                         <Text fontWeight={"normal"} cursor={"pointer"}>
-                            {row.user?.toString().substring(row?.user, row?.user.length)}
+                            {row.user ?? "--"}
                         </Text>
                     </Flex>
                 );
@@ -292,7 +292,7 @@ const InquiryManagement = () => {
                     <Flex gap={2} mb={2} flexDir={"column"} ml={4}>
                         {/* <ExportExcel /> */}
                         <Box w="36"></Box>
-                        <ExportExcel getExcelData={getExcelData} fileName={"Inquiry"} />
+                        <ExportExcel getExcelData={getExcelData} fileName={"お問い合わせ"} />
                         <SearchButton isLoading={isLoading} handleSearchData={handleSubmit} />
                         <ResetButton isDisabled={!dirty && disableReset} handleReset={handleReset} />
                     </Flex>

@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import ReturnButton from "../../../components/fields/ReturnButton";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CameraService from "../../../services/CameraService";
 import dayjs from "dayjs";
 import { globalStyles } from "../../../theme/styles";
@@ -56,13 +56,17 @@ const CameraView = () => {
         getCameraList();
     }, []);
 
+    const [navigatePath, setNavigatePath] = useState<any>(-1);
+
+    const location = useLocation();
+
     return (
         <>
             <Box w={"4xl"} width={{ base: "full", md: "4xl" }} pt={4}>
                 <Card>
                     <Box py={4} my={3} position={"relative"} display={"flex"} alignItems={"center"}>
                         <Stack position={"absolute"} mx={5}>
-                            <ReturnButton link="/camera-management" />
+                            <ReturnButton link={location?.state ?? -1} />
                         </Stack>
                         <CardHeader
                             p={0}
@@ -77,7 +81,7 @@ const CameraView = () => {
                             </Heading>
 
                             <Box position={"absolute"} right={"0"} top={"-3"}>
-                                <HeadingButtonRight path={`/camera-edit/${cameraData?._id}`} />
+                                <HeadingButtonRight path={`/camera-edit/${cameraData?._id}`} state={location?.state} />
                             </Box>
                         </CardHeader>
                     </Box>
@@ -205,22 +209,22 @@ const CameraView = () => {
                         </Stack>
                         <Divider />
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
+                            <Flex flex={0.2}>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo")}
                                 </Heading>
-                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
+                                <Text flex={0.8} whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {cameraData?.memo ?? "--"}
                                 </Text>
                             </Flex>
                         </Stack>
                         <Divider />
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
+                            <Flex flex={0.2}>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo_developer")}
                                 </Heading>
-                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
+                                <Text flex={0.8} whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {cameraData?.memoDeveloper ?? "--"}
                                 </Text>
                             </Flex>

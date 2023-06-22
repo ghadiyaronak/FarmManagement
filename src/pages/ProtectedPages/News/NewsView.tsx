@@ -107,19 +107,11 @@ const NewsView = () => {
                         </Stack>
                         <Divider />
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
-                                <Heading
-                                    w={"72"}
-                                    flex={"0.3"}
-                                    p={3}
-                                    bg={"#f9fafa"}
-                                    pl={12}
-                                    fontSize={19}
-                                    textTransform="capitalize"
-                                >
+                            <Flex flex={0.2}>
+                                <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={19} textTransform="capitalize">
                                     {t("news.news_title")}
                                 </Heading>
-                                <Text p={3} flex={"0.7"} fontSize="md">
+                                <Text p={3} flex={"0.2"} fontSize="md">
                                     {newsData?.title ? newsData?.title : "--"}
                                 </Text>
                             </Flex>

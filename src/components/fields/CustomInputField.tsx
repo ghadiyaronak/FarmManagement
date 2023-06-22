@@ -134,7 +134,7 @@ interface InputFieldProps {
 const CustomInputField: React.FC<InputFieldProps> = (props) => {
     return (
         <FormControl>
-            <Text as={"label"} fontWeight={"semibold"}>
+            <Text as={"label"}>
                 {props.label}
                 {props.isMandatory && (
                     <Text color={"red"} as="span">

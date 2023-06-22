@@ -247,6 +247,10 @@
         "change_password": "Change Password",
         "confirm_password": "Confirm Password",
         "logout_success": "Logout successful!",
+        "forgot_your_password": "Forgot your password?",
+        "management_screen": "Management Screen",
+        "get_an_email": "You'll get an email with a reset link",
+        "request_reset": "Request Reset",
         "logout": "Logout"
     },
 

@@ -148,11 +148,11 @@ const InquiryView = () => {
                         </Stack>
                         <Divider />
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
+                            <Flex flex={0.2}>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("inquiry_mgmt.inquiry_title")}
                                 </Heading>
-                                <Text p={3} fontSize="md">
+                                <Text flex={0.8} p={3} fontSize="md">
                                     {inquiryData?.title ?? "--"}
                                 </Text>
                             </Flex>
@@ -160,11 +160,11 @@ const InquiryView = () => {
                         <Divider />
 
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex flex={"0.3"}>
+                            <Flex flex={"0.2"}>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("inquiry_mgmt.inquiry_description")}
                                 </Heading>
-                                <Text whiteSpace={"pre-line"} flex={"0.7"} p={3} fontSize="md">
+                                <Text whiteSpace={"pre-line"} flex={"0.8"} p={3} fontSize="md">
                                     {inquiryData?.description ?? "--"}
                                 </Text>
                             </Flex>
@@ -213,11 +213,11 @@ const InquiryView = () => {
                         </Stack>
                         <Divider />
                         <Stack divider={<StackDivider />} spacing="4">
-                            <Flex>
+                            <Flex flex={0.2}>
                                 <Heading w={"72"} p={3} bg={"#f9fafa"} pl={12} fontSize={20} textTransform="capitalize">
                                     {t("farm_mgmt.memo")}
                                 </Heading>
-                                <Text whiteSpace={"pre-line"} p={3} fontSize="md">
+                                <Text flex={0.8} whiteSpace={"pre-line"} p={3} fontSize="md">
                                     {inquiryData?.memo ? inquiryData?.memo : "--"}
                                 </Text>
                             </Flex>

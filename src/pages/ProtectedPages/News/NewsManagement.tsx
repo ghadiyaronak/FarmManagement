@@ -71,6 +71,7 @@ const NewsManagement = () => {
     };
 
     const handleDelete = () => {
+        setIsLoading(true);
         dispatch(
             NewsService.deleteNews(
                 {
@@ -85,6 +86,7 @@ const NewsManagement = () => {
                         isClosable: true,
                         position: "top-right"
                     });
+                    setIsLoading(false);
                 },
                 (errorData: any) => {
                     toast({
@@ -94,6 +96,7 @@ const NewsManagement = () => {
                         isClosable: true,
                         position: "top-right"
                     });
+                    setIsLoading(false);
                 }
             )
         );
@@ -107,7 +110,7 @@ const NewsManagement = () => {
                 return (
                     <Box onClick={() => navigate(`/news-view/${row._id}`, { state: row })}>
                         <Text fontWeight={"normal"} cursor={"pointer"}>
-                            {row.title?.toString().substring(row.title, row?.title.length)}
+                            {row.title ?? "--"}
                         </Text>
                     </Box>
                 );
@@ -179,12 +182,12 @@ const NewsManagement = () => {
             const startDate = values.start_date;
             let formattedStartDate = "";
             if (startDate) {
-                formattedStartDate = dayjs(startDate).format("YYYY/MM/DD");
+                formattedStartDate = dayjs(startDate).format("YYYY-MM-DD");
             }
             const endDate = values.end_date;
             let formattedEndDate = "";
             if (endDate) {
-                formattedEndDate = dayjs(endDate).format("YYYY/MM/DD");
+                formattedEndDate = dayjs(endDate).format("YYYY-MM-DD");
             }
 
             dispatch(
@@ -192,7 +195,8 @@ const NewsManagement = () => {
                     {
                         title: title ?? undefined,
                         start_date: formattedStartDate ?? undefined,
-                        end_date: formattedEndDate ?? undefined
+                        end_date: formattedEndDate ?? undefined,
+                        limit: 5000
                     },
                     (success: any) => {
                         setNewsData(success.data.rows);
@@ -329,6 +333,7 @@ const NewsManagement = () => {
                             <Button
                                 _hover={{ bgColor: "red.300" }}
                                 onClick={handleDelete}
+                                isLoading={isLoading}
                                 bgColor={"red.500"}
                                 color={"white"}
                                 variant="ghost"
