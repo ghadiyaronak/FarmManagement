@@ -50,7 +50,7 @@ const Login = () => {
                 },
                 (errorData: any) => {
                     toast({
-                        title: errorData.message ? errorData.message : errorData?.data?.message,
+                        title: errorData?.message ? errorData?.message : errorData?.data?.message,
                         status: "error",
                         duration: 3 * 1000,
                         isClosable: true,

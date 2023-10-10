@@ -20,7 +20,7 @@ const CustomPasswordField: React.FC<InputFieldProps> = (props) => {
 
     return (
         <FormControl>
-            <FormLabel> {props.label}</FormLabel>
+            <FormLabel fontWeight={"bold"}> {props.label}</FormLabel>
             <InputGroup size="md">
                 <Input
                     name={props.name}

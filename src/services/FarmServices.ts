@@ -8,6 +8,7 @@ import {
     GET_PROFILE,
     GET_TOKEN_VALIDATION,
     LOGIN,
+    SUBMIT_EMAIL,
     UPDATE_FARM,
     UPDATE_PASSWORD
 } from "../store/actionTypes";
@@ -21,6 +22,7 @@ import {
     GET_FARM_DOWNLOAD_API,
     GET_FARM_NAME_API,
     REFRESH_TOKEN_URL,
+    SUBMIT_EMAIL_DETAILS,
     UPDATEPASSWORD,
     UPDATE_FARM_DETAILS
 } from "../utils/url";
@@ -121,6 +123,23 @@ class FarmService {
                 }
             },
             url: ADD_FARM_DETAILS,
+            resolve,
+            reject,
+            data: _payload.data
+        };
+        return { type: API_INVOCATION, payload };
+    }
+
+    submitEmail(_payload: any, resolve: any, reject: any) {
+        const payload = {
+            action: SUBMIT_EMAIL,
+            method: POST,
+            apiConfig: {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            },
+            url: SUBMIT_EMAIL_DETAILS,
             resolve,
             reject,
             data: _payload.data

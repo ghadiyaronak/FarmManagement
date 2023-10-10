@@ -5,7 +5,6 @@ import {
     GET_EXCEL_DATA,
     GET_INQUIRY_DETAILS,
     GET_INQUIRY_DOWNLOAD,
-    SELECTED_INQUIRY,
     UPDATE_INQUIRY,
     UPDATE_INQUIRY_DETAILS
 } from "../store/actionTypes";

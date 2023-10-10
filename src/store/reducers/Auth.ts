@@ -12,7 +12,7 @@ const Auth = (state = INITIAL_STATE, action: { type: string; payload: any }) => 
                 ...state,
                 accessToken: action.payload.data.access_token,
                 refreshToken: action.payload.data.refresh_token
-            };
+            }; 
 
         case GET_PROFILE_SUCCESS:
             return {

@@ -58,7 +58,7 @@ function* invokeAPI(action) {
         if (error && error.status === 401) {
             //do some action
         }
-        if ((error && error.status === 500) || error.status === 405 || error.status === 404 || error.status === 403) {
+        if ((error && error?.status === 500) || error?.status === 405 || error?.status === 404 || error?.status === 403) {
             //do some action
         }
         if (error && error.status === 406) {

@@ -1,5 +1,3 @@
-import { DOWNLOADINVOICE } from "./url";
-
 export const adjustPincode = (x: number) => {
     const words = x.toString().split("");
     const pincode = `${words[0].toString()}${words[1]}${words[2]}-${words[3]}${words[4]}${words[5]}${words[6]}`;
@@ -26,9 +24,4 @@ export const createPhoneNumber = (phone: number) => {
         }
     }
     return `${firstpart}-${secondpart}-${thirdpart}`;
-};
-
-export const handleDownloadPDF = (orderId: any) => {
-    const url = DOWNLOADINVOICE + "/" + orderId;
-    window.open(url, "_blank");
 };

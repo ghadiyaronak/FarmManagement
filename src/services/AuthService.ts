@@ -27,7 +27,6 @@ class AuthService {
         }
         if (_payload?.nameId) {
             query.append("id", _payload?.nameId);
-            console.log(_payload?.nameId);
         }
 
         const payload = {

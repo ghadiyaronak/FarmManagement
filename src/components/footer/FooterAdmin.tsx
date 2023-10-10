@@ -50,7 +50,7 @@ const Footer = () => {
                             transition={"background 0.3s ease"}
                             _hover={{
                                 bg: "blackAlpha.200"
-                            }}
+                            }}  
                         >
                             {FooterItem.icon}
                         </chakra.button>

@@ -39,6 +39,8 @@ import InquiryView from "./pages/ProtectedPages/inquiry/InquiryView";
 import InquiryEdit from "./pages/ProtectedPages/inquiry/InquiryEdit";
 import { useEffect } from "react";
 import ForgotPasswordPage from "./pages/Authentication/ForgotPasswordPage";
+import PrivacyPolice from "./pages/PublicPages/PrivacyPolice";
+import SubmitForm from "./pages/PublicPages/SubmitForm";
 
 const App = () => {
     return (
@@ -49,8 +51,8 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-                {/* protected routes */}
-                <Route element={<ProtectedLayout />}>
+                {/* protected routes */} 
+                <Route element={<Prote ctedLayout />}>
                     <Route path="/home" element={<HomeAdmin />} />
                     <Route path="/change-password" element={<ChangePassword />} />
 
@@ -90,11 +92,13 @@ const App = () => {
                     {/* FAQS  */}
                     <Route path="/faq-management" element={<FAQSmanagement />} />
 
-                    {/* USER GUIDe  */}
-                    <Route path="/user-guide" element={<Userguide />} />
+                    {/* USER GUIDE  */}
+                    {/* <Route path="/user-guide" element={<Userguide />} /> */}
                     <Route path="/privacy-policy" element={<Privacy />} />
                     <Route path="/notaion" element={<Notation />} />
                 </Route>
+                <Route path="/PrivacyPolicy" element={<PrivacyPolice />} />
+                <Route path="/data-removel-form" element={<SubmitForm />} />
 
                 <Route path="*" element={<NotFound />} />
             </Routes>

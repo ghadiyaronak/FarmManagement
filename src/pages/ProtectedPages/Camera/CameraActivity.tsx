@@ -11,8 +11,6 @@ interface HeadingProps {
     name?: any;
 }
 const CameraActivity = ({ name }: HeadingProps) => {
-    console.log(name);
-
     const { t } = useTranslation();
     const { _id } = useParams();
     const toast = useToast();
@@ -31,7 +29,6 @@ const CameraActivity = ({ name }: HeadingProps) => {
                 },
                 (success: any) => {
                     setCameraData(success.data.rows);
-                    console.log("dattatta", success.data);
                 },
                 (errorData: any) => {
                     toast({

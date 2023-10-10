@@ -11,7 +11,6 @@ import { useDispatch } from "react-redux";
 import NewsService from "../../../services/NewsService";
 import FormTextArea from "../../../components/form/FormTextArea";
 import LabelTextField from "../../../components/form/LabelTextField";
-import AddFarmDate from "../../../components/fields/AddFarmDate";
 import ReactDatePicker from "react-datepicker";
 import ja from "date-fns/locale/ja";
 import dayjs from "dayjs";

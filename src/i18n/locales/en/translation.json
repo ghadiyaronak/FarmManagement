@@ -201,11 +201,9 @@
         "order": "Order",
         "praiority": "Priority",
         "action": "Action",
-
         "add_section": "Add Section",
         "section_private": "Section Private",
         "edit_section": "Edit Section",
-
         "section_name": "Section name",
         "enter_section_name": "Enter section name",
         "enter_order": "Enter order",
@@ -261,7 +259,6 @@
         "required_fields": "Required Fields",
         "password_minimum_characters": "password must be at least 6 characters",
         "both_password_needs_to_be_the_same": "Both password need to be the same",
-
         "faq_section": "Section Name is required",
         "question_fields_required": "question fields is required",
         "answer_fields_required": "answer fields is required"
@@ -314,23 +311,11 @@
         "app_pin_is_required": "App pin is required",
         "10_digit_contact_number_is_required!": "10 digit contact number is required",
         "enter_priority_between_1_to_100": "enter priority between 1 to 100",
-        "information_you_have_made_private": "information you have made private",
-        "information_you_have_made_public": "information you have made public",
 
         "404error": "404 | This page could not be found.",
-        "please_try_after_some_times": "Please Try After Some Times",
-
-        "please_select_rows_first": "Please Select Rows first",
-        "delete_project": "Delete Project",
         "sure_delete": "Are You Sure You Want To Delete This Item?",
         "user_activate_success": "User Activated Successfuly!",
         "user_deactivate_success": "User Deactivated Successfuly!",
-
-        "inquiry_delete_confirm": "Are you sure you want to delete the Inquiry?",
-        "inquiry_delete_success": "Inquiry Deleted Successfully!",
-
-        "review_delete_confirm": "Are you sure you want to delete the Review?",
-        "review_delete_success": "Review Deleted Successfully!",
         "are_you_sure": "Are you Sure?"
     }
 }

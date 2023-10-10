@@ -33,8 +33,6 @@ import { useDispatch } from "react-redux";
 import UserService from "../../../services/UserService";
 import dayjs from "dayjs";
 import { BiLinkExternal } from "react-icons/bi";
-import { format } from "date-fns";
-import { endOfDay, startOfDay } from "date-fns";
 
 interface EditProps {
     mode?: any;
@@ -86,6 +84,13 @@ const ViewFarm = ({ mode }: EditProps) => {
             UserService.updateUser(
                 { _id: userData?._id, data },
                 (responseData: any) => {
+                    toast({
+                        title: responseData.message ? responseData.message : responseData?.data?.message,
+                        status: "success",
+                        duration: 3 * 1000,
+                        isClosable: true,
+                        position: "top-right"
+                    });
                     getUserList();
                     onClose();
                     setIsLoading(false);

@@ -22,8 +22,6 @@ import DeviceService from "../../../services/DeviceService";
 import dayjs from "dayjs";
 import { BiLinkExternal } from "react-icons/bi";
 import HeadingButtonRight from "../../../components/button/HeadingButton";
-import CloseEditButtonNew from "../../../components/button/CloseEditButton";
-import { IoMdClose } from "react-icons/io";
 
 const DeviceView = () => {
     const { t } = useTranslation();

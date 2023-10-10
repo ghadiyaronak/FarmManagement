@@ -79,11 +79,11 @@ export const NAV_ITEMS: Array<INavItem> = [
         icon: () => <BiTransfer />,
         path: "/notaion",
         label: "特定商取引法に基づく表記"
-    },
-    {
-        id: 11,
-        icon: () => <RiContactsBookLine />,
-        path: "/user-guide",
-        label: "利用規約"
     }
+    // {
+    //     id: 11,
+    //     icon: () => <RiContactsBookLine />,
+    //     path: "/user-guide",
+    //     label: "利用規約"
+    // }
 ];

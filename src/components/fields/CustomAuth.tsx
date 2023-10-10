@@ -16,7 +16,7 @@ const CustomAuth: React.FC<InputFieldProps> = (props) => {
     return (
         <Box>
             <Flex>
-                <FormLabel fontWeight={"500"} w={"2xs"} py={2} m={"0"}>
+                <FormLabel fontWeight={"Bold"} w={"2xs"} py={2} m={"0"}>
                     {" "}
                     {props.label}
                 </FormLabel>

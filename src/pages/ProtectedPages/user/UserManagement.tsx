@@ -152,7 +152,7 @@ const UserManagement = () => {
             selector: (row: any) => (row?.farm_id?.farm_name ? row?.farm_id?.farm_name : "--"),
             sortable: true,
             wrap: true,
-            width: "130px"
+            width: "150px"
         },
         {
             id: 3,
@@ -172,7 +172,7 @@ const UserManagement = () => {
             selector: (row: any) => row?.email,
             sortable: true,
             wrap: true,
-            width: "270px"
+            width: "300px"
         },
 
         {
@@ -213,13 +213,6 @@ const UserManagement = () => {
             width: "180px"
         }
     ];
-
-    const handlerSearchValue = useCallbackRef((event: any, keyName: any) => {
-        const value = event.target.value;
-        setSearchForm((prev) => {
-            return { ...prev, [keyName]: value };
-        });
-    }, []);
 
     const getFarmName = () => {
         dispatch(

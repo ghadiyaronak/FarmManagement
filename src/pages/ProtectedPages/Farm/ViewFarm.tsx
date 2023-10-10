@@ -54,8 +54,6 @@ const ViewFarm = ({ mode }: EditProps) => {
     const params = useParams();
     const [farmData, setFarmData] = useState<any>([]);
     const [modal, setModal] = useState<any>(false);
-    const [deviceData, setDeviceData] = useState<any>([]);
-    const [cameraData, setCameraData] = useState<any>([]);
     const [userData, setUserData] = useState<any>([]);
     const [farmUserData, setFarmUserData] = useState<any>([]);
     const [farmDeviceData, setFarmDeviceData] = useState<any>([]);
@@ -107,7 +105,7 @@ const ViewFarm = ({ mode }: EditProps) => {
                     </Flex>
                 );
             },
-            width: "250px"
+            width: "200px"
         },
         {
             id: 2,
@@ -115,7 +113,7 @@ const ViewFarm = ({ mode }: EditProps) => {
             selector: (row: any) => row?.farm_id?.farm_name,
             sortable: true,
             wrap: true,
-            width: "130px"
+            width: "150px"
         },
 
         {
@@ -443,6 +441,13 @@ const ViewFarm = ({ mode }: EditProps) => {
             FarmServices.updateFarm(
                 { _id: farmData?._id, data },
                 (responseData: any) => {
+                    toast({
+                        title: responseData.message ? responseData.message : responseData?.data?.message,
+                        status: "success",
+                        duration: 3 * 1000,
+                        isClosable: true,
+                        position: "top-right"
+                    });
                     getFarmListById();
                     onClose();
                     setIsLoading(false);

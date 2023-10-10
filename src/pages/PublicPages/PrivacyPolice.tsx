@@ -1,8 +1,8 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import MainHeading from "../../../components/menu/MainHeading";
+import MainHeading from "../../components/menu/MainHeading";
 
-const Privacy = () => {
+const PrivacyPolice = () => {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
     }, []);
@@ -194,4 +194,4 @@ const Privacy = () => {
     );
 };
 
-export default Privacy;
+export default PrivacyPolice;
